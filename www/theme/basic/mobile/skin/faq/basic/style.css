@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+#bo_cate h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+#bo_cate ul {background:#fff;padding-left:1rem;border-bottom:1rem solid #d9dce3;zoom:1}
+#bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_cate li {display:inline-block;float:left;}
+#bo_cate a {display:block;line-height:24rem;padding:15rem;border-radius:13rem;background:#fff}
+#bo_cate #bo_cate_on {display:inline-block;position:relative;color:#3a8afd}
+#bo_cate #bo_cate_on:after {content:"";position:absolute;left:0;bottom:0;width:100%;height:4rem;display:inline-block;background:#3a8afd}
+
+#faq_wrap {margin:0 0 30rem}
+#faq_wrap h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+.faq_admin {text-align:right}
+#faq_wrap ol {margin:0;padding:0;list-style:none}
+#faq_wrap li {border-bottom:1rem solid #ececec;background:#fff;position:relative}
+#faq_wrap li h3 {min-height:50rem;line-height:30rem;padding:15rem;padding-left:50rem;position:relative}
+#faq_wrap li h3 a {font-size:1.2em}
+#faq_wrap li h3 .tit_btn {position:absolute;right:15rem;top:15rem;border:0;width:30rem;height:30rem;background:#fff;color:#c5cdd8;font-size:1.2em}
+#faq_wrap li h3 .tit_bg {display:inline-block;position:absolute;top:15rem;left:15rem;text-align:center;color:#000;font-size:1.6em}
+#faq_wrap li h3.faq_li_open a {color:#3a8afd}
+
+#faq_con .con_inner {display:none;padding:5rem 5rem 20rem 50rem}
+#faq_con .con_inner .tit_bg {display:inline-block;position:absolute;top:10rem;left:10rem;text-align:center;background:#777;color:#fff;border-radius:50%;width:30rem;line-height:30rem;height:30rem}
+#faq_con .con_inner .closer_btn {position:absolute;right:15rem;top:15rem;border:0;width:30rem;height:30rem;background:#fff;color:#3a8afd;font-size:1.2em}
+
+#faq_sch {position:relative;padding:15rem;text-align:center}
+#faq_sch .frm_input {width:100%;height:45rem;border:2rem solid #3a8afd;border-radius:0}
+#faq_sch .btn_submit {position:absolute;top:17rem;right:17rem;width:41rem;height:41rem;background:none;color:#000;font-size:15rem}

@@ -1,0 +1,81 @@
+
+.vscode/ 폴더 복사
+
+git init
+git remote add origin https://github.com/catlazying/topmanager.co.kr.git
+git config --global --add safe.directory C:/_git/topmanager.co.kr
+// git config --global --unset safe.directory C:/_git/topmanager.co.kr // 삭제
+// git config --global --unset-all safe.directory // 전체삭제
+git config --global --get-all safe.directory // 확인
+
+git status
+
+--------------------
+
+git pull origin main // 땡겨오기
+git add .
+git commit -m "first commit"
+git branch -M main
+
+// git push --force origin main // 강제 푸시
+git push -u origin main
+--------------------
+
+// git pull origin master // 땡겨오기
+git add .
+git commit -m "first commit"
+git branch -M master  //마스터 가지치기
+
+// git push --force origin master // 강제 푸시
+git push -u origin master
+
+/// 삭제전 깃사이트 설정에서 기본 브렌치를 master 로 변경
+git push origin --delete main // main 삭제
+-- git branch -m main master // 로컬에서 main 브랜치의 이름을 master로 변경합니다
+
+sisacook.com
+--------------
+1. C:/_git/sisacook.com 폴더 다운받기
+2. New repository 추가 Private 로 생성 ( https://github.com/catlazying/sisacook.com.git )
+3. cmd에서 C:/_git/sisacook.com 폴더에서 아래 내용 입력
+	git init
+	git remote add origin https://github.com/catlazying/sisacook.com.git
+	git config --global --add safe.directory C:/_git/sisacook.com
+	 // 추가확인
+	git config --global --get-all safe.directory
+
+	git status
+	// 땡겨오기
+	git pull origin main
+	git add .
+	git commit -m "first commit"
+	git branch -M main
+
+	git push -u origin main
+
+	// 안되면 강제 푸시// git push --force origin main
+4. .vscode폴더, .gitignore파일 복사
+5. C:\_git\sisacook.com\.vscode\sftp.json 정보수정
+6. tasks.json 파일 을 단축키에 연결
+	tasks.json의 내용중
+		"label": "Git Add & Commit & Push",
+	이부분과
+
+	keybindings.json 파일에
+	"args": "Git Add & Commit & Push"
+	이 동일하면됨
+
+	keybindings.json 추가 내용 예제
+	[
+	    { "key": "ctrl+shift+alt+s",   "command": "workbench.action.tasks.runTask", "args": "Git Add & Commit & Push"}
+	]
+
+7. vscode 새창실행 해당폴더 선택
+	그냥 저장은 ctrl+s
+	저장 후 git동기화는 ctrl+shift+alt+s
+
+
+끝
+git add .
+git commit -m "bak file move"
+git push -u origin master

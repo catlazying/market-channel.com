@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+/* 방문자 집계 */
+#visit {position:relative}
+#visit .btn_admin {position:absolute;top:0;right:20rem;height:25rem;line-height:25rem;padding:0 5rem;border-radius:3rem}
+#visit h2 {font-size:1.2em;margin-bottom:20rem;text-align:left;color:#fff;position:relative}
+#visit dl {padding:10rem 0}
+#visit dl:after {display:block;visibility:hidden;clear:both;content:""}
+#visit dt {float:left;width:50%;text-align:left;line-height:23rem;height:23rem;color:#e3e3e3}
+#visit dt span {display:inline-block;width:5rem;height:5rem;border-radius:50%;vertical-align:middle;margin-right:10rem;background:#3a8afd}
+#visit dd {float:left;width:50%;padding:0 5rem;text-align:right;text-align:right;font-weight:bold;line-height:23rem;height:23rem;font-size:0.92em}
+#visit dd strong {display:inline-block;padding:0 5rem;border-radius:20rem;line-height:15rem;color:#fff}

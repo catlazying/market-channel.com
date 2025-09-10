@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+#bo_cate {margin-bottom:28rem}
+#bo_cate h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#bo_cate ul {zoom:1}
+#bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_cate li {display:inline-block;padding:2rem}
+#bo_cate a {display:block;line-height:28rem;padding:5rem 15rem;border-radius:30rem;border:1rem solid #d6e9ff;color:#6794d3}
+#bo_cate a:focus, #bo_cate a:hover, #bo_cate a:active {text-decoration:none;background:#3a8afd;color:#fff}
+#bo_cate #bo_cate_on {z-index:2;background:#3a8afd;color:#fff;font-weight:bold;border:1rem solid #3a8afd;
+-webkit-box-shadow:inset 0 2rem 5rem rgb(33, 135, 202);
+-moz-box-shadow:inset 0 2rem 5rem rgb(33, 135, 202);
+box-shadow:inset 0 2rem 5rem rgb(33, 135, 202)}
+
+#faq_wrap {margin:10rem 0 30rem}
+#faq_wrap h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+.faq_admin {text-align:right}
+#faq_wrap ol {margin:0;padding:0;list-style:none}
+#faq_wrap li {border-bottom:1rem solid #ececec;background:#fff;position:relative}
+#faq_wrap li:first-child {border-top:1rem solid #ececec}
+#faq_wrap li h3 {min-height:50rem;line-height:30rem;padding:15rem;padding-left:50rem;position:relative}
+#faq_wrap li h3 .tit_btn {position:absolute;right:15rem;top:15rem;border:0;width:30rem;height:30rem;background:#fff;color:#c5cdd8;font-size:1.2em}
+#faq_wrap li h3 .tit_bg {display:inline-block;position:absolute;top:15rem;left:15rem;text-align:center;color:#000;font-size:1.6em}
+#faq_wrap li h3.faq_li_open a {color:#3a8afd}
+
+#faq_con .con_inner {display:none;padding:5rem 5rem 20rem 50rem}
+#faq_con .con_inner .tit_bg {display:inline-block;position:absolute;top:10rem;left:10rem;text-align:center;background:#777;color:#fff;border-radius:50%;width:30rem;line-height:30rem;height:30rem}
+#faq_con .con_inner .closer_btn {position:absolute;right:15rem;top:15rem;border:0;width:30rem;height:30rem;background:#fff;color:#3a8afd;font-size:1.2em}
+
+#faq_sch {background:#f7f7f7;padding:30rem;text-align:center;margin:0 0 10rem}
+#faq_sch .sch_tit {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+#faq_sch .frm_input {border:1rem solid #d0d3db;width:300rem;height:45rem;border-radius:0;border-radius:3rem}
+#faq_sch .btn_submit {padding:0 10rem;height:45rem;width:88rem;font-size:1.083em;font-weight:bold;color:#fff;background:#434a54}
