@@ -55,6 +55,20 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </colgroup>
     <tbody>
     <tr>
+        <th scope="row"><label for="bn_position">출력위치</label></th>
+        <td>
+            <?php echo help("왼쪽 : 쇼핑몰화면 왼쪽에 출력합니다.\n메인 : 쇼핑몰 메인화면(index.php)에만 출력합니다."); ?>
+            <select name="bn_position" id="bn_position">
+                <option value="메인비주얼1" <?php echo get_selected($bn['bn_position'], '메인비주얼1'); ?>>메인비주얼1</option>
+                <option value="메인비주얼2" <?php echo get_selected($bn['bn_position'], '메인비주얼2'); ?>>메인비주얼2</option>
+                <option value="메인비주얼3" <?php echo get_selected($bn['bn_position'], '메인비주얼3'); ?>>메인비주얼3</option>
+                <option value="메인중간배너" <?php echo get_selected($bn['bn_position'], '메인중간배너'); ?>>메인중간배너</option>
+                <option value="메인레이어팝업1" <?php echo get_selected($bn['bn_position'], '메인레이어팝업1'); ?>>메인레이어팝업1</option>
+                <option value="메인레이어팝업2" <?php echo get_selected($bn['bn_position'], '메인레이어팝업2'); ?>>메인레이어팝업2</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
         <th scope="row">이미지</th>
         <td>
             <input type="file" name="bn_bimg">
@@ -104,16 +118,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         </select>
         </td>
     </tr>
-    <tr>
-        <th scope="row"><label for="bn_position">출력위치</label></th>
-        <td>
-            <?php echo help("왼쪽 : 쇼핑몰화면 왼쪽에 출력합니다.\n메인 : 쇼핑몰 메인화면(index.php)에만 출력합니다."); ?>
-            <select name="bn_position" id="bn_position">
-                <option value="왼쪽" <?php echo get_selected($bn['bn_position'], '왼쪽'); ?>>왼쪽</option>
-                <option value="메인" <?php echo get_selected($bn['bn_position'], '메인'); ?>>메인</option>
-        </select>
-        </td>
-    </tr>
+
     <tr>
         <th scope="row"><label for="bn_border">테두리</label></th>
         <td>

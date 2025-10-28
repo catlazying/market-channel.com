@@ -11,49 +11,49 @@
 .imageListWrapperHtml5, .imageListWrapper, .dragOver {
 	background-color: #fff;
 	position: absolute;
-    height: 250px;
-    width: 255px;
+    height: 250rem;
+    width: 255rem;
     overflow-y: scroll;
-    border-radius: 4px;
-	border: 2px #66b2ff solid;
+    border-radius: 4rem;
+	border: 2rem #66b2ff solid;
 }
 /* .imageListWrapperHtml5 {
-    border: 2px #66b2ff dashed;
+    border: 2rem #66b2ff dashed;
 } */
 .imageListWrapper {
-    border: 1px #aaa solid;
-    box-shadow: 0 0 3px #aaa;
+    border: 1rem #aaa solid;
+    box-shadow: 0 0 3rem #aaa;
 }
 .dragOver {
-    border: 2px #ff3399 dashed;
+    border: 2rem #ff3399 dashed;
 }
 #imageInfoBox {
     position: absolute;
-	left: 300px;
+	left: 300rem;
 }
 .imageInfoTitle {
     text-align: center;
     background-color: #e0e0e0;
-    width: 130px;
+    width: 130rem;
     font-family: "Malgun Gothic",gulim;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 12rem;
 }
 .imageInfoTitle span {
     display: inline-block;
-    margin-top: -1px;
-    line-height: 22px;
+    margin-top: -1rem;
+    line-height: 22rem;
 }
 .remove-button {
-	width: 93px;
-	height: 22px;
+	width: 93rem;
+	height: 22rem;
 	cursor: pointer;
 	vertical-align: middle;
 }
 .imageBox, .imageBoxHighlighted {
-	width: 120px;
-	height: 90px;
-	margin: 3px 3px;
+	width: 120rem;
+	height: 90rem;
+	margin: 3rem 3rem;
 	float: left;
 }
 .imageBox_theImage,.imageBox_theImage_over {
@@ -64,23 +64,23 @@
     background-color: #fff;
 }
 .imageBox .imageBox_theImage{
-	border: 1px solid #e0e0e0;
+	border: 1rem solid #e0e0e0;
 	background-image: url('../icons/dot.gif');
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 .imageBox .imageBox_theImage_over {
-	border: 1px solid #a0a0a0;
+	border: 1rem solid #a0a0a0;
 	background-image: url('../icons/dot.gif');
 	background-position: center center;
 	background-repeat: no-repeat;
     cursor: pointer;
 }
 .imageBoxHighlighted .imageBox_theImage {
-	border: 1px solid #ff6600;
+	border: 1rem solid #ff6600;
 }
 .imageBoxHighlighted .imageBox_theImage_over {
-	border: 1px solid #ff6600;
+	border: 1rem solid #ff6600;
 	background-image: url('../icons/dot.gif');
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -95,14 +95,14 @@
     background-position: center center;
 }
 .removeButton {
-    border: 1px solid #a0a0a0;
+    border: 1rem solid #a0a0a0;
 }
 .removeButton_over {
-    border: 1px solid #808080;
+    border: 1rem solid #808080;
 }
 #insertionMarker {
-	height: 102px;
-	width: 6px;
+	height: 102rem;
+	width: 6rem;
 	position: absolute;
 	display: none;
 }
@@ -110,7 +110,7 @@
 #insertionMarker img {
 	float: left;
 }
-	
+
 #dragDropContent{
 	position: absolute;
 	z-index: 10;
@@ -118,9 +118,9 @@
 }
 
 .button {
-    width: 64px;
-    height: 22px;
-    margin: 0 2px;
+    width: 64rem;
+    height: 22rem;
+    margin: 0 2rem;
     cursor: pointer;
     vertical-align: middle;
 }
@@ -132,5 +132,5 @@ body {
     background-color: #fff;
     line-height: 1em;
     font-family: 'Malgun Gothic', gulim, tahoma, helvetica;
-    font-size: 12px;
+    font-size: 12rem;
 }

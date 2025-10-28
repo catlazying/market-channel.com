@@ -114,7 +114,7 @@ ob_start();
 
             $point      = $sum['point'];
             $sell_price = $sum['price'];
-            
+
             $cp_button = '';
             // 쿠폰
             if($is_member) {
@@ -179,6 +179,10 @@ ob_start();
             <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
             <input type="hidden" name="cp_price[<?php echo $i; ?>]" value="0">
             <div class="li_name">
+							<div class="_nation">
+								<span>말레이시아</span>
+								<span>말레이시아</span>
+							</div>
                 <?php echo $it_name; ?>
             </div>
             <div class="li_op_wr">
@@ -191,7 +195,7 @@ ob_start();
                 <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
                 <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
                 <span class="prqty_sc li_prqty_sp"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
-                 <span class="total_point li_prqty_sp"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>
+                 <!-- <span class="total_point li_prqty_sp"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span> -->
 
             </div>
             <div class="total_price total_span"><span>주문금액 </span><strong><?php echo number_format($sell_price); ?></strong></div>
@@ -234,8 +238,8 @@ ob_start();
             <dt class="sod_bsk_dvr">배송비</dt>
             <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
 
-            <dt class="sod_bsk_point">포인트</dt>
-            <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
+            <!-- <dt class="sod_bsk_point">포인트</dt>
+            <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd> -->
             <dt class="sod_bsk_cnt">총계</dt>
             <dd class="sod_bsk_cnt">
                 <?php $tot_price = $tot_sell_price + $send_cost; // 총계 = 주문상품금액합계 + 배송비 ?>
@@ -294,10 +298,10 @@ if($is_kakaopay_use) {
                 <?php if (!$is_member) { // 비회원이면 ?>
                 <li>
                     <label for="od_pwd">비밀번호<strong class="sound_only"> 필수</strong></label>
-                    
+
                         <input type="password" name="od_pwd" id="od_pwd" required class="frm_input required" maxlength="20">
                         영,숫자 3~20자 (주문서 조회시 필요)
-                    
+
                 </li>
                 <?php } ?>
 
@@ -311,7 +315,7 @@ if($is_kakaopay_use) {
                 </li>
                 <li>
                     <strong>주소</strong>
-                    
+
                     <span class="add_num"><label for="od_zip" class="sound_only">우편번호<strong class="sound_only"> 필수</strong></label>
                     <input type="text" name="od_zip" value="<?php echo $member['mb_zip1'].$member['mb_zip2']; ?>" id="od_zip" required class="frm_input required" size="5" maxlength="6">
                     <button type="button" class="btn_frmline btn_addsch" onclick="win_zip('forderform', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon');">주소검색</button></span>
@@ -322,7 +326,7 @@ if($is_kakaopay_use) {
                     <label for="od_addr3" class="sound_only">참고항목</label>
                     <input type="text" name="od_addr3" value="<?php echo get_text($member['mb_addr3']) ?>" id="od_addr3" class="frm_input frm_address" readonly="readonly">
                     <input type="hidden" name="od_addr_jibeon" value="<?php echo get_text($member['mb_addr_jibeon']); ?>"><br>
-                    
+
                 </li>
                 <li>
                     <label for="od_email">E-mail<strong class="sound_only"> 필수</strong></label>
@@ -342,7 +346,7 @@ if($is_kakaopay_use) {
                         ?>
                         </select> -->
                         <input type="text" name="od_hope_date" value="" id="od_hope_date" required class="frm_input required" size="11" maxlength="10" readonly> 이후로 배송 바랍니다.
-                    
+
                 </li>
                 <?php } ?>
             </ul>
@@ -410,7 +414,7 @@ if($is_kakaopay_use) {
                     <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20">
                     <input type="checkbox" name="ad_default" id="ad_default" value="1">
                     <label for="ad_default" class="ad_default">기본배송지로 설정</label>
-                    
+
                 </li>
                 <?php
                 }
@@ -440,16 +444,53 @@ if($is_kakaopay_use) {
                     <input type="text" name="od_b_addr3" id="od_b_addr3" class="frm_input frm_address" readonly="readonly">
                     <input type="hidden" name="od_b_addr_jibeon" value="">
                 </li>
+
+
+
+
+
                 <li>
-                    <label for="od_memo">전하실 말씀</label>
+                    <label for="">매장출입 및 적재정보</label>
+                    <input type="text" name="" id="" class="frm_input">
+                </li>
+                <li>
+                    <label for="">배송지 간판명</label>
+                    <input type="text" name="" id="" class="frm_input">
+                </li>
+                <li>
+                    <label for="">비밀번호</label>
+                    <input type="text" name="" id="" class="frm_input">
+                </li>
+                <li>
+                    <label for="">잠금장치위치</label>
+                    <input type="text" name="" id="" class="frm_input">
+                </li>
+                <li>
+                    <label for="">적재위치</label>
+                    <input type="text" name="" id="" class="frm_input">
+										<div class="_redInfo">
+											* 위 정보가 없을 경우 문앞 상온 적재될 수 있습니다.<br>
+											(아이스박스 포장 없음)
+										</div>
+                </li>
+
+
+
+
+
+                <li>
+                    <label for="od_memo">비고</label>
                     <textarea name="od_memo" id="od_memo"></textarea>
                 </li>
+
+
+
+
+
+
             </ul>
         </div>
     </section>
-
-
-        
 
     <?php
     $oc_cnt = $sc_cnt = 0;
@@ -594,7 +635,7 @@ if($is_kakaopay_use) {
             echo '<li><input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" '.$checked.'> <label for="od_settle_card" class="lb_icon card_icon">신용카드</label></li>'.PHP_EOL;
             $checked = '';
         }
-        
+
         $easypay_prints = array();
 
         // PG 간편결제
@@ -623,7 +664,7 @@ if($is_kakaopay_use) {
                     if( in_array('nhnkcp_naverpay', $de_easy_pay_service_array) ){
                         if(isset($default['de_easy_pay_services']) && in_array('used_nhnkcp_naverpay_point', explode(',', $default['de_easy_pay_services'])) ){
                             $easypay_prints['nhnkcp_naverpay_card'] = '<li><input type="radio" id="od_settle_nhnkcp_naverpay" name="od_settle_case" data-pay="naverpay" value="간편결제" > <label for="od_settle_nhnkcp_naverpay" class="naverpay_icon nhnkcp_naverpay lb_icon nhnkcp_icon nhnkcp_card" title="NHN_KCP - 네이버페이 카드결제">카드</label></li>';
-                            
+
                             $easypay_prints['nhnkcp_naverpay_money'] = '<li><input type="radio" id="od_settle_nhnkcp_naverpay_money" name="od_settle_case" data-pay="naverpay" data-money="1" value="간편결제" > <label for="od_settle_nhnkcp_naverpay_money" class="naverpay_icon nhnkcp_naverpay lb_icon nhnkcp_icon nhnkcp_money" title="NHN_KCP - 네이버페이 머니/포인트 결제">머니</label></li>';
                         } else {
                             $easypay_prints['nhnkcp_naverpay_card'] = '<li><input type="radio" id="od_settle_nhnkcp_naverpay" name="od_settle_case" data-pay="naverpay" value="간편결제" > <label for="od_settle_nhnkcp_naverpay" class="naverpay_icon nhnkcp_naverpay lb_icon" title="NHN_KCP - 네이버페이 카드결제">네이버페이</label></li>';
@@ -669,10 +710,10 @@ if($is_kakaopay_use) {
         }
 
         if( ! isset($easypay_prints['nhnkcp_naverpay']) && function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp') ){
-            
+
             if(isset($default['de_easy_pay_services']) && in_array('used_nhnkcp_naverpay_point', explode(',', $default['de_easy_pay_services'])) ){
                 $easypay_prints['nhnkcp_naverpay_card'] = '<li><input type="radio" id="od_settle_nhnkcp_naverpay" name="od_settle_case" data-pay="naverpay" value="간편결제" > <label for="od_settle_nhnkcp_naverpay" class="naverpay_icon nhnkcp_naverpay lb_icon nhnkcp_icon nhnkcp_card" title="NHN_KCP - 네이버페이 카드결제">카드</label></li>';
-                
+
                 $easypay_prints['nhnkcp_naverpay_money'] = '<li><input type="radio" id="od_settle_nhnkcp_naverpay_money" name="od_settle_case" data-pay="naverpay" data-money="1" value="간편결제" > <label for="od_settle_nhnkcp_naverpay_money" class="naverpay_icon nhnkcp_naverpay lb_icon nhnkcp_icon nhnkcp_money" title="NHN_KCP - 네이버페이 머니/포인트 결제">머니</label></li>';
             } else {
                 $easypay_prints['nhnkcp_naverpay'] = '<li><input type="radio" id="od_settle_nhnkcp_naverpay" name="od_settle_case" data-pay="naverpay" value="간편결제" > <label for="od_settle_nhnkcp_naverpay" class="naverpay_icon nhnkcp_naverpay lb_icon" title="NHN_KCP - 네이버페이">네이버페이</label></li>';
@@ -1306,7 +1347,7 @@ function pay_approval()
         var send_coupon = parseInt(pf.od_send_coupon.value);
         f.good_mny.value = od_price + send_cost + send_cost2 - send_coupon - temp_point;
     }
-    
+
     // 카카오페이 지불
     if(settle_method == "KAKAOPAY") {
         <?php if($default['de_tax_flag_use']) { ?>
@@ -1357,9 +1398,9 @@ function pay_approval()
                 if(typeof f.naverpay_direct !== "undefined"){
                     f.naverpay_direct.value = "Y";
                 }
-                
+
                 var is_money = jQuery("input[name='od_settle_case']:checked").attr("data-money");
-                
+
                 if (is_money) {     // 머니/포인트 결제
                     jQuery(f).find("input[name='naverpay_point_direct']").val("Y");
                 } else {    // 카드 결제
@@ -1507,13 +1548,13 @@ function pay_approval()
 
                 if(nicepay_easy_pay === "nice_naverpay"){
                     if(typeof f.DirectEasyPay !== "undefined") f.DirectEasyPay.value = "E020";
-                    
-                    <?php 
+
+                    <?php
                         // * 카드 선택 시 전액 카드로 결제, 포인트 선택 시 전액 포인트로 결제.
                         // (카드와 포인트를 같이 사용하는 복합결제 형태의 결제는 불가함.)
                         // - 카드: EasyPayMethod=”E020=CARD”, 포인트: EasyPayMethod=”E020=POINT”
                     ?>
-                    
+
                     if(typeof f.EasyPayMethod !== "undefined") f.EasyPayMethod.value = "E020=CARD";
 
                 } else if(nicepay_easy_pay === "nice_kakaopay"){
@@ -1537,7 +1578,7 @@ function pay_approval()
                 paymethod = "무통장";
                 break;
         }
-        
+
         f.PayMethod.value = paymethod;
 
         <?php if($default['de_tax_flag_use']) { ?>

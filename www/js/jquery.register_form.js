@@ -1,10 +1,13 @@
-var reg_mb_id_check = function() {
+var reg_mb_id_check = function(mid='') {
+    if(mid==''){
+        mid = encodeURIComponent($("#reg_mb_id").val());
+    }
     var result = "";
     $.ajax({
         type: "POST",
         url: g5_bbs_url+"/ajax.mb_id.php",
         data: {
-            "reg_mb_id": encodeURIComponent($("#reg_mb_id").val())
+            "reg_mb_id": mid
         },
         cache: false,
         async: false,

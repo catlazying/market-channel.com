@@ -81,14 +81,16 @@ $colspan = 16;
 
     <label for="sfl" class="sound_only">검색대상</label>
     <select name="sfl" id="sfl">
-        <option value="mb_id" <?php echo get_selected($sfl, "mb_id"); ?>>회원아이디</option>
-        <option value="mb_nick" <?php echo get_selected($sfl, "mb_nick"); ?>>닉네임</option>
+        <option value="mb_id" <?php echo get_selected($sfl, "mb_id"); ?>>회원아이디<?php echo G5_MEMBER_ID_NAME?></option>
+        <option value="mb_nick" <?php echo get_selected($sfl, "mb_nick"); ?>>닉네임<?php echo G5_MEMBER_NICK_NAME?></option>
         <option value="mb_name" <?php echo get_selected($sfl, "mb_name"); ?>>이름</option>
         <option value="mb_level" <?php echo get_selected($sfl, "mb_level"); ?>>권한</option>
         <option value="mb_email" <?php echo get_selected($sfl, "mb_email"); ?>>E-MAIL</option>
         <option value="mb_tel" <?php echo get_selected($sfl, "mb_tel"); ?>>전화번호</option>
         <option value="mb_hp" <?php echo get_selected($sfl, "mb_hp"); ?>>휴대폰번호</option>
+        <?php if($config['cf_use_point']) {?>
         <option value="mb_point" <?php echo get_selected($sfl, "mb_point"); ?>>포인트</option>
+        <?php } ?>
         <option value="mb_datetime" <?php echo get_selected($sfl, "mb_datetime"); ?>>가입일시</option>
         <option value="mb_ip" <?php echo get_selected($sfl, "mb_ip"); ?>>IP</option>
         <option value="mb_recommend" <?php echo get_selected($sfl, "mb_recommend"); ?>>추천인</option>
@@ -104,7 +106,6 @@ $colspan = 16;
         회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 닉네임은 삭제하지 않고 영구 보관합니다.
     </p>
 </div>
-
 
 <form name="fmemberlist" id="fmemberlist" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);" method="post">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
@@ -123,10 +124,14 @@ $colspan = 16;
                         <label for="chkall" class="sound_only">회원 전체</label>
                         <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
                     </th>
-                    <th scope="col" id="mb_list_id" colspan="2"><?php echo subject_sort_link('mb_id') ?>아이디</a></th>
+                    <th scope="col" id="mb_list_id" colspan="2"><?php echo subject_sort_link('mb_id') ?>아이디<?php echo G5_MEMBER_ID_NAME?></a></th>
                     <th scope="col" rowspan="2" id="mb_list_cert"><?php echo subject_sort_link('mb_certify', '', 'desc') ?>본인확인</a></th>
                     <th scope="col" id="mb_list_mailc"><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일인증</a></th>
-                    <th scope="col" id="mb_list_open"><?php echo subject_sort_link('mb_open', '', 'desc') ?>정보공개</a></th>
+                    <th scope="col" id="mb_list_open">
+                        <?php if($config['cf_open_modify']>-1){ ?>}
+                            <?php echo subject_sort_link('mb_open', '', 'desc') ?>정보공개</a>
+                        <?php }?>
+                    </th>
                     <th scope="col" id="mb_list_mailr"><?php echo subject_sort_link('mb_mailling', '', 'desc') ?>메일수신</a></th>
                     <th scope="col" id="mb_list_auth">상태</th>
                     <th scope="col" id="mb_list_mobile">휴대폰</th>
@@ -136,14 +141,20 @@ $colspan = 16;
                 </tr>
                 <tr>
                     <th scope="col" id="mb_list_name"><?php echo subject_sort_link('mb_name') ?>이름</a></th>
-                    <th scope="col" id="mb_list_nick"><?php echo subject_sort_link('mb_nick') ?>닉네임</a></th>
+                    <th scope="col" id="mb_list_nick"><?php echo subject_sort_link('mb_nick') ?>닉네임<?php echo G5_MEMBER_NICK_NAME?></a></th>
                     <th scope="col" id="mb_list_sms"><?php echo subject_sort_link('mb_sms', '', 'desc') ?>SMS수신</a></th>
                     <th scope="col" id="mb_list_adultc"><?php echo subject_sort_link('mb_adult', '', 'desc') ?>성인인증</a></th>
                     <th scope="col" id="mb_list_auth"><?php echo subject_sort_link('mb_intercept_date', '', 'desc') ?>접근차단</a></th>
                     <th scope="col" id="mb_list_deny"><?php echo subject_sort_link('mb_level', '', 'desc') ?>권한</a></th>
                     <th scope="col" id="mb_list_tel">전화번호</th>
                     <th scope="col" id="mb_list_join"><?php echo subject_sort_link('mb_datetime', '', 'desc') ?>가입일</a></th>
-                    <th scope="col" id="mb_list_point"><?php echo subject_sort_link('mb_point', '', 'desc') ?> 포인트</a></th>
+                    <th scope="col" id="mb_list_point">
+                    <?php
+                    if($config['cf_use_point']) {
+                        echo subject_sort_link('mb_point', '', 'desc') ." 포인트</a>";
+                    }
+                    ?>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -254,8 +265,10 @@ $colspan = 16;
                         </td>
                         <td headers="mb_list_mailc"><?php echo preg_match('/[1-9]/', $row['mb_email_certify']) ? '<span class="txt_true">Yes</span>' : '<span class="txt_false">No</span>'; ?></td>
                         <td headers="mb_list_open">
-                            <label for="mb_open_<?php echo $i; ?>" class="sound_only">정보공개</label>
-                            <input type="checkbox" name="mb_open[<?php echo $i; ?>]" <?php echo $row['mb_open'] ? 'checked' : ''; ?> value="1" id="mb_open_<?php echo $i; ?>">
+                            <?php if($config['cf_open_modify']>-1){ ?>
+                                <label for="mb_open_<?php echo $i; ?>" class="sound_only">정보공개</label>
+                                <input type="checkbox" name="mb_open[<?php echo $i; ?>]" <?php echo $row['mb_open'] ? 'checked' : ''; ?> value="1" id="mb_open_<?php echo $i; ?>">
+                            <?php } ?>
                         </td>
                         <td headers="mb_list_mailr">
                             <label for="mb_mailling_<?php echo $i; ?>" class="sound_only">메일수신</label>
@@ -300,7 +313,11 @@ $colspan = 16;
                         </td>
                         <td headers="mb_list_tel" class="td_tel"><?php echo get_text($row['mb_tel']); ?></td>
                         <td headers="mb_list_join" class="td_date"><?php echo substr($row['mb_datetime'], 2, 8); ?></td>
-                        <td headers="mb_list_point" class="td_num"><a href="point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
+                        <td headers="mb_list_point" class="td_num">
+                        <?php if($config['cf_use_point']) {?>
+                            <a href="point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a>
+                        <? } ?>
+                        </td>
 
                     </tr>
 

@@ -97,8 +97,9 @@ $scrap_href = '';
 $good_href = '';
 $nogood_href = '';
 if ($is_member) {
-    // 스크랩 링크
-    $scrap_href = G5_BBS_URL.'/scrap_popin.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+    // 스크랩 링크 sns와 동일하게
+    if ($board['bo_use_sns'])
+        $scrap_href = G5_BBS_URL.'/scrap_popin.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
 
     // 추천 링크
     if ($board['bo_use_good'])

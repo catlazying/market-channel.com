@@ -88,6 +88,37 @@ foreach ($check_keys as $key) {
 
 $mb_memo = isset($_POST['mb_memo']) ? $_POST['mb_memo'] : '';
 
+// 마케팅 활용동의 날짜 저장
+if($posts['mb_mailling'] != '1') $posts['mb_mailling'] = '0';
+if($posts['mb_sms'] != '1') $posts['mb_sms'] = '0';
+// 마케팅 활용동의일시 저장
+$mb_1_ary = array();
+
+if(!empty($posts['mb_1'])){
+    $posts['mb_1'] = stripslashes($posts['mb_1']);
+    $mb_1_ary = json_decode($posts['mb_1'], true);
+}
+
+$today = G5_TIME_YMDHIS;
+if($posts['mb_mailling'] == 1 && (!isset($mb_1_ary['mail_date']) || empty($mb_1_ary['mail_date']))){
+    $mb_1_ary['mail_date'] = $today;
+}elseif($posts['mb_mailling'] != 1){
+    unset($mb_1_ary['mail_date']);
+}
+
+if($posts['mb_sms'] == 1 && (!isset($mb_1_ary['sms_date']) || empty($mb_1_ary['sms_date']))){
+    $mb_1_ary['sms_date'] = $today;
+}elseif($posts['mb_sms'] != 1 ){
+    unset($mb_1_ary['sms_date']);
+}
+
+if(!empty($mb_1_ary)){
+    $posts['mb_1'] = json_encode($mb_1_ary);
+}else{
+    $posts['mb_1'] = '';
+}
+// /저장 완료
+
 $sql_common = "  mb_name = '{$posts['mb_name']}',
                  mb_nick = '{$mb_nick}',
                  mb_email = '{$mb_email}',

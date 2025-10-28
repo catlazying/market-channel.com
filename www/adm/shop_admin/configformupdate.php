@@ -474,4 +474,5 @@ if( $warning_msg ){
     alert($warning_msg, "./configform.php");
 } else {
     goto_url("./configform.php");
+}/configform.php");
 }

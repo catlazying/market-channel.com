@@ -20,6 +20,9 @@ $it = array(
 'it_type3'=>0,
 'it_type4'=>0,
 'it_type5'=>0,
+'it_type6'=>0,
+'it_type7'=>0,
+'it_type8'=>0,
 'it_brand'=>'',
 'it_model'=>'',
 'it_tel_inq'=>0,
@@ -35,6 +38,7 @@ $it = array(
 'it_cust_price'=>0,
 'it_option_subject'=>'',
 'it_price'=>0,
+'it_purchase_price'=>0,
 'it_point'=>0,
 'it_supply_point'=>0,
 'it_soldout'=>0,
@@ -112,7 +116,7 @@ else if ($w == "u")
 
     if(!$it)
         alert('상품정보가 존재하지 않습니다.');
-    
+
     if (function_exists('check_case_exist_title')) check_case_exist_title($it, G5_SHOP_DIR, false);
 
     if (! (isset($ca_id) && $ca_id))
@@ -286,7 +290,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>스킨설정</caption>
-      
+
         <tbody>
         <tr>
             <th scope="row"><label for="it_skin">PC용 스킨</label></th>
@@ -383,7 +387,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             <td>
                 <?php echo help("메인화면에 유형별로 출력할때 사용합니다.\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다."); ?>
                 <input type="checkbox" name="it_type1" value="1" <?php echo ($it['it_type1'] ? "checked" : ""); ?> id="it_type1">
-                <label for="it_type1">히트 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_hit.gif" alt=""></label>
+                <label for="it_type1">베스트 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_hit.gif" alt=""></label>
                 <input type="checkbox" name="it_type2" value="1" <?php echo ($it['it_type2'] ? "checked" : ""); ?> id="it_type2">
                 <label for="it_type2">추천 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_rec.gif" alt=""></label>
                 <input type="checkbox" name="it_type3" value="1" <?php echo ($it['it_type3'] ? "checked" : ""); ?> id="it_type3">
@@ -391,7 +395,17 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <input type="checkbox" name="it_type4" value="1" <?php echo ($it['it_type4'] ? "checked" : ""); ?> id="it_type4">
                 <label for="it_type4">인기 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_best.gif" alt=""></label>
                 <input type="checkbox" name="it_type5" value="1" <?php echo ($it['it_type5'] ? "checked" : ""); ?> id="it_type5">
-                <label for="it_type5">할인 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_discount.gif" alt=""></label>
+                <label for="it_type5">특가 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_discount.gif" alt=""></label>
+
+                <input type="checkbox" name="it_type6" value="1" <?php echo ($it['it_type6'] ? "checked" : ""); ?> id="it_type6">
+                <label for="it_type6">실시간가격변동 </label>
+
+                <input type="checkbox" name="it_type7" value="1" <?php echo ($it['it_type7'] ? "checked" : ""); ?> id="it_type7">
+                <label for="it_type7">여분1 </label>
+
+                <input type="checkbox" name="it_type8" value="1" <?php echo ($it['it_type8'] ? "checked" : ""); ?> id="it_type8">
+                <label for="it_type8">여분2 </label>
+
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_type" value="1" id="chk_ca_it_type">
@@ -400,6 +414,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <label for="chk_all_it_type">전체적용</label>
             </td>
         </tr>
+        <?php if(G5_MARKET_YN=='N') { ?>
         <tr>
             <th scope="row"><label for="it_maker">제조사</label></th>
             <td>
@@ -413,6 +428,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <label for="chk_all_it_maker">전체적용</label>
             </td>
         </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="it_origin">원산지</label></th>
             <td>
@@ -426,6 +442,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <label for="chk_all_it_origin">전체적용</label>
             </td>
         </tr>
+        <?php if(G5_MARKET_YN=='N') { ?>
         <tr>
             <th scope="row"><label for="it_brand">브랜드</label></th>
             <td>
@@ -452,6 +469,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <label for="chk_all_it_model">전체적용</label>
             </td>
         </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="it_tel_inq">전화문의</label></th>
             <td>
@@ -478,6 +496,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <label for="chk_all_it_use">전체적용</label>
             </td>
         </tr>
+        <?php if(G5_COUPON_YN=='Y') { ?>
         <tr>
             <th scope="row"><label for="it_nocoupon">쿠폰적용안함</label></th>
             <td>
@@ -491,6 +510,8 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <label for="chk_all_it_nocoupon">전체적용</label>
             </td>
         </tr>
+        <?php } ?>
+        <?php if(G5_MARKET_YN=='N') { ?>
         <tr>
             <th scope="row"><label for="ec_mall_pid">네이버쇼핑 상품ID</label></th>
             <td colspan="2">
@@ -498,6 +519,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <input type="text" name="ec_mall_pid" value="<?php echo get_text($it['ec_mall_pid']); ?>" id="ec_mall_pid" class="frm_input" size="20">
             </td>
         </tr>
+        <?php } ?>
         <tr>
             <th scope="row">상품설명</th>
             <td colspan="2"> <?php echo editor_html('it_explan', get_text(html_purifier($it['it_explan']), 0)); ?></td>
@@ -506,6 +528,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             <th scope="row">모바일 상품설명</th>
             <td colspan="2"> <?php echo editor_html('it_mobile_explan', get_text(html_purifier($it['it_mobile_explan']), 0)); ?></td>
         </tr>
+        <?php if(G5_MARKET_YN=='N') { ?>
         <tr>
             <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
             <td>
@@ -519,6 +542,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <label for="chk_all_it_sell_email">전체적용</label>
             </td>
         </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="it_shop_memo">상점메모</label></th>
             <td><textarea name="it_shop_memo" id="it_shop_memo"><?php echo html_purifier($it['it_shop_memo']); ?></textarea></td>
@@ -547,7 +571,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
         <select id="it_info_gubun" name="it_info_gubun">
             <option value="">상품군을 선택하세요.</option>
             <?php
-            if(!$it['it_info_gubun']) $it['it_info_gubun'] = 'wear';
+            if(!$it['it_info_gubun']) $it['it_info_gubun'] = 'food';
             foreach($item_info as $key=>$value) {
                 $opt_value = $key;
                 $opt_text  = $value['title'];
@@ -589,6 +613,14 @@ $(function(){
         </colgroup>
         <tbody>
         <tr>
+            <th scope="row"><label for="it_purchase_price">매입가격</label></th>
+            <td>
+                <input type="text" name="it_purchase_price" value="<?php echo $it['it_purchase_price']; ?>" id="it_purchase_price" class="frm_input" size="8"> 원
+            </td>
+            <td class="td_grpset">
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="it_price">판매가격</label></th>
             <td>
                 <input type="text" name="it_price" value="<?php echo $it['it_price']; ?>" id="it_price" class="frm_input" size="8"> 원
@@ -613,6 +645,7 @@ $(function(){
                 <label for="chk_all_it_cust_price">전체적용</label>
             </td>
         </tr>
+        <?php if($config['cf_use_point']) { ?>
         <tr>
             <th scope="row"><label for="it_point_type">포인트 유형</label></th>
             <td>
@@ -666,6 +699,7 @@ $(function(){
                 <label for="chk_all_it_supply_point">전체적용</label>
             </td>
         </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="it_soldout">상품품절</label></th>
             <td>
@@ -679,6 +713,7 @@ $(function(){
                 <label for="chk_all_it_soldout">전체적용</label>
             </td>
         </tr>
+        <?php if ($config['cf_sms_use']) { ?>
         <tr>
             <th scope="row"><label for="it_stock_sms">재입고SMS 알림</label></th>
             <td colspan="2">
@@ -686,6 +721,7 @@ $(function(){
                 <input type="checkbox" name="it_stock_sms" value="1" id="it_stock_sms" <?php echo ($it['it_stock_sms']) ? "checked" : ""; ?>> 예
             </td>
         </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="it_stock_qty">재고수량</label></th>
             <td>

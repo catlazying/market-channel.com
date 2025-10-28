@@ -75,12 +75,45 @@ $mb_addr2       = clean_xss_tags($mb_addr2, 1, 1);
 $mb_addr3       = clean_xss_tags($mb_addr3, 1, 1);
 $mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '';
 
+// 마케팅 활용동의 날짜 저장
+if($mb_mailling != '1') $mb_mailling = '0';
+if($mb_sms != '1') $mb_sms = '0';
+// 마케팅 활용동의일시 저장
+$mb_1_ary = array();
+if(!empty($mb_1)){
+    $mb_1 = stripslashes($mb_1);
+    $mb_1_ary = json_decode($mb_1, true);
+}
+$today = G5_TIME_YMDHIS;
+if($mb_mailling ==1 && (isset($mb_1_ary['mail_date']) || empty($mb_1_ary['mail_date']))){
+    $mb_1_ary['mail_date'] = $today;
+}elseif($mb_mailling ==0){
+    unset($mb_1_ary['mail_date']);
+}
+
+if($mb_sms ==1 && (isset($mb_1_ary['sms_date']) || empty($mb_1_ary['sms_date']))){
+    $mb_1_ary['sms_date'] = $today;
+}elseif($mb_sms ==0){
+    unset($mb_1_ary['sms_date']);
+}
+
+if(!empty($mb_1_ary)){
+    $mb_1 = json_encode($mb_1_ary);
+}else{
+    $mb_1 = '';
+}
+// /저장 완료
+
 run_event('register_form_update_before', $mb_id, $w);
 
 if ($w == '' || $w == 'u') {
 
     if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
-    if ($msg = valid_mb_id($mb_id))         alert($msg, "", true, true);
+
+    if(G5_MARKET_YN != 'Y'){
+        if ($msg = valid_mb_id($mb_id))         alert($msg, "", true, true);
+    }
+
     if ($msg = count_mb_id($mb_id))         alert($msg, "", true, true);
 
     // 이름, 닉네임에 utf-8 이외의 문자가 포함됐다면 오류
@@ -280,7 +313,7 @@ if ($w == '') {
         include_once ('./register_form_update_mail1.php');
         $content = ob_get_contents();
         ob_end_clean();
-        
+
         $content = run_replace('register_form_update_mail_mb_content', $content, $mb_id);
 
         mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
@@ -300,7 +333,7 @@ if ($w == '') {
         include_once ('./register_form_update_mail2.php');
         $content = ob_get_contents();
         ob_end_clean();
-        
+
         $content = run_replace('register_form_update_mail_admin_content', $content, $mb_id);
 
         mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
@@ -521,7 +554,7 @@ if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
     include_once ('./register_form_update_mail3.php');
     $content = ob_get_contents();
     ob_end_clean();
-    
+
     $content = run_replace('register_form_update_mail_certify_content', $content, $mb_id);
 
     mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);

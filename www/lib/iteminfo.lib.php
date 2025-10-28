@@ -330,7 +330,7 @@ $item_info = array(
             "manufacturing_ymd"=>array("제조연월일", "포장일 또는 생산연도"),
             "expiration_date"=>array("유통기한 또는 품질유지기한", ""),
             "law_content"=>array("관련법상 표시사항", "농산물 - 농산물품질관리법상 유전자변형농산물 표시, 지리적표시<br />축산물 - 축산법에 따른 등급 표시, 쇠고기의 경우 이력관리에 따른 표시 유무<br />수산물 - 수산물품질관리법상 유전자변형수산물 표시, 지리적표시<br />수입식품에 해당하는 경우  \"식품위생법에 따른 수입신고를 필함\"의 문구"),
-            "product_composition"=>array("상품구성", ""),
+            "product_composition"=>array("상품구성(가공형태)", ""),
             "keep"=>array("보관방법 또는 취급방법", ""),
             "as"=>array("소비자상담 관련 전화번호", ""),
         )

@@ -234,7 +234,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             </colgroup>
             <tbody>
                 <tr>
-                    <th scope="row"><label for="mb_id">아이디<?php echo $sound_only ?></label></th>
+                    <th scope="row"><label for="mb_id">아이디<?php echo G5_MEMBER_ID_NAME?><?php echo $sound_only ?></label></th>
                     <td>
                         <input type="text" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id" <?php echo $required_mb_id ?> class="frm_input <?php echo $required_mb_id_class ?>" size="15" maxlength="20">
                         <?php if ($w == 'u') { ?><a href="./boardgroupmember_form.php?mb_id=<?php echo $mb['mb_id'] ?>" class="btn_frmline">접근가능그룹보기</a><?php } ?>
@@ -257,21 +257,26 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <tr>
                     <th scope="row"><label for="mb_name">이름(실명)<strong class="sound_only">필수</strong></label></th>
                     <td><input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" id="mb_name" required class="required frm_input" size="15" maxlength="20"></td>
-                    <th scope="row"><label for="mb_nick">닉네임<strong class="sound_only">필수</strong></label></th>
+                    <th scope="row"><label for="mb_nick">닉네임<?php echo G5_MEMBER_NICK_NAME?><strong class="sound_only">필수</strong></label></th>
                     <td><input type="text" name="mb_nick" value="<?php echo $mb['mb_nick'] ?>" id="mb_nick" required class="required frm_input" size="15" maxlength="20"></td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="mb_level">회원 권한</label></th>
                     <td><?php echo get_member_level_select('mb_level', 1, $member['mb_level'], $mb['mb_level']) ?></td>
-                    <th scope="row">포인트</th>
-                    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $mb['mb_id'] ?>" target="_blank"><?php echo number_format($mb['mb_point']) ?></a> 점</td>
-                </tr>
-                <tr>
                     <th scope="row"><label for="mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
                     <td><input type="text" name="mb_email" value="<?php echo $mb['mb_email'] ?>" id="mb_email" maxlength="100" required class="required frm_input email" size="30"></td>
+                </tr>
+                <?php if($config['cf_use_point']) { ?>
+                <tr>
+                    <th scope="row">포인트</th>
+                    <td colspan="3"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $mb['mb_id'] ?>" target="_blank"><?php echo number_format($mb['mb_point']) ?></a> 점</td>
+                    <?/* 감춤처리 <!--
                     <th scope="row"><label for="mb_homepage">홈페이지</label></th>
                     <td><input type="text" name="mb_homepage" value="<?php echo $mb['mb_homepage'] ?>" id="mb_homepage" class="frm_input" maxlength="255" size="15"></td>
+                    -->*/?>
                 </tr>
+                <?php } ?>
+
                 <tr>
                     <th scope="row"><label for="mb_hp">휴대폰번호</label></th>
                     <td><input type="text" name="mb_hp" value="<?php echo $mb['mb_hp'] ?>" id="mb_hp" class="frm_input" size="15" maxlength="20"></td>
@@ -305,8 +310,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <label for="mb_adult_no">아니오</label>
                     </td>
                 </tr>
+
                 <tr>
-                    <th scope="row">주소</th>
+                    <th scope="row">주소 <?php echo G5_MEMBER_ADDR_NAME; ?></th>
                     <td colspan="3" class="td_addr_line">
                         <label for="mb_zip" class="sound_only">우편번호</label>
                         <input type="text" name="mb_zip" value="<?php echo $mb['mb_zip1'] . $mb['mb_zip2']; ?>" id="mb_zip" class="frm_input readonly" size="5" maxlength="6">
@@ -321,6 +327,26 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <input type="hidden" name="mb_addr_jibeon" value="<?php echo $mb['mb_addr_jibeon']; ?>"><br>
                     </td>
                 </tr>
+
+                <tr>
+                    <th scope="row">배송지 주소 </th>
+                    <td colspan="3" class="td_addr_line">
+                        <label for="mb_2" class="sound_only">우편번호</label>
+                        <input type="text" name="mb_2" value="<?php echo $mb['mb_2']; ?>" id="mb_2" class="frm_input readonly" size="5" maxlength="6">
+                        <button type="button" class="btn_frmline" onclick="win_zip('fmember', 'mb_2', 'mb_3', 'mb_4', 'mb_5', 'mb_6');">주소 검색</button><br>
+                        <input type="text" name="mb_3" value="<?php echo $mb['mb_3'] ?>" id="mb_3" class="frm_input readonly" size="60">
+                        <label for="mb_3">기본주소</label><br>
+                        <input type="text" name="mb_4" value="<?php echo $mb['mb_4'] ?>" id="mb_4" class="frm_input" size="60">
+                        <label for="mb_4">상세주소</label>
+                        <br>
+                        <input type="text" name="mb_5" value="<?php echo $mb['mb_5'] ?>" id="mb_5" class="frm_input" size="60">
+                        <label for="mb_5">참고항목</label>
+                        <input type="hidden" name="mb_6" value="<?php echo $mb['mb_6']; ?>"><br>
+                    </td>
+                </tr>
+
+
+                <?php if($config['cf_open_modify']>-1){ ?>
                 <tr>
                     <th scope="row"><label for="mb_icon">회원아이콘</label></th>
                     <td colspan="3">
@@ -353,6 +379,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         ?>
                     </td>
                 </tr>
+                <? } ?>
                 <tr>
                     <th scope="row">메일 수신</th>
                     <td>
@@ -369,6 +396,15 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <label for="mb_sms_no">아니오</label>
                     </td>
                 </tr>
+
+                <tr>
+                    <th scope="row"><label for="mb_1">마케팅활용동의일시</label></th>
+                    <td colspan="3">
+                        <input type="text" name="mb_1" value="<?php echo $mb['mb_1'] ?>" id="mb_1" class="frm_input" style="width:100%;" maxlength="255">
+                    </td>
+                </tr>
+
+                <?php if($config['cf_open_modify']>-1){ ?>
                 <tr>
                     <th scope="row">정보 공개</th>
                     <td colspan="3">
@@ -386,6 +422,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <th scope="row"><label for="mb_profile">자기 소개</label></th>
                     <td colspan="3"><textarea name="mb_profile" id="mb_profile"><?php echo html_purifier($mb['mb_profile']); ?></textarea></td>
                 </tr>
+                <?php }else{ ?>
+                    <input type="hidden" name="mb_open" value="0">
+                <?php } ?>
                 <tr>
                     <th scope="row"><label for="mb_memo">메모</label></th>
                     <td colspan="3"><textarea name="mb_memo" id="mb_memo"><?php echo html_purifier($mb['mb_memo']); ?></textarea></td>
@@ -565,7 +604,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 run_event('admin_member_form_add', $mb, $w, 'table');
                 ?>
 
-                <?php for ($i = 1; $i <= 10; $i++) { ?>
+                <?php for ($i = 7; $i <= 10; $i++) { ?>
                     <tr>
                         <th scope="row"><label for="mb_<?php echo $i ?>">여분 필드 <?php echo $i ?></label></th>
                         <td colspan="3"><input type="text" name="mb_<?php echo $i ?>" value="<?php echo $mb['mb_' . $i] ?>" id="mb_<?php echo $i ?>" class="frm_input" size="30" maxlength="255"></td>

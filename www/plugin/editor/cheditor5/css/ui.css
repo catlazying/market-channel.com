@@ -11,16 +11,16 @@ a.cheditor-tag-path-elem:hover {
     cursor: pointer;
 }
 .cheditor-container {
-    border-top: 1px #ccc solid;
+    border-top: 1rem #ccc solid;
     position: relative;
     text-align: left;
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
 }
 .cheditor-tb-wrapper {
-    border-right: 1px #ccc solid;
-    border-left: 1px #ccc solid;
-    border-bottom: 1px #ccc solid;
+    border-right: 1rem #ccc solid;
+    border-left: 1rem #ccc solid;
+    border-bottom: 1rem #ccc solid;
     position: relative;
     display: block;
     -webkit-box-sizing: inherit;
@@ -28,37 +28,37 @@ a.cheditor-tag-path-elem:hover {
     background-color: #f0f0f0;
 }
 .cheditor-tb-wrapper-readonly {
-    border-right: 1px #ccc solid;
-    border-left: 1px #ccc solid;
-    border-bottom: 1px #ccc solid;
+    border-right: 1rem #ccc solid;
+    border-left: 1rem #ccc solid;
+    border-bottom: 1rem #ccc solid;
     position: relative;
     display: block;
-    background: #f0f0f0 url(../icons/readonlymode.png) no-repeat 10px center;
+    background: #f0f0f0 url(../icons/readonlymode.png) no-repeat 10rem center;
 }
 .cheditor-tb-wrapper-code {
-    border-right: 1px #ccc solid;
-    border-left: 1px #ccc solid;
-    border-bottom: 1px #ccc solid;
+    border-right: 1rem #ccc solid;
+    border-left: 1rem #ccc solid;
+    border-bottom: 1rem #ccc solid;
     position: relative;
     display: block;
-    background: #f0f0f0 url(../icons/viewmode_code.png) no-repeat 10px center;
+    background: #f0f0f0 url(../icons/viewmode_code.png) no-repeat 10rem center;
 }
 .cheditor-tb-wrapper-preview {
-    border-right: 1px #ccc solid;
-    border-left: 1px #ccc solid;
-    border-bottom: 1px #ccc solid;
+    border-right: 1rem #ccc solid;
+    border-left: 1rem #ccc solid;
+    border-bottom: 1rem #ccc solid;
     position: relative;
     display: block;
-    background: #f0f0f0 url(../icons/viewmode_preview.png) no-repeat 10px center;
+    background: #f0f0f0 url(../icons/viewmode_preview.png) no-repeat 10rem center;
 }
 .cheditor-tb-wrapper-readonly div, .cheditor-tb-wrapper-code div, .cheditor-tb-wrapper-preview div {
     display: none;
 }
 .cheditor-tb-fullscreen {
-    width: 16px;
-    height: 16px;
+    width: 16rem;
+    height: 16rem;
     float: right;
-    margin-top: 3px;
+    margin-top: 3rem;
     cursor: pointer;
     background: transparent url(../icons/fullscreen.png) no-repeat center center;
 }
@@ -66,17 +66,17 @@ a.cheditor-tag-path-elem:hover {
     display: none;
 }
 .cheditor-tb-fullscreen-actual {
-    width: 16px;
-    height: 16px;
+    width: 16rem;
+    height: 16rem;
     float: right;
-    margin-top: 3px;
+    margin-top: 3rem;
     cursor: pointer;
     background: transparent url(../icons/fullscreen_actual.png) no-repeat center center;
 }
 .cheditor-editarea-wrapper {
-    border-right: 1px #ccc solid;
-    border-bottom: 1px #ccc solid;
-    border-left: 1px #ccc solid;
+    border-right: 1rem #ccc solid;
+    border-bottom: 1rem #ccc solid;
+    border-left: 1rem #ccc solid;
     width: auto;
     overflow: hidden;
 }
@@ -97,19 +97,19 @@ a.cheditor-tag-path-elem:hover {
     overflow-x: hidden;
     overflow-y: scroll;
     margin: 0;
-    border: 1px solid transparent;
-    padding: 7px 10px;
+    border: 1rem solid transparent;
+    padding: 7rem 10rem;
     display: none;
     resize: none;
     outline: none;
     font-family: SourceCodePro, monospace;
-    font-size: 12px;
+    font-size: 12rem;
 }
 .cheditor-modify-block .cheditor-ico {
-    width: 16px;
-    height: 16px;
+    width: 16rem;
+    height: 16rem;
     vertical-align: middle;
-    margin-right: 5px;
+    margin-right: 5rem;
 }
 .cheditor-modify-block select {
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", gulim, monospace;
@@ -117,7 +117,7 @@ a.cheditor-tag-path-elem:hover {
     color: #000;
 }
 .cheditor-modify-block div {
-    padding: 5px 10px 5px 10px;
+    padding: 5rem 10rem 5rem 10rem;
     color: #000;
     display: block;
 }
@@ -126,27 +126,27 @@ a.cheditor-tag-path-elem:hover {
     color: #000;
 }
 .cheditor-modify-block div .user-input-alt {
-    width: 120px;
-    margin: 3px 10px 0 5px;
-    height: 15px;
-    line-height: 15px;
-    padding-top: 1px;
+    width: 120rem;
+    margin: 3rem 10rem 0 5rem;
+    height: 15rem;
+    line-height: 15rem;
+    padding-top: 1rem;
     font-size: 9pt;
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", gulim, monospace;
     color: #000;
 }
 .cheditor-modify-block div .user-input-caption {
-    width: 350px;
-    margin: 7px 10px 0 5px;
-    height: 15px;
-    line-height: 15px;
-    padding-top: 1px;
+    width: 350rem;
+    margin: 7rem 10rem 0 5rem;
+    height: 15rem;
+    line-height: 15rem;
+    padding-top: 1rem;
     font-size: 9pt;
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", gulim, monospace;
     color: #000;
 }
 .cheditor-modify-block div .caption-align {
-    margin: 7px 0 0 4px;
+    margin: 7rem 0 0 4rem;
     font-size: 9pt;
     vertical-align: top;
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", gulim, monospace;
@@ -155,43 +155,43 @@ a.cheditor-tag-path-elem:hover {
 .cheditor-modify-block div .wrap-checked {
     vertical-align: middle;
     padding: 0;
-    margin-right: 2px;
+    margin-right: 2rem;
 }
 .cheditor-modify-block div .input-submit {
     cursor: pointer;
     vertical-align: middle;
-    margin-top: -2px;
-    margin-left: 10px;
-    height: 20px;
-    width: 64px;
+    margin-top: -2rem;
+    margin-left: 10rem;
+    height: 20rem;
+    width: 64rem;
 }
 .cheditor-modify-block div .color-picker {
     cursor: pointer;
     vertical-align: middle;
-    height: 20px;
-    width: 20px;
+    height: 20rem;
+    width: 20rem;
 }
 .cheditor-modify-block div .delete-submit {
     cursor: pointer;
     vertical-align: middle;
-    margin-top: -2px;
-    margin-left: 3px;
-    height: 20px;
-    width: 64px;
+    margin-top: -2rem;
+    margin-left: 3rem;
+    height: 20rem;
+    width: 64rem;
 }
 .cheditor-modify-block div .edit-table-ico {
     cursor: pointer;
     vertical-align: middle;
-    width: 16px;
-    height: 16px;
-    margin: 0 3px;
+    width: 16rem;
+    height: 16rem;
+    margin: 0 3rem;
 }
 .cheditor-modify-block {
     display: none;
-    border-right: 1px #ccc solid;
-    border-bottom: 1px #ccc solid;
-    border-left: 1px #ccc solid;
-    padding: 2px;
+    border-right: 1rem #ccc solid;
+    border-bottom: 1rem #ccc solid;
+    border-left: 1rem #ccc solid;
+    padding: 2rem;
     background-color: #eee;
     font-size: 9pt;
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", gulim, monospace;
@@ -203,23 +203,23 @@ a.cheditor-tag-path-elem:hover {
     color: #333;
 }
 .cheditor-tag-path {
-    border-right: 1px #ccc solid;
-    border-bottom: 1px #ccc solid;
-    border-left: 1px #ccc solid;
-    padding: 0 2px 0 2px;
+    border-right: 1rem #ccc solid;
+    border-bottom: 1rem #ccc solid;
+    border-left: 1rem #ccc solid;
+    padding: 0 2rem 0 2rem;
     display: none;
-    height: 18px;
-    line-height: 18px;
+    height: 18rem;
+    line-height: 18rem;
     overflow: hidden;
 }
 .cheditor-viewmode {
-    padding: 0 4px 0 4px;
-    height: 16px;
+    padding: 0 4rem 0 4rem;
+    height: 16rem;
     background: transparent url(../icons/statusbar_bgline.gif) repeat-x 0 0;
 }
 .cheditor-viewmode div {
-    width: 24px;
-    height: 16px;
+    width: 24rem;
+    height: 16rem;
     cursor: pointer;
 }
 .cheditor-tab-rich {
@@ -247,135 +247,135 @@ a.cheditor-tag-path-elem:hover {
     float: left;
 }
 .cheditor-resizebar {
-    height: 11px;
+    height: 11rem;
     overflow: hidden;
-    border-left: 1px #ccc solid;
-    border-right: 1px #ccc solid;
+    border-left: 1rem #ccc solid;
+    border-right: 1rem #ccc solid;
     cursor: s-resize;
     background: #eee url(../icons/splitter.gif) no-repeat center top;
 }
 .cheditor-resizebar-off {
-    height: 11px;
+    height: 11rem;
     overflow: hidden;
-    border-left: 1px #ccc solid;
-    border-right: 1px #ccc solid;
+    border-left: 1rem #ccc solid;
+    border-right: 1rem #ccc solid;
     cursor: default;
     background-color: #eee;
 }
-.cheditor_mode_icon { width: 24px; height: 16px; cursor: pointer; vertical-align: top }
+.cheditor_mode_icon { width: 24rem; height: 16rem; cursor: pointer; vertical-align: top }
 .cheditor-pulldown-container {
-    border: #7d8db0 1px solid;
+    border: #7d8db0 1rem solid;
     background-color: #fff;
-    padding: 1px;
+    padding: 1rem;
     position: relative;
-    -moz-box-shadow: 0 0 5px #aaa;
-    -webkit-box-shadow: 0 0 5px #aaa;
-    box-shadow: 1px 1px 10px #bbb;
+    -moz-box-shadow: 0 0 5rem #aaa;
+    -webkit-box-shadow: 0 0 5rem #aaa;
+    box-shadow: 1rem 1rem 10rem #bbb;
 }
 .cheditor-pulldown-container div {
-    padding: 2px 2px 2px 15px;
+    padding: 2rem 2rem 2rem 15rem;
     font-size: 9pt;
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", gulim, monospace;
     color: #222;
     position: relative;
     display: block;
     line-height: 1.2;
-    margin: 2px 2px;
+    margin: 2rem 2rem;
 }
 .cheditor-pulldown-color-container {
-    border: #7d8db0 1px solid;
-    -moz-box-shadow: 0 0 5px #aaa;
-    -webkit-box-shadow: 0 0 5px #aaa;
-    box-shadow: 1px 1px 10px #bbb;
+    border: #7d8db0 1rem solid;
+    -moz-box-shadow: 0 0 5rem #aaa;
+    -webkit-box-shadow: 0 0 5rem #aaa;
+    box-shadow: 1rem 1rem 10rem #bbb;
     background-color: #fff;
-    padding: 2px;
+    padding: 2rem;
 }
 .cheditor-pulldown-container div label, .cheditor-pulldown-textblock-container div label {
     display: block;
 }
 .cheditor-pulldown-textblock-container div div {
     text-align: center;
-    padding: 2px;
+    padding: 2rem;
     font-size: 9pt;
     color: #000;
     line-height: 1.2;
 }
 .cheditor-pulldown-textblock-container div {
-    padding: 1px;
+    padding: 1rem;
 }
 .cheditor-pulldown-textblock-out {
-    border: #fff 1px solid;
+    border: #fff 1rem solid;
 }
 .cheditor-pulldown-textblock-over {
-    border: #ccc 1px solid;
+    border: #ccc 1rem solid;
 }
 .cheditor-pulldown-textblock-container {
-    border: #7d8db0 1px solid;
-    -moz-box-shadow: 0 0 5px #aaa;
-    -webkit-box-shadow: 0 0 5px #aaa;
-    box-shadow: 1px 1px 10px #bbb;
+    border: #7d8db0 1rem solid;
+    -moz-box-shadow: 0 0 5rem #aaa;
+    -webkit-box-shadow: 0 0 5rem #aaa;
+    box-shadow: 1rem 1rem 10rem #bbb;
     background-color: #fff;
-    padding: 2px;
+    padding: 2rem;
 }
 .cheditor-pulldown-mouseout {
-    border: #fff 1px solid;
+    border: #fff 1rem solid;
 }
 .cheditor-pulldown-mouseover {
     background-color: #f0f0f0;
-    border: #e0e0e0 1px solid;
+    border: #e0e0e0 1rem solid;
 }
 .cheditor-pulldown-frame {
     position: absolute;
     visibility: hidden;
     z-index: -1;
-    width: 1px;
-    height: 1px;
-    line-height: 12px;
+    width: 1rem;
+    height: 1rem;
+    line-height: 12rem;
 }
 .cheditor-pulldown-color-cell-over, .cheditor-pulldown-color-cell {
     float: left;
-    width: 14px;
-    height: 14px;
-    margin: 1px;
+    width: 14rem;
+    height: 14rem;
+    margin: 1rem;
     cursor: pointer;
 }
 .cheditor-pulldown-color-cell-over {
-    border: 1px #000 solid;
+    border: 1rem #000 solid;
 }
 .cheditor-pulldown-color-cell-over span {
-    width: 12px;
-    height: 12px;
-    border: 1px #fff solid;
+    width: 12rem;
+    height: 12rem;
+    border: 1rem #fff solid;
     display: block;
 }
 .cheditor-pulldown-color-cell {
-    border: 1px #999 solid;
+    border: 1rem #999 solid;
 }
 .cheditor-pulldown-color-cell span {
-    width: 14px;
-    height: 14px;
+    width: 14rem;
+    height: 14rem;
     display: block;
     border: none;
 }
 .cheditor-pulldown-color-selected {
-    border: 1px solid #999;
+    border: 1rem solid #999;
     text-align: left;
-    margin: 4px 0 0 1px;
-    padding-left: 5px;
-    height: 15px;
-    line-height: 15px;
-    font-size: 11px;
+    margin: 4rem 0 0 1rem;
+    padding-left: 5rem;
+    height: 15rem;
+    line-height: 15rem;
+    font-size: 11rem;
     font-family: verdana, monospace;
-    width: 55px;
+    width: 55rem;
     vertical-align: -10%;
 }
 .cheditor-pulldown-color-reset, .cheditor-pulldown-color-show-picker {
-    height: 19px;
-    width: 16px;
+    height: 19rem;
+    width: 16rem;
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
-    margin-left: 3px;
+    margin-left: 3rem;
 }
 .cheditor-pulldown-color-reset {
     background: #fff url(../icons/color_picker_reset.png) no-repeat center center;
@@ -385,9 +385,9 @@ a.cheditor-tag-path-elem:hover {
 }
 .cheditor-pulldown-color-submit {
     vertical-align: middle;
-    margin: 4px 1px 0 0;
-    height: 19px;
-    width: 40px;
+    margin: 4rem 1rem 0 0;
+    height: 19rem;
+    width: 40rem;
     cursor: pointer;
     right: 0;
     position: absolute;
@@ -412,32 +412,32 @@ a.cheditor-tag-path-elem:hover {
     height: 100%;
 }
 .cheditor-popup-window {
-    border: 1px solid #0078D7;
-    border-radius: 5px;
+    border: 1rem solid #0078D7;
+    border-radius: 5rem;
     background-color: #0078D7;
     display: none;
     position: absolute;
     top: 0;
     left: 0;
-    -moz-box-shadow: 0 0 5px #aaa;
-    -webkit-box-shadow: 0 0 5px #aaa;
-    box-shadow: 0 0 10px #bbb;
+    -moz-box-shadow: 0 0 5rem #aaa;
+    -webkit-box-shadow: 0 0 5rem #aaa;
+    box-shadow: 0 0 10rem #bbb;
     padding: 0;
     overflow: hidden;
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
 }
 .cheditor-popup-cmd-button {
-    width: 64px;
-    height: 22px;
-    margin: 5px 2px;
+    width: 64rem;
+    height: 22rem;
+    margin: 5rem 2rem;
     cursor: pointer;
     vertical-align: middle;
 }
 .cheditor-popup-cframe {
     background-color: #fff;
     margin: 0;
-    padding: 10px;
+    padding: 10rem;
     border: none;
     text-align: center;
     -webkit-box-sizing: content-box;
@@ -450,14 +450,14 @@ a.cheditor-tag-path-elem:hover {
     overflow: hidden;
 }
 .cheditor-popup-drag-handle {
-    height: 31px;
+    height: 31rem;
 }
 .cheditor-popup-titlebar {
-    padding-left: 10px;
-    line-height: 30px;
+    padding-left: 10rem;
+    line-height: 30rem;
 }
 .cheditor-popup-title {
-    font-size: 12px;
+    font-size: 12rem;
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", gulim, monospace;
     font-weight: bold;
     color: #fff;
@@ -466,26 +466,26 @@ a.cheditor-tag-path-elem:hover {
     background-color: #fff;
     position: absolute;
     display: block;
-    left: 0px;
-    top: 27px;
+    left: 0rem;
+    top: 27rem;
 }
 .cheditor-pulldown-wrapper {
     line-height: 1;
 }
 .cheditor-toolbar-icon-wrapper {
-    margin: 0 2px 0 0;
+    margin: 0 2rem 0 0;
     float: left;
-    height: 24px;
+    height: 24rem;
     overflow: hidden;
 }
 .cheditor-tb-icon {
-    height: 22px;
-    width: 16px;
+    height: 22rem;
+    width: 16rem;
     overflow: hidden;
 }
 .cheditor-tb-icon-disable {
-    height: 22px;
-    width: 16px;
+    height: 22rem;
+    width: 16rem;
     overflow: hidden;
     filter: alpha(opacity=40) gray;
     opacity: 0.4;
@@ -494,14 +494,14 @@ a.cheditor-tag-path-elem:hover {
     padding: 0;
     margin: 0;
     color: #333;
-    height: 20px;
-    line-height: 20px;
+    height: 20rem;
+    line-height: 20rem;
 }
 .cheditor-tb-text-disable {
     padding: 0;
     margin: 0;
-    height: 20px;
-    line-height: 20px;
+    height: 20rem;
+    line-height: 20rem;
     color: #333;
     overflow: hidden;
     filter: alpha(opacity=40) gray;
@@ -510,49 +510,49 @@ a.cheditor-tag-path-elem:hover {
 }
 .cheditor-tb-text span, .cheditor-tb-text-disable span {
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", gulim, monospace;
-    margin: 0 0 0 1px;
+    margin: 0 0 0 1rem;
     padding: 0;
-    width: 41px;
+    width: 41rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     display: block;
-    font-size: 12px;
+    font-size: 12rem;
 }
 .cheditor-tb-icon23 {
-    height: 22px;
-    width: 23px;
-    margin-left: 3px;
+    height: 22rem;
+    width: 23rem;
+    margin-left: 3rem;
     overflow: hidden;
 }
 .cheditor-tb-icon23-disable {
-    height: 22px;
-    width: 23px;
-    margin-left: 3px;
+    height: 22rem;
+    width: 23rem;
+    margin-left: 3rem;
     overflow: hidden;
     filter: alpha(opacity=40) gray;
     opacity: 0.4;
 }
 .cheditor-tb-icon36 {
-    height: 22px;
-    width: 36px;
+    height: 22rem;
+    width: 36rem;
     overflow: hidden;
 }
 .cheditor-tb-icon36-disable {
-    height: 22px;
-    width: 36px;
+    height: 22rem;
+    width: 36rem;
     overflow: hidden;
     filter: alpha(opacity=40) gray;
     opacity: 0.4;
 }
 .cheditor-tb-combo {
-    height: 22px;
-    width: 10px;
+    height: 22rem;
+    width: 10rem;
     overflow: hidden;
 }
 .cheditor-tb-combo-disable {
-    height: 22px;
-    width: 10px;
+    height: 22rem;
+    width: 10rem;
     overflow: hidden;
     filter: alpha(opacity=40) gray;
     opacity: 0.4;
@@ -560,43 +560,43 @@ a.cheditor-tag-path-elem:hover {
 .cheditor-tb-bg55 {
     float: left;
     overflow: hidden;
-    background: transparent url(../icons/toolbar-background.png) no-repeat left -483px;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -483rem;
     position: relative;
 }
 .cheditor-tb-bg40 {
     float: left;
     overflow: hidden;
-    background: transparent url(../icons/toolbar-background.png) no-repeat left -552px;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -552rem;
     position: relative;
 }
 .cheditor-tb-bg44 {
     float: left;
     overflow: hidden;
-    background: transparent url(../icons/toolbar-background.png) no-repeat left -621px;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -621rem;
     position: relative;
 }
 .cheditor-tb-bg30-first {
     float: left;
     overflow: hidden;
-    background: transparent url(../icons/toolbar-background.png) no-repeat left -276px;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -276rem;
     position: relative;
 }
 .cheditor-tb-bg30 {
     float: left;
     overflow: hidden;
-    background: transparent url(../icons/toolbar-background.png) no-repeat left -345px;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -345rem;
     position: relative;
 }
 .cheditor-tb-bg30-last {
     float: left;
     overflow: hidden;
-    background: transparent url(../icons/toolbar-background.png) no-repeat left -414px;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -414rem;
     position: relative;
 }
 .cheditor-tb-bgcombo {
     float: left;
     overflow: hidden;
-    background: transparent url(../icons/toolbar-background.png) no-repeat left -690px;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -690rem;
     position: relative;
 }
 .cheditor-tb-bgcombo-first {
@@ -608,13 +608,13 @@ a.cheditor-tag-path-elem:hover {
 .cheditor-tb-bgcombo-last {
     float: left;
     overflow: hidden;
-    background: url(../icons/toolbar-background.png) no-repeat left -759px;
+    background: url(../icons/toolbar-background.png) no-repeat left -759rem;
     position: relative;
 }
 .cheditor-tb-bg {
     float: left;
     overflow: hidden;
-    background: transparent url(../icons/toolbar-background.png) no-repeat left -69px;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -69rem;
     position: relative;
 }
 .cheditor-tb-bg-first {
@@ -626,33 +626,33 @@ a.cheditor-tag-path-elem:hover {
 .cheditor-tb-bg-last {
     float: left;
     overflow: hidden;
-    background: transparent url(../icons/toolbar-background.png) no-repeat left -138px;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -138rem;
     position: relative;
     background-clip: border-box;
 }
 .cheditor-tb-bg-single {
     float: left;
     overflow: hidden;
-    background: transparent url(../icons/toolbar-background.png) no-repeat left -207px;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -207rem;
     position: relative;
 }
 .cheditor-tb-color-btn {
-	width: 16px;
-	height: 3px;
+	width: 16rem;
+	height: 3rem;
 	overflow: hidden;
 	position: absolute;
-	top: 16px;
-	left: 3px;
+	top: 16rem;
+	left: 3rem;
 }
 .cheditor-tb-button-spacer {
     overflow: hidden;
-    width: 4px;
-    height: 4px;
+    width: 4rem;
+    height: 4rem;
     float: left;
 }
 .cheditor-tb-split {
 	overflow: hidden;
-    height: 2px;
-    width: 3px;
+    height: 2rem;
+    width: 3rem;
     clear: both;
 }

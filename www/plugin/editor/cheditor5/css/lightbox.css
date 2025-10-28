@@ -5,8 +5,8 @@
 ************************************************/
 img.chimg_photo
 {
-  border: 1px darkgray solid;
-  padding:10px;
+  border: 1rem darkgray solid;
+  padding:10rem;
 }
 div.imgblock
 {
@@ -19,7 +19,7 @@ div.rightjust
 }
 div.caption
 {
-  margin-top: 5px;
+  margin-top: 5rem;
   margin-left: 0.2em;
   color: darkgray;
   font-size: 9pt;
@@ -40,47 +40,47 @@ div.caption-text
     outline: none;
 }
 .imageUtil img {
-	border: 2px solid gray;
+	border: 2rem solid gray;
 }
 .imageUtil:hover img {
-	border: 2px solid silver;
+	border: 2rem solid silver;
 }
 
 .imageUtil-image {
-    border-bottom: 1px solid white;
+    border-bottom: 1rem solid white;
 }
 .imageUtil-image-blur {
 }
 .imageUtil-caption {
     display: none;
-    border-bottom: 1px solid white;
+    border-bottom: 1rem solid white;
     font-family: gulim, Verdana, Helvetica;
     font-size: 9pt;
-    padding: 5px;
+    padding: 5rem;
     background-color: #fff;
 }
 .imageUtil-loading {
     display: block;
 	color: white;
-	font-size: 9px;
+	font-size: 9rem;
 	font-weight: normal;
     text-decoration: none;
-	padding: 3px;
-	border-top: 1px solid white;
-	border-bottom: 1px solid white;
+	padding: 3rem;
+	border-top: 1rem solid white;
+	border-bottom: 1rem solid white;
     background-color: black;
-    padding-left: 22px;
+    padding-left: 22rem;
     background-image: url(icons/imageutil/loader.gif);
     background-repeat: no-repeat;
-    background-position: 3px 1px;
+    background-position: 3rem 1rem;
 }
 
 a.imageUtil-credits,
 a.imageUtil-credits i {
-    padding: 2px;
+    padding: 2rem;
     color: silver;
     text-decoration: none;
-	font-size: 10px;
+	font-size: 10rem;
 }
 a.imageUtil-credits:hover,
 a.imageUtil-credits:hover i {

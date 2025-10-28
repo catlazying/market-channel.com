@@ -4,24 +4,38 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
+
+
+// 게시판 댓글 규칙
+if($board['bo_comment_level']=='10'){
+    if($member['mb_level']>=7) {
+        $is_reply_view = true;
+    } else {
+        $is_reply_view = false;
+    }
+}else{
+    $is_reply_view = true;
+}
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
 <!-- 게시판 이름 표시 <div id="bo_v_table"><?php echo ($board['bo_mobile_subject'] ? $board['bo_mobile_subject'] : $board['bo_subject']); ?></div> -->
-<ul class="btn_top top btn_bo_user"> 
-	<li><a href="#bo_vc" class="btn_b03 btn" title="댓글"><i class="fa fa-commenting" aria-hidden="true"></i><span class="sound_only">댓글</span></a></li>
-    <?php if ($board['bo_use_sns'] || $scrap_href){ ?>
+<ul class="btn_top top btn_bo_user">
+    <?php if($is_reply_view==true){ ?>
+	    <li><a href="#bo_vc" class="btn_b03 btn" title="댓글"><i class="fa fa-commenting" aria-hidden="true"></i><span class="sound_only">댓글</span></a></li>
+    <?php } ?>
+    <?php if ($board['bo_use_sns']){ ?>
     <li class="bo_share">
     	<button type="button" class="btn_share_opt btn_b03 btn is_view_btn" title="공유"><i class="fa fa-share-alt" aria-hidden="true"></i><span class="sound_only">공유</span></button>
     	<div id="bo_v_share" class="is_view_btn">
             <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href; ?>" target="_blank" class=" btn_scrap" onclick="win_scrap(this.href); return false;" title="스크랩"><i class="fa fa-thumb-tack" aria-hidden="true"></i><span class="sound_only">스크랩</span></a><?php } ?>
             <?php include_once(G5_SNS_PATH."/view.sns.skin.php"); ?>
-        </div>	
+        </div>
     </li>
     <?php } ?>
     <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b03 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</a></li><?php } ?>
-	
+
 	<li>
 		<button type="button" class="btn_more_opt btn_b03 btn is_view_btn" title="게시판 리스트 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
     	<?php ob_start(); ?>
@@ -61,17 +75,23 @@ jQuery(function($){
     <header>
         <h2 id="bo_v_title">
             <?php if ($category_name) { ?>
-            <span class="bo_v_cate"><?php echo $view['ca_name']; // 분류 출력 끝 ?></span> 
+            <span class="bo_v_cate"><?php echo $view['ca_name']; // 분류 출력 끝 ?></span>
             <?php } ?>
             <span class="bo_v_tit"><?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></span>
         </h2>
         <div id="bo_v_info">
 	        <h2>페이지 정보</h2>
-	        <span class="sound_only">작성자 </span><?php echo $view['name'] ?><span class="ip"><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></span>
-	        <span class="sound_only">작성일</span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?>
-	        <span class="sound_only">조회</span><strong><i class="fa fa-eye" aria-hidden="true"></i> <?php echo number_format($view['wr_hit']) ?></strong>
-	        <span class="sound_only">댓글</span><strong><i class="fa fa-commenting-o" aria-hidden="true"></i> <?php echo number_format($view['wr_comment']) ?></strong>
-	    </div>
+            <?php if($bo_table=='notice'){ ?>
+                <span class="sound_only">작성일</span>작성일:  <?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?>
+                <span class="sound_only">조회</span>조회수: <strong><?php echo number_format($view['wr_hit']) ?></strong>
+                <span class="sound_only">댓글</span>댓글수: <strong> <?php echo number_format($view['wr_comment']) ?></strong>
+            <?php }else{?>
+                <span class="sound_only">작성자 </span><?php echo $view['name'] ?><span class="ip"><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></span>
+                <span class="sound_only">작성일</span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?>
+                <span class="sound_only">조회</span><strong><i class="fa fa-eye" aria-hidden="true"></i> <?php echo number_format($view['wr_hit']) ?></strong>
+                <span class="sound_only">댓글</span><strong><i class="fa fa-commenting-o" aria-hidden="true"></i> <?php echo number_format($view['wr_comment']) ?></strong>
+            <?php }?>
+        </div>
     </header>
 
     <section id="bo_v_atc">
@@ -122,7 +142,7 @@ jQuery(function($){
         }
         ?>
     </section>
-    
+
     <?php
     $cnt = 0;
     if ($view['file']['count']) {
@@ -194,10 +214,11 @@ jQuery(function($){
         <?php if ($next_href) { ?><li class="bo_v_next"><a href="<?php echo $next_href ?>"><i class="fa fa-chevron-down" aria-hidden="true"></i><span class="sound_only">다음글</span> <?php echo $next_wr_subject;?></a></li><?php } ?>
     </ul>
     <?php } ?>
-    
-    <?php
-    // 코멘트 입출력
-    include_once(G5_BBS_PATH.'/view_comment.php');
+
+    <?php if($is_reply_view==true){
+        // 코멘트 입출력
+        include_once(G5_BBS_PATH.'/view_comment.php');
+    }
 	?>
 
 </article>

@@ -20,16 +20,16 @@ $admin = get_admin("super");
 			<a href="/bbs/content.php?co_id=privacy">개인정보처리방침</a>
 		</div>
 		<ul class="info">
-			<li>회사명 : 씨에버상사</li>
-			<li>대표자명 : 김연수, 이정필</li>
-			<li>사업자등록번호 : <span>107-87-71715</span></li>
-			<li>통신판매업 : 제 2025-인천중구-0453 호</li>
+			<li>회사명 : <?php echo $default['de_admin_company_name']; ?></li>
+			<li>대표자명 : <?php echo $default['de_admin_company_owner']; ?></li>
+			<li>사업자등록번호 : <span><?php echo $default['de_admin_company_saupja_no']; ?></span></li>
+			<li>통신판매업 : <?php echo $default['de_admin_tongsin_no']; ?></li>
 		</ul>
 		<p class="safe">
 			씨에버상사는 고객님이 현금 결제한 금액에 대해 국민은행과 채무지급보증계약을 체결하여 안전거래를 보장하고 있습니다.
 		</p>
 		<ul class="cs">
-			<li>고객센터 : <span>070-7695-4560</span></li>
+			<li>고객센터 : <span><?php echo $default['de_admin_company_tel']; ?></span></li>
 			<li>이메일 : tldpqj4939@daum.net</li>
 			<li>상담운영시간 : 09:00 ~ 16:00 (월 ~ 금)</li>
 			<li>휴 무 : 토요일, 일요일 휴무 / 공휴일 : 별도 공지</li>

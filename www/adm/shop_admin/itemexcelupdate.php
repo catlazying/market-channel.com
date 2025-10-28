@@ -62,11 +62,16 @@ if($is_upload_file) {
         $it_type3           = addslashes((string)$rowData[0][$j++]);
         $it_type4           = addslashes((string)$rowData[0][$j++]);
         $it_type5           = addslashes((string)$rowData[0][$j++]);
+        $it_type6           = addslashes((string)$rowData[0][$j++]);
+        $it_type7           = addslashes((string)$rowData[0][$j++]);
+        $it_type8           = addslashes((string)$rowData[0][$j++]);
+
         $it_basic           = addslashes((string)$rowData[0][$j++]);
         $it_explan          = addslashes((string)$rowData[0][$j++]);
         $it_mobile_explan   = addslashes((string)$rowData[0][$j++]);
         $it_cust_price      = addslashes(only_number($rowData[0][$j++]));
         $it_price           = addslashes(only_number($rowData[0][$j++]));
+        $it_purchase_price  = addslashes(only_number($rowData[0][$j++]));
         $it_tel_inq         = addslashes((string)$rowData[0][$j++]);
         $it_point           = addslashes(only_number($rowData[0][$j++]));
         $it_point_type      = addslashes(only_number($rowData[0][$j++]));
@@ -130,12 +135,16 @@ if($is_upload_file) {
                          it_type3 = '$it_type3',
                          it_type4 = '$it_type4',
                          it_type5 = '$it_type5',
+                         it_type6 = '$it_type6',
+                         it_type7 = '$it_type7',
+                         it_type8 = '$it_type8',
                          it_basic = '$it_basic',
                          it_explan = '$it_explan',
                          it_explan2 = '$it_explan2',
                          it_mobile_explan = '$it_mobile_explan',
                          it_cust_price = '$it_cust_price',
                          it_price = '$it_price',
+                         it_purchase_price = '$it_purchase_price',
                          it_point = '$it_point',
                          it_point_type = '$it_point_type',
                          it_stock_qty = '$it_stock_qty',

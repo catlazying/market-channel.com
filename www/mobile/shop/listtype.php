@@ -75,4 +75,4 @@ echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['SCRI
 ?>
 
 <?php
-include_once(G5_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php'););

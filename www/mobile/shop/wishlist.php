@@ -46,10 +46,15 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         <li>
             <div class="wish_img"><a href="<?php echo shop_item_url($row['it_id']); ?>"><?php echo $image; ?></a></div>
             <div class="wish_info">
+
+							<div class="_nation">
+								<span>말레이시아</span>
+								<span>말레이시아</span>
+							</div>
                 <a href="<?php echo shop_item_url($row['it_id']); ?>" class="wish_prd"><?php echo stripslashes($row['it_name']); ?></a>
                 <span class="info_price"><?php echo display_price(get_price($row), $row['it_tel_inq'])."\n"; ?></span>
                 <span class="info_date"><?php echo substr($row['wi_time'], 2, 17); ?></span>
-            
+
                 <div class="wish_chk">
                     <?php if(is_soldout($row['it_id'])) { // 품절검사?>
                     <span class="sold_out">품절</span>

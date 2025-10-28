@@ -116,4 +116,4 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     </section>
 
 <?php
-include_once(G5_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');');

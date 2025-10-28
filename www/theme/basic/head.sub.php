@@ -40,6 +40,10 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if ($path === '/shop/item.php') {
 	$g5_head_title2 = '상세보기';
+}else if($path === '/bbs/alarm_list.php') {
+	$g5_head_title2 = '알림내역';
+}else if($path === '/bbs/alarm_set.php') {
+	$g5_head_title2 = '알림설정';
 }
 
 if ($bo_table == 'qa'){

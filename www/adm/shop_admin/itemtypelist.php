@@ -68,6 +68,9 @@ $sql  = " select it_id,
                  it_type3,
                  it_type4,
                  it_type5,
+                 it_type6,
+                 it_type7,
+                 it_type8,
                  ca_id
           $sql_common
           $sql_order
@@ -130,11 +133,12 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     <tr>
         <th scope="col"><?php echo subject_sort_link("it_id", $qstr, 1); ?>상품코드</a></th>
         <th scope="col"><?php echo subject_sort_link("it_name"); ?>상품명</a></th>
-        <th scope="col"><?php echo subject_sort_link("it_type1", $qstr, 1); ?>히트<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type1", $qstr, 1); ?>베스트<br>상품</a></th>
         <th scope="col"><?php echo subject_sort_link("it_type2", $qstr, 1); ?>추천<br>상품</a></th>
         <th scope="col"><?php echo subject_sort_link("it_type3", $qstr, 1); ?>신규<br>상품</a></th>
         <th scope="col"><?php echo subject_sort_link("it_type4", $qstr, 1); ?>인기<br>상품</a></th>
-        <th scope="col"><?php echo subject_sort_link("it_type5", $qstr, 1); ?>할인<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type5", $qstr, 1); ?>특가<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type6", $qstr, 1); ?>실시간가격변동</a></th>
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -151,7 +155,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         </td>
         <td class="td_left"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
         <td class="td_chk2">
-            <label for="type1_<?php echo $i; ?>" class="sound_only">히트상품</label>
+            <label for="type1_<?php echo $i; ?>" class="sound_only">베스트상품</label>
             <input type="checkbox" name="it_type1[<?php echo $i; ?>]" value="1" id="type1_<?php echo $i; ?>" <?php echo ($row['it_type1'] ? 'checked' : ''); ?>>
         </td>
         <td class="td_chk2">
@@ -167,8 +171,12 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <input type="checkbox" name="it_type4[<?php echo $i; ?>]" value="1" id="type4_<?php echo $i; ?>" <?php echo ($row['it_type4'] ? 'checked' : ''); ?>>
         </td>
         <td class="td_chk2">
-            <label for="type5_<?php echo $i; ?>" class="sound_only">할인상품</label>
+            <label for="type5_<?php echo $i; ?>" class="sound_only">특가상품</label>
             <input type="checkbox" name="it_type5[<?php echo $i; ?>]" value="1" id="type5_<?php echo $i; ?>" <?php echo ($row['it_type5'] ? 'checked' : ''); ?>>
+        </td>
+        <td class="td_chk2">
+            <label for="type6_<?php echo $i; ?>" class="sound_only">실시간가격변동</label>
+            <input type="checkbox" name="it_type6[<?php echo $i; ?>]" value="1" id="type6_<?php echo $i; ?>" <?php echo ($row['it_type6'] ? 'checked' : ''); ?>>
         </td>
         <td class="td_mng td_mng_s">
             <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" class="btn btn_03"><span class="sound_only"><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?> </span>수정</a>

@@ -48,7 +48,7 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
 //히트상품
 $(function(){
     var hit_smt_val = parseInt($('#idx_hit .smt_40').attr("data-value"));
-    
+
     if(! hit_smt_val){
         hit_smt_val = 5;
     }
@@ -139,3 +139,5 @@ $(function(){
 
 <?php
 include_once(G5_SHOP_PATH.'/shop.tail.php');
+
+?>

@@ -99,7 +99,11 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         <th scope="col" rowspan="2">관리</th>
     </tr>
     <tr>
-        <th scope="col" id="sct_admin"><?php echo subject_sort_link("ca_mb_id"); ?>관리회원아이디</a></th>
+        <th scope="col" id="sct_admin">
+            <?php if(G5_MARKET_YN=='N') { ?>
+            <?php echo subject_sort_link("ca_mb_id"); ?>관리회원아이디</a>
+            <?php } ?>
+        </th>
         <th scope="col" id="sct_sell"><?php echo subject_sort_link("ca_use"); ?>판매가능</a></th>
         <th scope="col" id="sct_adultcert">성인인증</th>
         <th scope="col" id="sct_imgh">이미지 높이</th>
@@ -180,7 +184,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <label for="ca_out_width<?php echo $i; ?>" class="sound_only">출력이미지 폭</label>
             <input type="text" name="ca_img_width[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_img_width']); ?>" id="ca_out_width<?php echo $i; ?>" required class="required tbl_input" size="3" > <span class="sound_only">픽셀</span>
         </td>
-        
+
         <td headers="sct_imgcol">
             <label for="ca_lineimg_num<?php echo $i; ?>" class="sound_only">1줄당 이미지 수</label>
             <input type="text" name="ca_list_mod[<?php echo $i; ?>]" size="3" value="<?php echo $row['ca_list_mod']; ?>" id="ca_lineimg_num<?php echo $i; ?>" required class="required tbl_input"> <span class="sound_only">개</span>
@@ -206,13 +210,19 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     </tr>
     <tr class="<?php echo $bg; ?>">
         <td headers="sct_admin">
-            <?php if ($is_admin == 'super') {?>
-            <label for="ca_mb_id<?php echo $i; ?>" class="sound_only">관리회원아이디</label>
-            <input type="text" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>" id="ca_mb_id<?php echo $i; ?>" class="tbl_input full_input" size="15" maxlength="20">
+            <?php if(G5_MARKET_YN=='N') { ?>
+                <?php if ($is_admin == 'super') {?>
+                <label for="ca_mb_id<?php echo $i; ?>" class="sound_only">관리회원아이디</label>
+                <input type="text" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>" id="ca_mb_id<?php echo $i; ?>" class="tbl_input full_input" size="15" maxlength="20">
+                <?php } else { ?>
+                <input type="hidden" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>">
+                <?php echo $row['ca_mb_id']; ?>
+                <?php } ?>
             <?php } else { ?>
             <input type="hidden" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>">
             <?php echo $row['ca_mb_id']; ?>
             <?php } ?>
+
         </td>
         <td headers="sct_sell" class="td_possible">
             <input type="checkbox" name="ca_use[<?php echo $i; ?>]" value="1" id="ca_use<?php echo $i; ?>" <?php echo ($row['ca_use'] ? "checked" : ""); ?>>

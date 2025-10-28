@@ -33,7 +33,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 					<div class="ico"><img src="<?=G5_URL?>/images/ico-menu1.svg" alt=""></div>
 					<div class="txt">카테고리</div>
 				</a>
-				<a href="<?php echo G5_SHOP_URL; ?>/mypage.php">
+				<a href="<?php echo G5_SHOP_URL; ?>/orderinquiry.php">
 					<div class="ico"><img src="<?=G5_URL?>/images/ico-menu2.svg" alt=""></div>
 					<div class="txt">배송조회</div>
 				</a>
@@ -113,11 +113,11 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 			</ul>
 			<ul>
 				<li>
-					<a href="#">마이페이지</a>
+					<a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a>
 					<ul class="ty4">
-						<li><a href="#">내 정보변경</a></li>
-						<li><a href="#">결제내역</a></li>
-						<li><a href="#">구매내역</a></li>
+						<li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php">내 정보변경</a></li>
+						<li><a href="<?php echo G5_SHOP_URL; ?>/orderinquiry.php">결제내역</a></li>
+						<li><a href="<?php echo G5_SHOP_URL; ?>/orderinquiry.php">구매내역</a></li>
 						<li><a href="<?php echo G5_SHOP_URL; ?>/cart.php">장바구니</a></li>
 					</ul>
 				</li>

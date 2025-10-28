@@ -383,19 +383,19 @@ if (!isset($member['mb_scrap_cnt'])) {
 
 // 아이코드 토큰키 추가
 if (!isset($config['cf_icode_token_key'])) {
-    $sql = "ALTER TABLE `{$g5['config_table']}` 
+    $sql = "ALTER TABLE `{$g5['config_table']}`
             ADD COLUMN `cf_icode_token_key` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_icode_server_port`; ";
     sql_query($sql, false);
 }
 // 아이디/비밀번호 찾기에 본인확인 사용 여부 필드 추가
 if (!isset($config['cf_cert_find'])) {
-    $sql = "ALTER TABLE `{$g5['config_table']}` 
+    $sql = "ALTER TABLE `{$g5['config_table']}`
             ADD COLUMN `cf_cert_find` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_cert_use`; ";
     sql_query($sql, false);
 }
 // 간편인증 필드 추가
 if (!isset($config['cf_cert_simple'])) {
-    $sql = "ALTER TABLE `{$g5['config_table']}` 
+    $sql = "ALTER TABLE `{$g5['config_table']}`
             ADD COLUMN `cf_cert_simple` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_hp`; ";
     sql_query($sql, false);
 }
@@ -410,15 +410,15 @@ if (!isset($config['cf_cert_kg_mid'])) {
     sql_query($sql, false);
 }
 if (!isset($config['cf_cert_use_seed'])) {
-    $sql = "ALTER TABLE `{$g5['config_table']}` 
+    $sql = "ALTER TABLE `{$g5['config_table']}`
             ADD COLUMN `cf_cert_use_seed` TINYINT(4) NOT NULL DEFAULT '1' AFTER `cf_cert_kg_mid`; ";
     sql_query($sql, false);
 }
 if (!isset($config['cf_cert_kcp_enckey'])) {
-    $sql = "ALTER TABLE `{$g5['config_table']}` 
+    $sql = "ALTER TABLE `{$g5['config_table']}`
             ADD COLUMN `cf_cert_kcp_enckey` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_cert_kcp_cd`; ";
     sql_query($sql, false);
-    
+
     $config['cf_cert_kcp_enckey'] = '';
 }
 
@@ -530,7 +530,9 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                         <th scope="row"><label for="cf_nick_modify">닉네임 수정</label></th>
                         <td>수정하면 <input type="text" name="cf_nick_modify" value="<?php echo (int) $config['cf_nick_modify'] ?>" id="cf_nick_modify" class="frm_input" size="3"> 일 동안 바꿀 수 없음</td>
                         <th scope="row"><label for="cf_open_modify">정보공개 수정</label></th>
-                        <td>수정하면 <input type="text" name="cf_open_modify" value="<?php echo (int) $config['cf_open_modify'] ?>" id="cf_open_modify" class="frm_input" size="3"> 일 동안 바꿀 수 없음</td>
+                        <td>수정하면 <input type="text" name="cf_open_modify" value="<?php echo (int) $config['cf_open_modify'] ?>" id="cf_open_modify" class="frm_input" size="3"> 일 동안 바꿀 수 없음
+                        ('-1'로 설정하면 정보공개를 보여주지 않음)
+                    </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="cf_new_del">최근게시물 삭제</label></th>
@@ -1557,7 +1559,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </table>
         </div>
     </section>
-    
+
     <div id="config_captcha_wrap" style="display:none">
         <h2>캡챠입력</h2>
         <?php
@@ -1567,7 +1569,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         echo $captcha_html;
         ?>
     </div>
-    
+
     <div class="btn_fixed_top btn_confirm">
         <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
     </div>
@@ -1663,7 +1665,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         if ($('#cf_add_script').val()) {
             isChanged = isChanged || $('#cf_add_script').val() !== initialValues.cf_add_script;
         }
-        
+
         var $wrap = $("#config_captcha_wrap"),
             tooptipid = "mp_captcha_tooltip",
             $p_text = $("<p>", {id:tooptipid, style:"font-size:0.95em;letter-spacing:-0.1em"}).html("중요정보를 수정할 경우 캡챠를 입력해야 합니다."),
@@ -1680,20 +1682,20 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             $wrap.hide();
             if($("#"+tooptipid).length && ! is_invisible_recaptcha){ $children.next("#"+tooptipid).remove(); }
         }
-        
+
         return isChanged;
     }
-        
+
     function fconfigform_submit(f) {
         var current_user_ip = "<?php echo $_SERVER['REMOTE_ADDR']; ?>";
         var cf_intercept_ip_val = f.cf_intercept_ip.value;
-        
+
         if (check_config_captcha_open()){
             jQuery("html, body").scrollTop(jQuery("#config_captcha_wrap").offset().top);
-            
+
             <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함 ?>
         }
-        
+
         if (cf_intercept_ip_val && current_user_ip) {
             var cf_intercept_ips = cf_intercept_ip_val.split("\n");
 
@@ -1714,19 +1716,19 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         f.action = "./config_form_update.php";
         return true;
     }
-    
+
     jQuery(function($){
         $("#captcha_key").prop('required', false).removeAttr("required").removeClass("required");
-        
+
         // 최고관리자 변경시
         $(document).on('change', '#cf_admin', check_config_captcha_open);
 
         // 방문자분석 스크립트 변경시
         $(document).on('input', '#cf_analytics', check_config_captcha_open);
-        
+
         // 추가 메타태그 변경시
         $(document).on('input', '#cf_add_meta', check_config_captcha_open);
-        
+
         // 추가 script, css 변경시
         $(document).on('input', '#cf_add_script', check_config_captcha_open);
     });
@@ -1761,9 +1763,9 @@ if ($config['cf_cert_use']) {
 
     // kcp일 때
     if ($config['cf_cert_hp'] == 'kcp') {
-        
+
         $bin_path = ((int)$config['cf_cert_use'] === 2 && !$config['cf_cert_kcp_enckey']) ? 'bin_old' : 'bin';
-        
+
         if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
             if (PHP_INT_MAX == 2147483647) { // 32-bit
                 $exe = G5_KCPCERT_PATH . '/'.$bin_path.'/ct_cli';
@@ -1773,7 +1775,7 @@ if ($config['cf_cert_use']) {
         } else {
             $exe = G5_KCPCERT_PATH . '/'.$bin_path.'/ct_cli_exe.exe';
         }
-        
+
         echo module_exec_check($exe, 'ct_cli');
     }
 

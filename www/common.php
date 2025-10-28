@@ -4,6 +4,13 @@
 *******************************************************************************/
 error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING );
 
+
+// 특정 아이피 체크 if (substr($_SERVER['REMOTE_ADDR'], 0, 11) == "203.249.190") {}
+// if (substr($_SERVER['REMOTE_ADDR'], 0, 11) == "203.249.190") {
+	ini_set('display_errors', '1');
+	error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+// }
+
 // 보안설정이나 프레임이 달라도 쿠키가 통하도록 설정
 header('P3P: CP="ALL CURa ADMa DEVa TAIa OUR BUS IND PHY ONL UNI PUR FIN COM NAV INT DEM CNT STA POL HEA PRE LOC OTC"');
 
@@ -36,22 +43,22 @@ if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
 
 function g5_path()
 {
-    $chroot = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], dirname(__FILE__))); 
-    $result['path'] = str_replace('\\', '/', $chroot.dirname(__FILE__)); 
-    $server_script_name = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_NAME'])); 
-    $server_script_filename = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME'])); 
-    $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $server_script_name); 
-    $document_root = str_replace($tilde_remove, '', $server_script_filename); 
+    $chroot = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], dirname(__FILE__)));
+    $result['path'] = str_replace('\\', '/', $chroot.dirname(__FILE__));
+    $server_script_name = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_NAME']));
+    $server_script_filename = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']));
+    $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $server_script_name);
+    $document_root = str_replace($tilde_remove, '', $server_script_filename);
     $pattern = '/.*?' . preg_quote($document_root, '/') . '/i';
-    $root = preg_replace($pattern, '', $result['path']); 
-    $port = ($_SERVER['SERVER_PORT'] == 80 || $_SERVER['SERVER_PORT'] == 443) ? '' : ':'.$_SERVER['SERVER_PORT']; 
-    $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://'; 
-    $user = str_replace(preg_replace($pattern, '', $server_script_filename), '', $server_script_name); 
-    $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']; 
-    if(isset($_SERVER['HTTP_HOST']) && preg_match('/:[0-9]+$/', $host)) 
-        $host = preg_replace('/:[0-9]+$/', '', $host); 
-    $host = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", '', $host); 
-    $result['url'] = $http.$host.$port.$user.$root; 
+    $root = preg_replace($pattern, '', $result['path']);
+    $port = ($_SERVER['SERVER_PORT'] == 80 || $_SERVER['SERVER_PORT'] == 443) ? '' : ':'.$_SERVER['SERVER_PORT'];
+    $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
+    $user = str_replace(preg_replace($pattern, '', $server_script_filename), '', $server_script_name);
+    $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+    if(isset($_SERVER['HTTP_HOST']) && preg_match('/:[0-9]+$/', $host))
+        $host = preg_replace('/:[0-9]+$/', '', $host);
+    $host = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", '', $host);
+    $result['url'] = $http.$host.$port.$user.$root;
     return $result;
 }
 
@@ -271,7 +278,7 @@ if( ! class_exists('XenoPostToForm') ){
         }
 
         public static function check() {
-            $cookie_session_name = self::g5_session_name(); 
+            $cookie_session_name = self::g5_session_name();
 
             return !isset($_COOKIE[$cookie_session_name]) && count($_POST) && ((isset($_SERVER['HTTP_REFERER']) && !preg_match('~^https://'.preg_quote($_SERVER['HTTP_HOST'], '~').'/~', $_SERVER['HTTP_REFERER']) || ! isset($_SERVER['HTTP_REFERER']) ));
         }
@@ -382,7 +389,7 @@ if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) 
 
             $headers = headers_list();
             krsort($headers);
-            $cookie_session_name = method_exists('XenoPostToForm', 'g5_session_name') ? XenoPostToForm::g5_session_name() : 'PHPSESSID'; 
+            $cookie_session_name = method_exists('XenoPostToForm', 'g5_session_name') ? XenoPostToForm::g5_session_name() : 'PHPSESSID';
             foreach ($headers as $header) {
                 if (!preg_match('~^Set-Cookie: '.$cookie_session_name.'=~', $header)) continue;
                 $header = preg_replace('~(; secure; HttpOnly)?$~', '; secure; HttpOnly; SameSite=None', $header);
@@ -530,9 +537,9 @@ if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이�
     $member = get_member($_SESSION['ss_mb_id']);
 
     // 차단된 회원이면 ss_mb_id 초기화, 또는 세션에 저장된 회원 토큰값을 비교하여 틀리면 초기화
-    if( ($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME)) 
+    if( ($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME))
         || ($member['mb_leave_date'] && $member['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME))
-        || (function_exists('check_auth_session_token') && !check_auth_session_token($member['mb_datetime'])) 
+        || (function_exists('check_auth_session_token') && !check_auth_session_token($member['mb_datetime']))
         ) {
         set_session('ss_mb_id', '');
         $member = array();
@@ -634,7 +641,7 @@ if ($bo_table) {
         set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
         $gr_id = $board['gr_id'];
         // 게시판 테이블 전체이름
-        $write_table = $g5['write_prefix'] . $bo_table; 
+        $write_table = $g5['write_prefix'] . $bo_table;
 
         if (isset($wr_id) && $wr_id) {
             $write = get_write($write_table, $wr_id);
@@ -851,3 +858,6 @@ header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
 run_event('common_header');
+
+
+// 여기까지 도달했으면 common.php 파일이 정상적으로 로드된 것임

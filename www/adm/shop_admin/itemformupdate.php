@@ -305,6 +305,7 @@ $check_sanitize_keys = array(
 'it_nocoupon',          // 쿠폰적용안함
 'ec_mall_pid',          // 네이버쇼핑 상품ID
 'it_sell_email',        // 판매자 e-mail
+'it_purchase_price',    // 매입가격
 'it_price',             // 판매가격
 'it_cust_price',        // 시중가격
 'it_point_type',        // 포인트 유형
@@ -320,11 +321,14 @@ $check_sanitize_keys = array(
 'it_sc_method',         // 배송비 결제
 'it_sc_price',          // 기본배송비
 'it_sc_minimum',        // 배송비 상세조건
-'it_type1',             // 상품유형(히트)
+'it_type1',             // 상품유형(베스트)
 'it_type2',             // 상품유형(추천)
 'it_type3',             // 상품유형(신상품)
 'it_type4',             // 상품유형(인기)
-'it_type5',             // 상품유형(할인)
+'it_type5',             // 상품유형(특가)
+'it_type6',             // 상품유형(실시간가격변동)
+'it_type7',             // 상품유형(여분1)
+'it_type8',             // 상품유형(여분2)
 );
 
 foreach( $check_sanitize_keys as $key ){
@@ -354,12 +358,17 @@ $sql_common = " ca_id               = '$ca_id',
                 it_type3            = '$it_type3',
                 it_type4            = '$it_type4',
                 it_type5            = '$it_type5',
+                it_type6            = '$it_type6',
+                it_type7            = '$it_type7',
+                it_type8            = '$it_type8',
+
                 it_basic            = '$it_basic',
                 it_explan           = '$it_explan',
                 it_explan2          = '".strip_tags(trim(clean_xss_attributes($it_explan)))."',
                 it_mobile_explan    = '$it_mobile_explan',
                 it_cust_price       = '$it_cust_price',
                 it_price            = '$it_price',
+                it_purchase_price   = '$it_purchase_price',
                 it_point            = '$it_point',
                 it_point_type       = '$it_point_type',
                 it_supply_point     = '$it_supply_point',
@@ -537,7 +546,7 @@ if(is_checked('chk_ca_it_skin'))                $ca_fields .= " , it_skin = '$it
 if(is_checked('chk_ca_it_mobile_skin'))         $ca_fields .= " , it_mobile_skin = '$it_mobile_skin' ";
 if(is_checked('chk_ca_it_basic'))               $ca_fields .= " , it_basic = '$it_basic' ";
 if(is_checked('chk_ca_it_order'))               $ca_fields .= " , it_order = '$it_order' ";
-if(is_checked('chk_ca_it_type'))                $ca_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
+if(is_checked('chk_ca_it_type'))                $ca_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5', it_type6 = '$it_type6', it_type7 = '$it_type7', it_type8 = '$it_type8' ";
 if(is_checked('chk_ca_it_maker'))               $ca_fields .= " , it_maker = '$it_maker' ";
 if(is_checked('chk_ca_it_origin'))              $ca_fields .= " , it_origin = '$it_origin' ";
 if(is_checked('chk_ca_it_brand'))               $ca_fields .= " , it_brand = '$it_brand' ";
@@ -551,6 +560,7 @@ if(is_checked('chk_ca_it_nocoupon'))            $ca_fields .= " , it_nocoupon = 
 if(is_checked('chk_ca_it_soldout'))             $ca_fields .= " , it_soldout = '$it_soldout' ";
 if(is_checked('chk_ca_it_info'))                $ca_fields .= " , it_info_gubun = '$it_info_gubun', it_info_value = '$it_info_value' ";
 if(is_checked('chk_ca_it_price'))               $ca_fields .= " , it_price = '$it_price' ";
+if(is_checked('chk_ca_it_purchase_price'))      $ca_fields .= " , it_purchase_price = '$it_purchase_price' ";
 if(is_checked('chk_ca_it_cust_price'))          $ca_fields .= " , it_cust_price = '$it_cust_price' ";
 if(is_checked('chk_ca_it_point'))               $ca_fields .= " , it_point = '$it_point' ";
 if(is_checked('chk_ca_it_point_type'))          $ca_fields .= " , it_point_type = '$it_point_type' ";
@@ -589,7 +599,7 @@ if(is_checked('chk_all_it_skin'))                $all_fields .= " , it_skin = '$
 if(is_checked('chk_all_it_mobile_skin'))         $all_fields .= " , it_mobile_skin = '$it_mobile_skin' ";
 if(is_checked('chk_all_it_basic'))               $all_fields .= " , it_basic = '$it_basic' ";
 if(is_checked('chk_all_it_order'))               $all_fields .= " , it_order = '$it_order' ";
-if(is_checked('chk_all_it_type'))                $all_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
+if(is_checked('chk_all_it_type'))                $all_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5', it_type6 = '$it_type6', it_type7 = '$it_type7', it_type8 = '$it_type8' ";
 if(is_checked('chk_all_it_maker'))               $all_fields .= " , it_maker = '$it_maker' ";
 if(is_checked('chk_all_it_origin'))              $all_fields .= " , it_origin = '$it_origin' ";
 if(is_checked('chk_all_it_brand'))               $all_fields .= " , it_brand = '$it_brand' ";

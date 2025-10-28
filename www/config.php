@@ -236,3 +236,14 @@ define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
 
 // KAKAO 우편번호 서비스 CDN
 define('G5_POSTCODE_JS', '<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>');
+
+// 아이디 / 닉네임 부분을 다른 명칭추가
+define('G5_MEMBER_ID_NAME', '(사업자번호)'); // 아이디에 표시될 명칭
+define('G5_MEMBER_NICK_NAME', '(상호명)');   // 닉네임에 표시될 명칭
+define('G5_MEMBER_ADDR_NAME', '(사업장)');   // 주소에 표시될 명칭
+
+define('G5_COUPON_YN', 'N');   // 쿠폰 여부
+define('G5_SKIN_MOD_YN', 'N');   // SKIN 수정 여부
+
+define('G5_MARKET_YN', 'Y');   // 마켓 여부
+define('G5_DELIVERY_YN', 'Y');   // 배송정보 기본저장

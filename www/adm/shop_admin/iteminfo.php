@@ -7,8 +7,8 @@ if(isset($it['it_id']) && $it['it_id']) {
     $gubun = $it['it_info_gubun'];
 } else {
     $it_id = isset($_POST['it_id']) ? safe_replace_regex($_POST['it_id'], 'it_id') : '';
-    $gubun = isset($_POST['gubun']) ? clean_xss_tags($_POST['gubun'], 1, 1) : 'wear';
-    
+    $gubun = isset($_POST['gubun']) ? clean_xss_tags($_POST['gubun'], 1, 1) : 'food';
+
     if ( $it_id ){
         $sql = " select it_id, it_info_gubun, it_info_value from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
         if( $items = sql_fetch($sql) ) {

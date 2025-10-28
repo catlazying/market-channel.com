@@ -118,17 +118,21 @@ $cart_count = sql_num_rows($result);
                 <div class="li_chk chk_box">
                     <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>" class="selec_chk" checked>
                     <label for="ct_chk_<?php echo $i; ?>"><span></span><b class="sound_only">상품선택</b></label>
-                </div> 
+                </div>
+								<div class="_nation">
+									<span>말레이시아</span>
+									<span>말레이시아</span>
+								</div>
                 <div class="li_name"><?php echo $it_name; ?></div>
                 <div class="total_img"><?php echo $image; ?></div>
                 <div class="li_mod"><?php echo $mod_options; ?></div>
-            </div> 
+            </div>
             <div class="sod_opt"><?php echo $it_options; ?></div>
             <div class="li_prqty">
                 <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
                 <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
                 <span class="prqty_sc li_prqty_sp"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
-                <span class="total_point li_prqty_sp"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>
+                <!-- <span class="total_point li_prqty_sp"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span> -->
             </div>
              <div class="total_price total_span"><span>소계 </span><strong><?php echo number_format($sell_price); ?></strong>원</div>
         </li>
@@ -167,8 +171,8 @@ $cart_count = sql_num_rows($result);
             <?php } ?>
 
             <?php if ($tot_price > 0) { ?>
-            <dt>포인트</dt>
-            <dd><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
+            <!-- <dt>포인트</dt>
+            <dd><strong><?php echo number_format($tot_point); ?> 점</strong></dd> -->
             <dt class="sod_bsk_cnt">총계</dt>
             <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?></strong> 원</dd>
             <?php } ?>

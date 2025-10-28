@@ -4,20 +4,20 @@ html, body {
 p {
     margin: 0;
 }
-table, td, th { border:1px dotted #ccc; }
+table, td, th { border:1rem dotted #ccc; }
 table { border-collapse: collapse }
 
 /*-------------------------------------------------------------------------------*/
 .ch_bogus_spacer {}
 .cheditor-zero-width { font-family: monospace; }
 .cheditor-insertpara-pointer {
-    height: 1px;
+    height: 1rem;
     display: none;
     overflow: hidden;
     background-color: red;
     position: absolute;
 }
 .cheditor-add-paragraph {
-    border: #999 dotted 1px;
-    margin: 1px 0px;
+    border: #999 dotted 1rem;
+    margin: 1rem 0rem;
 }

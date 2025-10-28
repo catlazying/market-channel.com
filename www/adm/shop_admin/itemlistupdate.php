@@ -32,6 +32,7 @@ if ($post_act_button == "선택수정") {
         $p_it_name = (isset($_POST['it_name']) && is_array($_POST['it_name'])) ? strip_tags(clean_xss_attributes($_POST['it_name'][$k])) : '';
         $p_it_cust_price = (isset($_POST['it_cust_price']) && is_array($_POST['it_cust_price'])) ? strip_tags($_POST['it_cust_price'][$k]) : '';
         $p_it_price = (isset($_POST['it_price']) && is_array($_POST['it_price'])) ? strip_tags($_POST['it_price'][$k]) : '';
+        $p_it_purchase_price = (isset($_POST['it_purchase_price']) && is_array($_POST['it_purchase_price'])) ? strip_tags($_POST['it_purchase_price'][$k]) : '';
         $p_it_stock_qty = (isset($_POST['it_stock_qty']) && is_array($_POST['it_stock_qty'])) ? strip_tags($_POST['it_stock_qty'][$k]) : '';
         $p_it_skin = (isset($_POST['it_skin']) && is_array($_POST['it_skin'])) ? strip_tags($_POST['it_skin'][$k]) : '';
         $p_it_mobile_skin = (isset($_POST['it_mobile_skin']) && is_array($_POST['it_mobile_skin'])) ? strip_tags($_POST['it_mobile_skin'][$k]) : '';
@@ -56,6 +57,7 @@ if ($post_act_button == "선택수정") {
                        it_name        = '".$p_it_name."',
                        it_cust_price  = '".sql_real_escape_string($p_it_cust_price)."',
                        it_price       = '".sql_real_escape_string($p_it_price)."',
+                       it_purchase_price = '".sql_real_escape_string($p_it_purchase_price)."',
                        it_stock_qty   = '".sql_real_escape_string($p_it_stock_qty)."',
                        it_skin        = '".sql_real_escape_string($p_it_skin)."',
                        it_mobile_skin = '".sql_real_escape_string($p_it_mobile_skin)."',

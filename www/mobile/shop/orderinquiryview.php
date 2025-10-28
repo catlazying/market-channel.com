@@ -115,7 +115,7 @@ if($od['od_pg'] == 'lg') {
                     <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($opt_price); ?></span>
                     <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($opt['ct_qty']); ?></span>
                     <span class="prqty_sc li_prqty_sp"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
-                    <span class="total_point li_prqty_sp"><span>적립포인트 </span><?php echo number_format($point); ?></span>
+                    <!-- <span class="total_point li_prqty_sp"><span>적립포인트 </span><?php echo number_format($point); ?></span> -->
 
                 </div>
                 <div class="li_total">
@@ -201,8 +201,8 @@ if($od['od_pg'] == 'lg') {
                 <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cancel_price']); ?> 원</strong></dd>
                 <?php } ?>
 
-                <dt class="sod_bsk_point">적립포인트</dt>
-                <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
+                <!-- <dt class="sod_bsk_point">적립포인트</dt>
+                <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd> -->
 
                 <dt class="sod_bsk_cnt">총계</dt>
                 <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?> 원</strong></dd>
@@ -468,7 +468,7 @@ if($od['od_pg'] == 'lg') {
 
             <div  class="odf_tbl">
                 <table>
-           
+
                 <tbody>
                 <tr>
                     <th scope="row">이 름</th>
@@ -501,7 +501,7 @@ if($od['od_pg'] == 'lg') {
 
             <div  class="odf_tbl">
                 <table>
-   
+
                 <tbody>
                 <tr>
                     <th scope="row">이 름</th>
@@ -528,12 +528,37 @@ if($od['od_pg'] == 'lg') {
                     <th scope="row">희망배송일</th>
                     <td><?php echo substr($od['od_hope_date'],0,10).' ('.get_yoil($od['od_hope_date']).')' ;?></td>
                 </tr>
-                <?php }
+
+
+
+                <?php }?>
+
+                <tr>
+                    <th scope="row">매장출입 및 적재정보</th>
+                    <td>매장출입 및 적재정보</td>
+                </tr>
+                <tr>
+                    <th scope="row">배송지 간판명</th>
+                    <td>간판명</td>
+                </tr>
+                <tr>
+                    <th scope="row">비밀번호</th>
+                    <td>비밀번호</td>
+                </tr>
+                <tr>
+                    <th scope="row">잠금장치위치</th>
+                    <td>잠금장치 위치</td>
+                </tr>
+                <tr>
+                    <th scope="row">적재위치</th>
+                    <td>적재위치</td>
+                </tr>
+								<?php
                 if ($od['od_memo'])
                 {
                 ?>
                 <tr>
-                    <th scope="row">전하실 말씀</th>
+                    <th scope="row">비고</th>
                     <td><?php echo conv_content($od['od_memo'], 0); ?></td>
                 </tr>
                 <?php } ?>
