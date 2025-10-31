@@ -17,6 +17,18 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 	</div>
 
 	<div class="_mainLink">
+		<?php
+				$categories = show_shop_category_array(10,'4');
+				if( $categories ){
+					foreach($categories as $category){
+						echo '<a href="'.$category['url'].'">';
+						echo '	<div class="img"><img src="'.G5_URL.'/images'.$category['ca_1'].'" alt=""></div>';
+						echo '	<div class="txt">'.$category['ca_name'].'</div>';
+						echo '</a>';
+					}
+				}
+		?>
+
 		<a href="#">
 			<div class="img"><img src="<?=G5_URL?>/images/ico-link1.png" alt=""></div>
 			<div class="txt">한식</div>

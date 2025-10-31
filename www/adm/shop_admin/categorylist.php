@@ -20,6 +20,11 @@ if ($stx != "") {
     if (isset($save_stx) && $save_stx && ($save_stx != $stx))
         $page = 1;
 }
+if( $depth ) {
+    $len = $depth * 2;
+    $sql_search .= " $where LENGTH(ca_id) <= '$len' ";
+    $where = " and ";
+}
 
 $sql_common = " from {$g5['g5_shop_category_table']} ";
 if ($is_admin != 'super')
@@ -56,13 +61,25 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
+
     <span class="btn_ov01"><span class="ov_txt">생성된  분류 수</span><span class="ov_num">  <?php echo number_format($total_count); ?>개</span></span>
 </div>
 
 <form name="flist" class="local_sch01 local_sch">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="save_stx" value="<?php echo $stx; ?>">
-
+<label for="sfl" class="sound_only">분류단계</label>
+<select name="depth" id="depth">
+    <option value="0"<?php echo get_selected($depth, "0", true); ?>>전체분류</option>
+    <option value="1"<?php echo get_selected($depth, "1", true); ?>>1차 분류까지 </option>
+    <option value="2"<?php echo get_selected($depth, "2", true); ?>>2차 분류까지</option>
+    <option value="3"<?php echo get_selected($depth, "3", true); ?>>3차 분류까지</option>
+</select>
+<script>
+    document.getElementById('depth').addEventListener('change', function() {
+        this.form.submit();
+    });
+</script>
 <label for="sfl" class="sound_only">검색대상</label>
 <select name="sfl" id="sfl">
     <option value="ca_name"<?php echo get_selected($sfl, "ca_name", true); ?>>분류명</option>
@@ -73,7 +90,6 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="required frm_input">
 <input type="submit" value="검색" class="btn_submit">
-
 </form>
 
 <form name="fcategorylist" method="post" action="./categorylistupdate.php" autocomplete="off">
@@ -91,11 +107,14 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         <th scope="col" rowspan="2"><?php echo subject_sort_link("ca_id"); ?>분류코드</a></th>
         <th scope="col" id="sct_cate"><?php echo subject_sort_link("ca_name"); ?>분류명</a></th>
         <th scope="col" id="sct_amount">상품수</th>
+        <th scope="col" rowspan="2">이미지</th>
         <th scope="col" id="sct_hpcert">본인인증</th>
         <th scope="col" id="sct_imgw">이미지 폭</th>
         <th scope="col" id="sct_imgcol">1행이미지수</th>
         <th scope="col" id="sct_mobileimg">모바일<br>1행이미지수</th>
+        <?php if(G5_SKIN_MOD_YN == 'Y') { ?>
         <th scope="col" id="sct_pcskin">PC스킨지정</th>
+        <?php } ?>
         <th scope="col" rowspan="2">관리</th>
     </tr>
     <tr>
@@ -109,7 +128,9 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         <th scope="col" id="sct_imgh">이미지 높이</th>
         <th scope="col" id="sct_imgrow">이미지 행수</th>
         <th scope="col" id="sct_mobilerow">모바일<br>이미지 행수</th>
+        <?php if(G5_SKIN_MOD_YN == 'Y') { ?>
         <th scope="col" id="sct_mskin">모바일스킨지정</th>
+        <?php } ?>
     </tr>
     </thead>
     <tbody>
@@ -176,6 +197,19 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         </td>
         <td headers="sct_cate" class="sct_name<?php echo $level; ?>"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="tbl_input full_input required"></td>
         <td headers="sct_amount" class="td_amount"><a href="./itemlist.php?sca=<?php echo $row['ca_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
+        <td class="td_code" rowspan="2">
+            <?php
+            $img = 'images'.$row['ca_1'];
+            if (is_file(G5_PATH.'/'.$img)) {
+                $size = getimagesize(G5_PATH.'/'.$img);
+                echo '<img src="'.G5_URL.'/'.$img.'" alt="" width="'.$size[0].'" height="'.$size[1].'">';
+            } else {
+                echo '<span class="empty_category_image">이미지없음</span>';
+            }
+            ?>
+
+        </td>
+
         <td headers="sct_hpcert" class="td_possible">
             <input type="checkbox" name="ca_cert_use[<?php echo $i; ?>]" value="1" id="ca_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_cert_use']) echo 'checked="checked"'; ?>>
             <label for="ca_cert_use_yes<?php echo $i; ?>">사용</label>
@@ -193,6 +227,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <label for="ca_mobileimg_num<?php echo $i; ?>" class="sound_only">모바일 1줄당 이미지 수</label>
             <input type="text" name="ca_mobile_list_mod[<?php echo $i; ?>]" size="3" value="<?php echo $row['ca_mobile_list_mod']; ?>" id="ca_mobileimg_num<?php echo $i; ?>" required class="required tbl_input"> <span class="sound_only">개</span>
         </td>
+        <?php if(G5_SKIN_MOD_YN == 'Y') { ?>
         <td headers="sct_pcskin" class="sct_pcskin">
             <label for="ca_skin_dir<?php echo $i; ?>" class="sound_only">PC스킨폴더</label>
             <?php echo get_skin_select('shop', 'ca_skin_dir'.$i, 'ca_skin_dir['.$i.']', $row['ca_skin_dir'], 'class="skin_dir"'); ?>
@@ -201,6 +236,10 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
                 <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_shop_skin_path, $row['ca_skin']); ?>
             </select>
         </td>
+        <?php }else{ ?>
+            <input type="hidden" name="ca_skin_dir[<?php echo $i; ?>]" value="<?php echo $row['ca_skin_dir']; ?>">
+            <input type="hidden" name="ca_skin[<?php echo $i; ?>]" value="<?php echo $row['ca_skin']; ?>">
+        <?php } ?>
         <td class="td_mng td_mng_s" rowspan="2">
             <?php echo $s_add; ?>
             <?php echo $s_vie; ?>
@@ -245,6 +284,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <label for="ca_mobileimg_row<?php echo $i; ?>" class="sound_only">모바일 이미지 줄 수</label>
             <input type="text" name="ca_mobile_list_row[<?php echo $i; ?>]" value='<?php echo $row['ca_mobile_list_row']; ?>' id="ca_mobileimg_row<?php echo $i; ?>" required class="required tbl_input" size="3">
         </td>
+        <?php if(G5_SKIN_MOD_YN == 'Y') { ?>
         <td headers="sct_mskin"  class="sct_mskin">
             <label for="ca_mobile_skin_dir<?php echo $i; ?>" class="sound_only">모바일스킨폴더</label>
             <?php echo get_mobile_skin_select('shop', 'ca_mobile_skin_dir'.$i, 'ca_mobile_skin_dir['.$i.']', $row['ca_mobile_skin_dir'], 'class="skin_dir"'); ?>
@@ -253,6 +293,10 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
                 <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_mshop_skin_path, $row['ca_mobile_skin']); ?>
             </select>
         </td>
+        <?php }else{ ?>
+            <input type="hidden" name="ca_mobile_skin_dir[<?php echo $i; ?>]" value="<?php echo $row['ca_mobile_skin_dir']; ?>">
+            <input type="hidden" name="ca_mobile_skin[<?php echo $i; ?>]" value="<?php echo $row['ca_mobile_skin']; ?>">
+        <?php } ?>
     </tr>
     <?php }
     if ($i == 0) echo "<tr><td colspan=\"9\" class=\"empty_table\">자료가 한 건도 없습니다.</td></tr>\n";

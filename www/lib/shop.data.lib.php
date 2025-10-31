@@ -2,7 +2,7 @@
 if (!defined('_GNUBOARD_')) exit;
 
 function get_shop_item($it_id, $is_cache=false, $add_query=''){
-    
+
     global $g5, $g5_object;
 
     $add_query_key = $add_query ? 'shop_'.md5($add_query) : '';
@@ -15,7 +15,7 @@ function get_shop_item($it_id, $is_cache=false, $add_query=''){
 
         $g5_object->set('shop', $it_id, $item, $add_query_key);
     }
-    
+
     if( isset($item['it_basic']) ) {
         $item['it_basic'] = conv_content($item['it_basic'], 1);
     }
@@ -28,7 +28,7 @@ function get_shop_item($it_id, $is_cache=false, $add_query=''){
 }
 
 function get_shop_item_with_category($it_id, $seo_title='', $add_query=''){
-    
+
     global $g5, $default;
 
     if( $seo_title ){
@@ -36,7 +36,7 @@ function get_shop_item_with_category($it_id, $seo_title='', $add_query=''){
     } else {
         $sql = " select a.*, b.ca_name, b.ca_use from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b where a.it_id = '$it_id' and a.ca_id = b.ca_id $add_query order by it_id desc limit 1";
     }
-    
+
     $item = sql_fetch($sql);
 
     if( isset($item['it_basic']) ) {
@@ -47,11 +47,11 @@ function get_shop_item_with_category($it_id, $seo_title='', $add_query=''){
 }
 
 function get_shop_navigation_data($is_cache, $ca_id, $ca_id2='', $ca_id3=''){
-    
+
     $all_categories = get_shop_category_array($is_cache);
 
     $datas = array();
-    
+
     if( strlen($ca_id) >= 2 && $all_categories ){
         foreach((array) $all_categories as $category1 ){
             $datas[0][] = $category1['text'];
@@ -86,12 +86,12 @@ function get_shop_navigation_data($is_cache, $ca_id, $ca_id2='', $ca_id3=''){
 }
 
 function get_shop_category_by($is_cache, $case, $value){
-    
+
     if( $case === 'ca_id' ){
         $categories = get_shop_category_array($is_cache);
 
         $key = substr(preg_replace('/[^0-9a-z]/i', '', $value), 0, 2);
-        
+
         if( isset($categories[$key]) ){
             return $categories[$key];
         }
@@ -103,7 +103,7 @@ function get_shop_category_by($is_cache, $case, $value){
 function get_shop_category_array($is_cache=false){
 
     static $categories = array();
-    
+
     $categories = run_replace('get_shop_category_array', $categories, $is_cache);
 
     if( $is_cache && !empty($categories) ){
@@ -116,7 +116,7 @@ function get_shop_category_array($is_cache=false){
 
         $row['url'] = shop_category_url($row['ca_id']);
         $categories[$row['ca_id']]['text'] = $row;
-        
+
         if( $row['ca_id'] ){
             $result2 = sql_query(get_shop_category_sql($row['ca_id'], 4));
 
@@ -124,7 +124,7 @@ function get_shop_category_array($is_cache=false){
 
                 $row2['url'] = shop_category_url($row2['ca_id']);
                 $categories[$row['ca_id']][$row2['ca_id']]['text'] = $row2;
-                
+
                 if( $row2['ca_id'] ){
                     $result3 = sql_query(get_shop_category_sql($row2['ca_id'], 6));
                     for($k=0; $row3=sql_fetch_array($result3); $k++) {
@@ -136,7 +136,7 @@ function get_shop_category_array($is_cache=false){
             }   //end for
         }   //end if
     }   //end for
-    
+
     return $categories;
 }
 
@@ -268,4 +268,21 @@ function get_shop_item_options($it_id, $subject, $no)
     }
 
     return $str;
+}
+
+// 1차에 해당하는 2차 추출하기
+function show_shop_category_array($ca_id, $len='4'){
+    static $categories = array();
+
+    if( isset($categories[$ca_id]) ) {
+        return $categories[$ca_id];
+    }
+
+    $result2 = sql_query(get_shop_category_sql($ca_id, $len));
+    for($j=0; $row2=sql_fetch_array($result2); $j++) {
+        $row2['url'] = shop_category_url($row2['ca_id']);
+        $categories[$row2['ca_id']] = $row2;
+    }   //end for
+
+    return $categories;
 }
