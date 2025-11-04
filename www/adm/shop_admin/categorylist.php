@@ -315,7 +315,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 </form>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;depth=$depth&amp;page="); ?>
 
 <script>
 $(function() {

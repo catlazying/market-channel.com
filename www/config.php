@@ -247,3 +247,14 @@ define('G5_SKIN_MOD_YN', 'N');   // SKIN 수정 여부
 
 define('G5_MARKET_YN', 'Y');   // 마켓 여부
 define('G5_DELIVERY_YN', 'Y');   // 배송정보 기본저장
+
+define('G5_LIST_OLDCATE_YN', 'N');   // 리스트 기존 카테고리 여부
+define('G5_LIST_BEST_YN', 'N');   // 리스트 베스트 여부
+define('G5_LIST_SNSSHARE_YN', 'N');   // 리스트 공유 여부
+define('G5_LIST_VIEW_STAR_YN', 'N');   // 리스트 후기 평점 여부
+define('G5_LIST_VIEW_ICON_YN', 'N');   // 리스트 후기 아이콘 여부
+define('G5_LIST_SORT_YN', 'N');   // 리스트 정렬 여부
+define('G5_NEXT_PROD_YN', 'N');   // 다음 상품 사용
+
+define('G5_REVIEW_USE', 'N');   // 후기 사용 여부
+define('G5_QNA_USE', 'N');   // 문의 사용 여부

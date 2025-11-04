@@ -21,11 +21,11 @@ $li_width_style = ' style="width:'.$li_width.'%;"';
 
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     if ($i == 0) {
-        if ($this->css) {
-            echo "<ul id=\"sct_wrap\" class=\"{$this->css}\">\n";
-        } else {
-            echo "<ul id=\"sct_wrap\" class=\"srl_10\">\n";
-        }
+        // if ($this->css) {
+        //     echo "<ul id=\"sct_wrap\" class=\"{$this->css}\">\n";
+        // } else {
+        //     echo "<ul id=\"sct_wrap\" class=\"srl_10\">\n";
+        // }
     }
 
     if($i % $this->list_mod == 0)
@@ -33,47 +33,66 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     else
         $li_clear = '';
 
-    echo "<li class=\"sct_li{$li_clear}\"$li_width_style><div class=\"li_wr\">\n";
+            echo "<div class=\"_item <?php echo $li_clear ?>\">\n";
+			echo "	<div class=\"img\"> <a href=\"{$this->href}{$row['it_id']}\"> \n";
+            echo get_it_image($row['it_id'], $this->img_width, $this->img_height, '', '', stripslashes($row['it_name']))."\n";
 
-    if ($this->href) {
-        echo "<div class=\"sct_img\"><a href=\"{$this->href}{$row['it_id']}\">\n";
-    }
-
-    if ($this->view_it_img) {
-        echo get_it_image($row['it_id'], $this->img_width, $this->img_height, '', '', stripslashes($row['it_name']))."\n";
-    }
-
-    if ($this->href) {
-        echo "</a></div>\n";
-    }
+            $origins = explode(',', $row['it_origin']);
+            foreach ($origins as $origin) {
+                echo "<span class=\"mark\">".$origin."</span>\n";
+            }
 
 
-    if ($this->view_it_id) {
-        echo "<div class=\"sct_id\">&lt;".stripslashes($row['it_id'])."&gt;</div>\n";
-    }
+            echo " </a> </div>\n";
+			echo "	<div class=\"info\">\n";
+			echo "		<div class=\"subject\"><a href=\"{$this->href}{$row['it_id']}\">".stripslashes($row['it_name'])."</a></div>\n";
+			echo "		<div class=\"price\"> <strong>\n";
+            echo display_price(get_price($row), $row['it_tel_inq'])."\n";
+            echo "</strong> <em>원</em> </div>\n";
+			echo "	</div>\n";
+			echo "</div>\n";
 
-    if ($this->href) {
-        echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_txt\">\n";
-    }
+    // echo "<li class=\"sct_li{$li_clear}\"$li_width_style><div class=\"li_wr\">\n";
 
-    if ($this->view_it_name) {
-        echo stripslashes($row['it_name'])."\n";
-    }
+    // if ($this->href) {
+    //     echo "<div class=\"sct_img\"><a href=\"{$this->href}{$row['it_id']}\">\n";
+    // }
 
-    if ($this->href) {
-        echo "</a>\n";
-    }
+    // if ($this->view_it_img) {
+    //     echo get_it_image($row['it_id'], $this->img_width, $this->img_height, '', '', stripslashes($row['it_name']))."\n";
+    // }
 
-    if ($this->view_it_price) {
-        echo "<div class=\"sct_cost\">\n";
-        echo display_price(get_price($row), $row['it_tel_inq'])."\n";
-        echo "</div>\n";
-    }
+    // if ($this->href) {
+    //     echo "</a></div>\n";
+    // }
 
-    echo "</div></li>\n";
+
+    // if ($this->view_it_id) {
+    //     echo "<div class=\"sct_id\">&lt;".stripslashes($row['it_id'])."&gt;</div>\n";
+    // }
+
+    // if ($this->href) {
+    //     echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_txt\">\n";
+    // }
+
+    // if ($this->view_it_name) {
+    //     echo stripslashes($row['it_name'])."\n";
+    // }
+
+    // if ($this->href) {
+    //     echo "</a>\n";
+    // }
+
+    // if ($this->view_it_price) {
+    //     echo "<div class=\"sct_cost\">\n";
+    //     echo display_price(get_price($row), $row['it_tel_inq'])."\n";
+    //     echo "</div>\n";
+    // }
+
+    // echo "</div></li>\n";
 }
 
-if ($i > 0) echo "</ul>\n";
+// if ($i > 0) echo "</ul>\n";
 
 if($i == 0) echo "<p class=\"sct_noitem\">등록된 관련상품이 없습니다.</p>\n";
 ?>

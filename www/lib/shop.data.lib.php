@@ -272,16 +272,11 @@ function get_shop_item_options($it_id, $subject, $no)
 
 // 1차에 해당하는 2차 추출하기
 function show_shop_category_array($ca_id, $len='4'){
-    static $categories = array();
-
-    if( isset($categories[$ca_id]) ) {
-        return $categories[$ca_id];
-    }
-
+    $categories = null;
     $result2 = sql_query(get_shop_category_sql($ca_id, $len));
     for($j=0; $row2=sql_fetch_array($result2); $j++) {
         $row2['url'] = shop_category_url($row2['ca_id']);
-        $categories[$row2['ca_id']] = $row2;
+        $categories[$j] = $row2;
     }   //end for
 
     return $categories;

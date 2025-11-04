@@ -42,7 +42,7 @@ foreach((array) $list as $row){
         }
     }
 
- 
+
    if($i % $this->list_mod == 0)
         $li_clear = ' sct_clear';
     else
@@ -99,7 +99,7 @@ foreach((array) $list as $row){
         echo display_price(get_price($row), $row['it_tel_inq'])."\n";
         echo "</div>\n";
     }
-        
+
     // 위시리스트 + 공유 버튼 시작 {
     echo "<div class=\"sct_op_btn\">\n";
         echo "<button type=\"button\" class=\"btn_wish\" data-it_id=\"{$row['it_id']}\"><span class=\"sound_only\">위시리스트</span><i class=\"fa fa-heart-o\" aria-hidden=\"true\"></i></button>\n";
@@ -159,7 +159,7 @@ jQuery(function($){
             $ul_sct.removeClass("sct_10").addClass("sct_10_list")
             .find(".sct_li").removeAttr("style");
         }
-        
+
         if (typeof g5_cookie_domain != 'undefined') {
             set_cookie("ck_itemlist"+list_ca_id+"_type", type, 1, g5_cookie_domain);
         }

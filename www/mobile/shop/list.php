@@ -72,243 +72,97 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 <script src="<?php echo G5_JS_URL; ?>/shop.mobile.list.js"></script>
 
 <div class="_schMenu">
-	<form action="#" class="sch">
-		<input type="text" placeholder="상품명을 입력해 주세요">
+	<form name="frmdetailsearch" class="sch">
+		<input type="hidden" name="qsort" id="qsort" value="<?php echo $qsort ?>">
+		<input type="hidden" name="qorder" id="qorder" value="<?php echo $qorder ?>">
+		<input type="hidden" name="qcaid" id="qcaid" value="<?php echo $ca['ca_id'] ?>">
+		<input type="hidden" name="qname" value="1">
+		<input type="hidden" name="qbasic" value="1">
+
+		<input type="text" name="q" value="<?php echo $q; ?>" id="ssch_q"  maxlength="30" placeholder="상품명을 입력해 주세요">
 		<button type="submit"><i class="ri-search-line"></i></button>
 	</form>
-	<div class="menu ty1">
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-link1.png" alt=""></div>
-			<div class="txt">한식</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-link2.png" alt=""></div>
-			<div class="txt">중식</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-link3.png" alt=""></div>
-			<div class="txt">일식</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-link4.png" alt=""></div>
-			<div class="txt">양식</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-link5.png" alt=""></div>
-			<div class="txt">기타</div>
-		</a>
-	</div>
-	<div class="menu ty2">
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-food1.png" alt=""></div>
-			<div class="txt">찜</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-food2.png" alt=""></div>
-			<div class="txt">탕</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-food3.png" alt=""></div>
-			<div class="txt">볶음</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-food4.png" alt=""></div>
-			<div class="txt">조림</div>
-		</a>
-	</div>
-	<div class="menu ty3">
-		<a href="#" class="active"><span>전체</span></a>
-		<a href="#"><span>새우류</span></a>
-		<a href="#"><span>연체류</span></a>
-		<a href="#"><span>생선류</span></a>
-		<a href="#"><span>게류</span></a>
-		<a href="#"><span>가공수산</span></a>
-		<a href="#"><span>어패류</span></a>
-		<a href="#"><span>특수분위</span></a>
-		<a href="#"><span>초밥류</span></a>
-		<a href="#"><span>기타냉동</span></a>
-		<a href="#"><span>공산품</span></a>
-	</div>
+
+
+	<? if(strlen($ca['ca_id'])=='2'){ ?>
+		<div class="menu ty1" >
+			<?php // 업태별
+				$categories = show_shop_category_array($ca['ca_id'],'4');
+				if( $categories ){
+					foreach($categories as $category){
+						echo '<a href="'.$category['url'].'">';
+						echo '	<div class="img"><img src="'.G5_URL.'/images'.$category['ca_1'].'" alt=""></div>';
+						echo '	<div class="txt">'.$category['ca_name'].'</div>';
+						echo '</a>';
+					}
+				}
+			?>
+		</div>
+	<? } ?>
+	<? if(strlen($ca['ca_id'])>='4'){ ?>
+		<div class="menu ty3">
+			<a href="/shop/list-<?=substr($ca['ca_id'],0,4)?>" class="<?=(substr($ca['ca_id'],0,4)==$ca['ca_id'])?"active":""?>"><span>전체</span></a>
+			<?php // 업태별 strlen($ca['ca_id'])
+				$categories = show_shop_category_array(substr($ca['ca_id'],0,4),'6');
+				if( $categories ){
+					foreach($categories as $category){
+						echo '<a href="'.$category['url'].'" class="'.($ca['ca_id']==$category['ca_id']?"active":"").'">';
+						echo '	<span>'.$category['ca_name'].'</span>';
+						echo '</a>';
+					}
+				}
+			?>
+		</div>
+	<? } ?>
 </div>
-
-
-
-
-<div id="sct">
-
-	<div class="_shopListHead">
-		<div class="all">상품수 : 132개</div>
-		<div class="sort">
-			<button type="button" onclick="$(this).closest('.sort').toggleClass('active')"><i class="ri-equalizer-2-line"></i></button>
-			<div>
-				<a href="#">낮은가격순</a>
-				<a href="#">높은가격순</a>
-				<a href="#">상품명순</a>
-			</div>
-		</div>
-	</div>
-
-	<div class="_shopList">
-
-		<div class="_item2">
-			<div class="img">
-				<a href="/shop/item.php?it_id=1756864603">
-					<img src="https://placehold.co/340x340" alt="">
-				</a>
-			</div>
-			<div class="info">
-				<div class="nation">
-					<span>말레이시아</span>
-					<span>베트남</span>
-				</div>
-				<div class="subject"><a href="/shop/item.php?it_id=1756864603">블랙타이거새우 (BT)</a></div>
-				<div class="sum">
-					<dl>
-						<dt>가공형태</dt>
-						<dd>라운드, IQF /</dd>
-					</dl>
-					<dl>
-						<dt>규격</dt>
-						<dd>500g * 10ea / 5kg</dd>
-					</dl>
-					<dl>
-						<dt>단위</dt>
-						<dd>BOX</dd>
-					</dl>
-				</div>
-				<div class="price">
-					<strong>250,000</strong><em>원</em>
-				</div>
-				<div class="sum">
-					<dl>
-						<dt>조회수</dt>
-						<dd>2561</dd>
-					</dl>
-				</div>
-			</div>
-		</div>
-
-		<div class="_item2">
-			<div class="img">
-				<a href="/shop/item.php?it_id=1756864603">
-					<img src="https://placehold.co/340x340" alt="">
-				</a>
-			</div>
-			<div class="info">
-				<div class="nation">
-					<span>말레이시아</span>
-					<span>베트남</span>
-				</div>
-				<div class="subject"><a href="/shop/item.php?it_id=1756864603">블랙타이거새우 (BT)</a></div>
-				<div class="sum">
-					<dl>
-						<dt>가공형태</dt>
-						<dd>라운드, IQF /</dd>
-					</dl>
-					<dl>
-						<dt>규격</dt>
-						<dd>500g * 10ea / 5kg</dd>
-					</dl>
-					<dl>
-						<dt>단위</dt>
-						<dd>BOX</dd>
-					</dl>
-				</div>
-				<div class="price">
-					<strong>250,000</strong><em>원</em>
-				</div>
-				<div class="sum">
-					<dl>
-						<dt>조회수</dt>
-						<dd>2561</dd>
-					</dl>
-				</div>
-			</div>
-		</div>
-
-		<div class="_item2">
-			<div class="img">
-				<a href="/shop/item.php?it_id=1756864603">
-					<img src="https://placehold.co/340x340" alt="">
-				</a>
-			</div>
-			<div class="info">
-				<div class="nation">
-					<span>말레이시아</span>
-					<span>베트남</span>
-				</div>
-				<div class="subject"><a href="/shop/item.php?it_id=1756864603">블랙타이거새우 (BT)</a></div>
-				<div class="sum">
-					<dl>
-						<dt>가공형태</dt>
-						<dd>라운드, IQF /</dd>
-					</dl>
-					<dl>
-						<dt>규격</dt>
-						<dd>500g * 10ea / 5kg</dd>
-					</dl>
-					<dl>
-						<dt>단위</dt>
-						<dd>BOX</dd>
-					</dl>
-				</div>
-				<div class="price">
-					<strong>250,000</strong><em>원</em>
-				</div>
-				<div class="sum">
-					<dl>
-						<dt>조회수</dt>
-						<dd>2561</dd>
-					</dl>
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-
-
-
-		<?php
-		// 상단 HTML
-		echo '<div id="sct_hhtml">'.conv_content($ca['ca_mobile_head_html'], 1).'</div>';
-
+<?
+	if(G5_LIST_OLDCATE_YN == 'Y') {
 		$cate_skin = $skin_dir.'/listcategory.skin.php';
 		if(!is_file($cate_skin))
 				$cate_skin = G5_MSHOP_SKIN_PATH.'/listcategory.skin.php';
 		include $cate_skin;
+	}
+		// 상단 HTML
+		echo '<div id="sct_hhtml">'.conv_content($ca['ca_mobile_head_html'], 1).'</div>';
+?>
 
-		// 테마미리보기 베스트상품 재설정
-		if(defined('_THEME_PREVIEW_') && _THEME_PREVIEW_ === true) {
-				if(isset($theme_config['ca_mobile_list_best_mod']))
-						$theme_config['ca_mobile_list_best_mod'] = (isset($tconfig['ca_mobile_list_best_mod']) && $tconfig['ca_mobile_list_best_mod']) ? $tconfig['ca_mobile_list_best_mod'] : 0;
-				if(isset($theme_config['ca_mobile_list_best_row']))
-						$theme_config['ca_mobile_list_best_row'] = (isset($tconfig['ca_mobile_list_best_row']) && $tconfig['ca_mobile_list_best_row']) ? $tconfig['ca_mobile_list_best_row'] : 0;
+
+
+<div id="sct">
+		<?php
+
+		if(G5_LIST_BEST_YN == 'Y') {
+			// 테마미리보기 베스트상품 재설정
+			if(defined('_THEME_PREVIEW_') && _THEME_PREVIEW_ === true) {
+					if(isset($theme_config['ca_mobile_list_best_mod']))
+							$theme_config['ca_mobile_list_best_mod'] = (isset($tconfig['ca_mobile_list_best_mod']) && $tconfig['ca_mobile_list_best_mod']) ? $tconfig['ca_mobile_list_best_mod'] : 0;
+					if(isset($theme_config['ca_mobile_list_best_row']))
+							$theme_config['ca_mobile_list_best_row'] = (isset($tconfig['ca_mobile_list_best_row']) && $tconfig['ca_mobile_list_best_row']) ? $tconfig['ca_mobile_list_best_row'] : 0;
+			}
+
+			// 분류 Best Item
+			$list_mod = (isset($theme_config['ca_mobile_list_best_mod']) && $theme_config['ca_mobile_list_best_mod']) ? (int)$theme_config['ca_mobile_list_best_mod'] : $ca['ca_mobile_list_mod'];
+			$list_row = (isset($theme_config['ca_mobile_list_best_row']) && $theme_config['ca_mobile_list_best_row']) ? (int)$theme_config['ca_mobile_list_best_row'] : $ca['ca_mobile_list_row'];
+			$limit = $list_mod * $list_row;
+			$best_skin = G5_MSHOP_SKIN_PATH.'/list.best.10.skin.php';
+
+			$sql = " select *
+									from {$g5['g5_shop_item_table']}
+									where ( ca_id like '$ca_id%' or ca_id2 like '$ca_id%' or ca_id3 like '$ca_id%' )
+										and it_use = '1'
+										and it_type4 = '1'
+									order by it_order, it_id desc
+									limit 0, $limit ";
+
+			$list = new item_list($best_skin, $list_mod, $list_row, $ca['ca_mobile_img_width'], $ca['ca_mobile_img_height']);
+			$list->set_query($sql);
+			$list->set_mobile(true);
+			$list->set_view('it_img', true);
+			$list->set_view('it_id', false);
+			$list->set_view('it_name', true);
+			$list->set_view('it_price', true);
+			echo $list->run();
 		}
-
-		// 분류 Best Item
-		$list_mod = (isset($theme_config['ca_mobile_list_best_mod']) && $theme_config['ca_mobile_list_best_mod']) ? (int)$theme_config['ca_mobile_list_best_mod'] : $ca['ca_mobile_list_mod'];
-		$list_row = (isset($theme_config['ca_mobile_list_best_row']) && $theme_config['ca_mobile_list_best_row']) ? (int)$theme_config['ca_mobile_list_best_row'] : $ca['ca_mobile_list_row'];
-		$limit = $list_mod * $list_row;
-		$best_skin = G5_MSHOP_SKIN_PATH.'/list.best.10.skin.php';
-
-		$sql = " select *
-								from {$g5['g5_shop_item_table']}
-								where ( ca_id like '$ca_id%' or ca_id2 like '$ca_id%' or ca_id3 like '$ca_id%' )
-									and it_use = '1'
-									and it_type4 = '1'
-								order by it_order, it_id desc
-								limit 0, $limit ";
-
-		$list = new item_list($best_skin, $list_mod, $list_row, $ca['ca_mobile_img_width'], $ca['ca_mobile_img_height']);
-		$list->set_query($sql);
-		$list->set_mobile(true);
-		$list->set_view('it_img', true);
-		$list->set_view('it_id', false);
-		$list->set_view('it_name', true);
-		$list->set_view('it_price', true);
-		echo $list->run();
-
 		// 상품 출력순서가 있다면
 		if ($sort != "")
 				$order_by = $sort.' '.$sortodr.' , it_order, it_id desc';
@@ -322,23 +176,28 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 
 		if (file_exists($skin_file)) {
 
-				echo '<div id="sct_sortlst">';
+			echo '<div id="sct_sortlst">';
+				echo '<div class="_shopListHead">';
+					echo '<div class="all">상품수 : <span class="total_count">0</span>개</div>';
+					echo '<div class="sort">';
+						$sort_skin = $skin_dir.'/list.sort.skin.php';
+						if(!is_file($sort_skin))
+								$sort_skin = G5_MSHOP_SKIN_PATH.'/list.sort.skin.php';
+						include $sort_skin;
 
-				$sort_skin = $skin_dir.'/list.sort.skin.php';
-				if(!is_file($sort_skin))
-						$sort_skin = G5_MSHOP_SKIN_PATH.'/list.sort.skin.php';
-				include $sort_skin;
-
+					if(G5_LIST_SORT_YN=='Y') {
 						// 상품 보기 타입 변경 버튼
-				$sub_skin = $skin_dir.'/list.sub.skin.php';
-				if(!is_file($sub_skin))
-						$sub_skin = G5_MSHOP_SKIN_PATH.'/list.sub.skin.php';
+						$sub_skin = $skin_dir.'/list.sub.skin.php';
+						if(!is_file($sub_skin))
+								$sub_skin = G5_MSHOP_SKIN_PATH.'/list.sub.skin.php';
 
-				if(is_file($sub_skin)){
-						include $sub_skin;
-				}
-
+						if(is_file($sub_skin)){
+								include $sub_skin;
+						}
+					}
+					echo '</div>';
 				echo '</div>';
+			echo '</div>';
 
 				// 총몇개
 				$items = $ca['ca_mobile_list_mod'] * $ca['ca_mobile_list_row'];
@@ -392,7 +251,12 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 		echo '<div id="sct_thtml">'.conv_content($ca['ca_mobile_tail_html'], 1).'</div>';
 		?>
 </div>
-
+<script>
+	jQuery(function($){
+		var total_count = <?php echo number_format($total_count); ?>;
+		$('.total_count').text(total_count);
+	});
+</script>
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
 

@@ -12,6 +12,7 @@ $menu['menu500'] = array(
     array('500300', '이벤트관리', G5_ADMIN_URL . '/shop_admin/itemevent.php', 'scf_event'),
     array('500310', '이벤트일괄처리', G5_ADMIN_URL . '/shop_admin/itemeventlist.php', 'scf_event_mng'),
     array('500500', '배너관리', G5_ADMIN_URL . '/shop_admin/bannerlist.php', 'scf_banner', 1),
+    array('500600', '팝업레이어관리', G5_ADMIN_URL . '/newwinlist.php', 'scf_poplayer'),
     array('500140', '보관함현황', G5_ADMIN_URL . '/shop_admin/wishlist.php', 'sst_wish'),
     array('500210', '가격비교사이트', G5_ADMIN_URL . '/shop_admin/price.php', 'sst_compare', 1)
 );

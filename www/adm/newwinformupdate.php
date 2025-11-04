@@ -1,5 +1,5 @@
 <?php
-$sub_menu = '100310';
+$sub_menu = '500600';
 require_once './_common.php';
 
 $nw_id = isset($_REQUEST['nw_id']) ? (string)preg_replace('/[^0-9]/', '', $_REQUEST['nw_id']) : 0;

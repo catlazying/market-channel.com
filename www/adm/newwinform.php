@@ -1,5 +1,5 @@
 <?php
-$sub_menu = '100310';
+$sub_menu = '500600';
 require_once './_common.php';
 require_once G5_EDITOR_LIB;
 

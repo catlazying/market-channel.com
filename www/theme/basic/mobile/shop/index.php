@@ -5,28 +5,31 @@ define("_INDEX_", TRUE);
 
 include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 ?>
-
-
 	<div class="_vis">
 		<div class="swiper-wrapper">
 			<div class="vis swiper-slide"><a href="#"><img src="<?=G5_URL?>/images/vis1.png" alt=""></a></div>
 			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=2" alt=""></a></div>
 			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=3" alt=""></a></div>
+			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=3" alt=""></a></div>
+			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=3" alt=""></a></div>
+			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=3" alt=""></a></div>
+			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=3" alt=""></a></div>
 		</div>
 		<div class="page"></div>
 	</div>
+	<?php echo display_banner('메인비주얼', 'mainbanner.10.skin.php'); ?>
 
 	<div class="_mainLink">
-		<?php
-				$categories = show_shop_category_array(10,'4');
-				if( $categories ){
-					foreach($categories as $category){
-						echo '<a href="'.$category['url'].'">';
-						echo '	<div class="img"><img src="'.G5_URL.'/images'.$category['ca_1'].'" alt=""></div>';
-						echo '	<div class="txt">'.$category['ca_name'].'</div>';
-						echo '</a>';
-					}
+		<?php // 업태별
+			$categories = show_shop_category_array(30,'4');
+			if( $categories ){
+				foreach($categories as $category){
+					echo '<a href="'.$category['url'].'">';
+					echo '	<div class="img"><img src="'.G5_URL.'/images'.$category['ca_1'].'" alt=""></div>';
+					echo '	<div class="txt">'.$category['ca_name'].'</div>';
+					echo '</a>';
 				}
+			}
 		?>
 
 		<a href="#">
@@ -371,6 +374,20 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 	<hr class="_line">
 
 	<div class="_menuLink">
+		<?php // 상품별
+			$categories = "";
+			$categories = show_shop_category_array(10,'4');
+			if( $categories ){
+				foreach($categories as $category){
+					echo '<a href="'.$category['url'].'">';
+					echo '	<div class="img"><img src="'.G5_URL.'/images'.$category['ca_1'].'" alt=""></div>';
+					echo '	<div class="txt">'.$category['ca_name'].'</div>';
+					echo '</a>';
+				}
+			}
+		?>
+
+
 		<a href="#">
 			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link1.svg" alt=""></div>
 			<div class="txt">연체류</div>
@@ -428,6 +445,18 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 		</div>
 
 		<div class="_ovaList">
+			<?php
+
+			$mobile_main_skin_file = G5_MSHOP_SKIN_PATH . '/main.10.skin.php';
+
+			$mobile_main_list_mod = 4;
+			$mobile_main_img_width = 340;
+			$mobile_main_img_height = 340;
+			$sql = " select * from  {$g5['g5_shop_item_table']} where  it_use='1' ";
+			$list = new item_list($mobile_main_skin_file, $mobile_main_list_mod, 0, $mobile_main_img_width, $mobile_main_img_height);
+			$list->set_query($sql);
+			echo $list->run();
+			?>
 			<div class="_item">
 				<div class="img">
 					<a href="#">

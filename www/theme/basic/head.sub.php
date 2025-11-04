@@ -32,10 +32,6 @@ header("Expires: 0"); // rfc2616 - Section 14.21
 header("Pragma: no-cache"); // HTTP/1.0
 */
 
-
-
-
-
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if ($path === '/shop/item.php') {

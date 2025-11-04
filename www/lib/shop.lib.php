@@ -440,7 +440,8 @@ function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img
 
     if($thumb) {
         $file_url = str_replace(G5_PATH, G5_URL, $filepath.'/'.$thumb);
-        $img = '<img src="'.$file_url.'" width="'.$width.'" height="'.$height.'" alt="'.$img_alt.'"';
+        // $img = '<img src="'.$file_url.'" width="'.$width.'" height="'.$height.'" alt="'.$img_alt.'"';
+        $img = '<img src="'.$file_url.'" alt="'.$img_alt.'"';
     } else {
         $img = '<img src="'.G5_SHOP_URL.'/img/no_image.gif" width="'.$width.'"';
         if($height)
@@ -606,7 +607,7 @@ function display_price($price, $tel_inq=false)
     if ($tel_inq)
         $price = '전화문의';
     else
-        $price = number_format($price, 0).'원';
+        $price = number_format($price, 0).''; // '원' 제거
 
     return $price;
 }

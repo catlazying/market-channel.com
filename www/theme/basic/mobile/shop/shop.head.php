@@ -17,7 +17,10 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 	<header class="_header">
 		<?php if(defined('_INDEX_')) {?>
 		<h1 class="logo"><a href="<?=G5_URL?>">MARKET CHANNEL</a></h1>
-		<?php }else{?>
+		<?php }else{
+			$g5_head_title_ary = explode('&gt;',$g5_head_title2);
+			$g5_head_title2 = trim($g5_head_title_ary[count($g5_head_title_ary)-1]);
+		?>
 		<h1 class="title"><span><?=$g5_head_title2?></span></h1>
 		<?php }?>
 		<button type="button" class="prev" onclick="history.back(-1)"></button>
@@ -73,22 +76,15 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 				<li>
 					<a href="#">상품 카테고리</a>
 					<ul class="ty1">
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">전체</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">새우류</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">연체류</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">생선류</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">갑각류(꽃게외)</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">어패류(조개외)</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">초밥류</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">가공수산류</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">특수부위</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">정육</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">공산품</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">소스류</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">기타수산</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">냉동야채</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">반찬</a></li>
-					</ul>
+					<?php // 상품별
+						$categories = show_shop_category_array(10,'4');
+						if( $categories ){
+							foreach($categories as $category){
+								echo '<li><a href="'.$category['url'].'">'.$category['ca_name'].'</a></li>';
+							}
+						}
+					?>
+ 					</ul>
 				</li>
 				<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">신규상품</a></li>
 				<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">특가상품</a></li>
@@ -96,18 +92,27 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 				<li>
 					<a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">업종별 상품</a>
 					<ul class="ty1">
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">찜</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">탕</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">볶음</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">조림</a></li>
+					<?php // 업태별
+						$categories = show_shop_category_array(30,'4');
+						if( $categories ){
+							foreach($categories as $category){
+								echo '<li><a href="'.$category['url'].'">'.$category['ca_name'].'</a></li>';
+							}
+						}
+					?>
 					</ul>
 				</li>
 				<li>
 					<a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">요리별 상품</a>
 					<ul class="ty3">
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">한식</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">중식</a></li>
-						<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">양식 및 기타</a></li>
+					<?php // 조리방식별
+						$categories = show_shop_category_array(40,'4');
+						if( $categories ){
+							foreach($categories as $category){
+								echo '<li><a href="'.$category['url'].'">'.$category['ca_name'].'</a></li>';
+							}
+						}
+					?>
 					</ul>
 				</li>
 			</ul>

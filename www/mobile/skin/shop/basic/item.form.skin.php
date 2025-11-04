@@ -52,69 +52,82 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 				<h2>상품간략정보 및 구매기능</h2>
 				<div class="sit_ov_wr">
 					<div class="nation">
-						<span>말레이시아</span>
-						<span>베트남</span>
+						<?php
+							$origins = explode(',', $it['it_origin']);
+							foreach ($origins as $origin) {
+								echo "<span>".$origin."</span>\n";
+							}
+						?>
 					</div>
 					<strong id="sit_title"><?php echo stripslashes($it['it_name']); ?></strong>
-					<!-- <?php if ($it['it_basic']) { ?>
+					<?php if ($it['it_basic']) { ?>
 						<p id="sit_desc"><?php echo $it['it_basic']; ?></p>
-					<?php } ?> -->
+					<?php } ?>
 					<?php if ($is_orderable) { ?>
 						<p id="sit_opt_info">상품 선택옵션 <?php echo $option_count; ?> 개, 추가옵션 <?php echo $supply_count; ?> 개</p>
 					<?php } ?>
 
 
 
-				<?php if (!$it['it_use']) { // 판매가능이 아닐 경우
-				?>
-					<div class="price">판매중지</div>
-				<?php } else if ($it['it_tel_inq']) { // 전화문의일 경우
-				?>
-					<div class="price">전화문의</div>
-				<?php } else { // 전화문의가 아닐 경우
-				?>
-
-					<?php if ($it['it_cust_price']) { // 1.00.03
+					<?php if (!$it['it_use']) { // 판매가능이 아닐 경우
 					?>
-						<del><?php echo display_price($it['it_cust_price']); ?></del>
+						<div class="price">판매중지</div>
+					<?php } else if ($it['it_tel_inq']) { // 전화문의일 경우
+					?>
+						<div class="price">전화문의</div>
+					<?php } else { // 전화문의가 아닐 경우
+					?>
+
+						<?php if ($it['it_cust_price'] > get_price($it)) { // 1.00.03
+						?>
+							<del><?php echo display_price($it['it_cust_price']); ?></del>
 						<?php } ?>
 						<div class="price">
 							<?php echo number_format(get_price($it)); ?> <em>원</em>
 							<input type="hidden" id="it_price" value="<?php echo get_price($it); ?>">
 						</div>
-				<?php } ?>
+					<?php } ?>
 
-					<!-- <div id="sit_star_sns">
-						<?php
-						$sns_title = get_text($it['it_name']) . ' | ' . get_text($config['cf_title']);
-						$sns_url  = shop_item_url($it['it_id']);
-
-						if ($score = get_star_image($it['it_id'])) { ?>
-							<span class="sound_only">고객평점 <?php echo $score ?>개</span> <img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $score ?>.png" alt="" class="sit_star" width="100"> <span class="review_num">사용후기 <?php echo $it['it_use_cnt']; ?> 개</span>
-						<?php } ?>
-						<div class="sit_btn_opt"> <span id="btn_wish"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="sound_only">위시리스트</span><span class="btn_wish_num"><?php echo get_wishlist_count_by_item($it['it_id']); ?></span></span>
-							<button type="button" class="btn_sns_share"><i class="fa fa-share-alt" aria-hidden="true"></i><span class="sound_only">sns 공유</span></button>
-							<div class="sns_area"> <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_MSHOP_SKIN_URL . '/img/facebook.png'); ?> <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_MSHOP_SKIN_URL . '/img/twitter.png'); ?> <?php echo get_sns_share_link('kakaotalk', $sns_url, $sns_title, G5_MSHOP_SKIN_URL . '/img/sns_kakao.png'); ?>
-								<?php
-								$href = G5_SHOP_URL . '/iteminfo.php?it_id=' . $it_id;
-								?>
-								<a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec"><i class="fa fa-envelope-o" aria-hidden="true"></i><span class="sound_only">추천하기</span></a>
-							</div>
+					<?php if(G5_LIST_VIEW_STAR_YN=='Y' || G5_LIST_SNSSHARE_YN=='Y') { ?>
+						<div id="sit_star_sns">
+							<?php
+							$sns_title = get_text($it['it_name']) . ' | ' . get_text($config['cf_title']);
+							$sns_url  = shop_item_url($it['it_id']);
+							if(G5_LIST_VIEW_STAR_YN=='Y') {
+								if ($score = get_star_image($it['it_id'])) { ?>
+									<span class="sound_only">고객평점 <?php echo $score ?>개</span> <img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $score ?>.png" alt="" class="sit_star" width="100"> <span class="review_num">사용후기 <?php echo $it['it_use_cnt']; ?> 개</span>
+							<?php }
+							} ?>
+							<?php if(G5_LIST_SNSSHARE_YN=='Y') { ?>
+								<div class="sit_btn_opt"> <span id="btn_wish"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="sound_only">위시리스트</span><span class="btn_wish_num"><?php echo get_wishlist_count_by_item($it['it_id']); ?></span></span>
+									<button type="button" class="btn_sns_share"><i class="fa fa-share-alt" aria-hidden="true"></i><span class="sound_only">sns 공유</span></button>
+									<div class="sns_area"> <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_MSHOP_SKIN_URL . '/img/facebook.png'); ?> <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_MSHOP_SKIN_URL . '/img/twitter.png'); ?> <?php echo get_sns_share_link('kakaotalk', $sns_url, $sns_title, G5_MSHOP_SKIN_URL . '/img/sns_kakao.png'); ?>
+										<?php
+										$href = G5_SHOP_URL . '/iteminfo.php?it_id=' . $it_id;
+										?>
+										<a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec"><i class="fa fa-envelope-o" aria-hidden="true"></i><span class="sound_only">추천하기</span></a>
+									</div>
+								</div>
+							<?php } ?>
 						</div>
-					</div> -->
-					<script>
-						$(".btn_sns_share").click(function() {
-							$(".sns_area").show();
-						});
-						$(document).mouseup(function(e) {
-							var container = $(".sns_area");
-							if (container.has(e.target).length === 0)
-								container.hide();
-						});
-					</script>
+						<?php if(G5_LIST_SNSSHARE_YN=='Y') { ?>
+						<script>
+							$(".btn_sns_share").click(function() {
+								$(".sns_area").show();
+							});
+							$(document).mouseup(function(e) {
+								var container = $(".sns_area");
+								if (container.has(e.target).length === 0)
+									container.hide();
+							});
+						</script>
+						<?php } ?>
+					<?php } ?>
 				</div>
+
+				<?php if(G5_NEXT_PROD_YN=='Y') { ?>
 				<!-- 다른 상품 보기 시작 { -->
-				<!-- <div id="sit_siblings">
+					<div id="sit_siblings">
 							<?php
 							if ($prev_href || $next_href) {
 								$prev_title = '<i class="fa fa-caret-left" aria-hidden="true"></i> ' . $prev_title;
@@ -127,50 +140,64 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 							}
 							?>
 							<a href="<?php echo G5_SHOP_URL; ?>/largeimage.php?it_id=<?php echo $it['it_id']; ?>&amp;no=1" target="_blank" class="popup_item_image "><i class="fa fa-search-plus" aria-hidden="true"></i><span class="sound_only">확대보기</span></a>
-					</div> -->
+					</div>
 				<!-- } 다른 상품 보기 끝 -->
+				<?php } ?>
+
 			</section>
 		</div>
 	</div>
 
+<?
+		$info_data = unserialize(stripslashes($it['it_info_value']));
 
+		if ($it['it_sc_type'] == 1)
+			$sc_method = '무료배송';
+		else {
+			if ($it['it_sc_method'] == 1)
+				$sc_method = '수령후 지불';
+			else if ($it['it_sc_method'] == 2) {
+				$ct_send_cost_label = '<label for="ct_send_cost">배송비결제</label>';
+				$sc_method = '<select name="ct_send_cost" id="ct_send_cost">
+																<option value="0">주문시 결제</option>
+																<option value="1">수령후 지불</option>
+														</select>';
+			} else
+				$sc_method = '주문시 결제';
+		}
+?>
 	<div class="sit_ov_tbl">
 		<dl>
-
-
-
 			<dt>판매가능 수량</dt>
-			<dd>20Box</dd>
+			<dd><?php echo number_format(get_it_stock_qty($it_id)); ?></dd>
 		</dl>
 		<dl>
 			<dt>가공형태</dt>
-			<dd>라운드, IQF /</dd>
+			<dd><?php echo $info_data['product_composition']; ?></dd>
 		</dl>
 		<dl>
 			<dt>과세여부</dt>
-			<dd>비과세</dd>
+			<dd><?php echo ($it['it_notax']==1)?"비과세":"과세"; ?></dd>
 		</dl>
 		<dl>
 			<dt>규격</dt>
-			<dd>500g * 10ea / 5kg</dd>
+			<dd><?php echo $info_data['quantity']; ?></dd>
 		</dl>
 		<dl>
 			<dt>배송료</dt>
-			<dd>무료</dd>
+			<dd><?php echo $sc_method?></dd>
 		</dl>
 		<dl>
 			<dt>무게</dt>
-			<dd>5kg</dd>
+			<dd><?php echo $info_data['weight']; ?></dd>
 		</dl>
-		<dl>
-			<dt>상품코드</dt>
-			<dd>1234567</dd>
-		</dl>
+
 		<dl>
 			<dt>단위</dt>
-			<dd>BOX</dd>
+			<dd><?php echo $info_data['size']; ?></dd>
 		</dl>
-				<!-- <?php if ($it['it_maker']) { ?>
+			<?php if(G5_MARKET_YN=='N') { /* <!-- ?>
+				 <?php if ($it['it_maker']) { ?>
 					<dl>
 						<dt scope="row">제조사</dt>
 						<dd><?php echo $it['it_maker']; ?></dd>
@@ -222,14 +249,11 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 						</dd>
 					</dl>
 				<?php } ?>
-				<?php
-				/* 재고 표시하는 경우 주석 해제
-					<dl>
-							<th scope="row">재고수량</th>
-							<td><?php echo number_format(get_it_stock_qty($it_id)); ?> 개</td>
-					</tr>
-					*/
-				?>
+				<dl>
+						<th scope="row">재고수량</th>
+						<td><?php echo number_format(get_it_stock_qty($it_id)); ?> 개</td>
+				</dl>
+
 				<?php if ($config['cf_use_point']) { // 포인트 사용한다면
 				?>
 					<dl>
@@ -277,11 +301,13 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 						<dt>최대구매수량</dt>
 						<dd><?php echo number_format($it['it_buy_max_qty']); ?> 개</dd>
 					</dl>
-				<?php } ?> -->
+				<?php } ?>
+		<?php --> */ } ?>
+
 	</div>
-	<!-- <div class="btn_option_wr">
+	<div class="btn_option_wr">
 		<button type="button" class="btn_cart_op btn_submit btn">구매하기</button>
-</div> -->
+</div>
 	<div id="btn_option">
 		<div class="sl_option">
 			<div class="optWrap">
@@ -377,12 +403,18 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 			<li>
 				<button type="button" id="btn_sit_inf" rel="#sit_inf" class="selected">상품정보</button>
 			</li>
-			<!-- <li>
-				<button type="button" id="btn_sit_use" rel="#sit_use">사용후기</button>
-			</li>
-			<li>
-				<button type="button" id="btn_sit_qa" rel="#sit_qa">상품문의</button>
-			</li> -->
+
+			<?php if(G5_REVIEW_USE=='Y') { ?>
+				<li>
+					<button type="button" id="btn_sit_use" rel="#sit_use">사용후기</button>
+				</li>
+			<?php } ?>
+
+			<?php if(G5_QNA_USE=='Y') { ?>
+				<li>
+					<button type="button" id="btn_sit_qa" rel="#sit_qa">상품문의</button>
+				</li>
+			<?php } ?>
 		</ul>
 		<ul class="tab_con">
 			<!-- 상품 정보 시작 { -->
@@ -394,6 +426,7 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 					<div id="sit_inf_explan"> <?php echo ($it['it_mobile_explan'] ? conv_content($it['it_mobile_explan'], 1) : conv_content($it['it_explan'], 1)); ?> </div>
 				<?php } ?>
 				<?php
+				/*<!--
 				if ($it['it_info_value']) { // 상품 정보 고시
 					$info_data = unserialize(stripslashes($it['it_info_value']));
 					if (is_array($info_data)) {
@@ -424,24 +457,29 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 						}
 					}
 				} //if
+				 -->*/
 				?>
 			</li>
-			<!-- 사용후기 시작 { -->
-			<li id="sit_use">
-				<h2>사용후기</h2>
-				<div id="itemuse">
-					<?php include_once(G5_SHOP_PATH . '/itemuse.php'); ?>
-				</div>
-			</li>
-			<!-- } 사용후기 끝 -->
-			<!-- 상품문의 시작 { -->
-			<li id="sit_qa">
-				<h2>상품문의</h2>
-				<div id="itemqa">
-					<?php include_once(G5_SHOP_PATH . '/itemqa.php'); ?>
-				</div>
-			</li>
-			<!-- } 상품문의 끝 -->
+			<?php if(G5_REVIEW_USE=='Y') { ?>
+				<!-- 사용후기 시작 { -->
+				<li id="sit_use">
+					<h2>사용후기</h2>
+					<div id="itemuse">
+						<?php include_once(G5_SHOP_PATH . '/itemuse.php'); ?>
+					</div>
+				</li>
+				<!-- } 사용후기 끝 -->
+			<?php } ?>
+			<?php if(G5_QNA_USE=='Y') { ?>
+				<!-- 상품문의 시작 { -->
+				<li id="sit_qa">
+					<h2>상품문의</h2>
+					<div id="itemqa">
+						<?php include_once(G5_SHOP_PATH . '/itemqa.php'); ?>
+					</div>
+				</li>
+				<!-- } 상품문의 끝 -->
+			<?php } ?>
 		</ul>
 	</div>
 
@@ -496,40 +534,6 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 	<section id="sit_rel">
 		<h2>관련상품</h2>
 		<div class="_ovaList">
-			<div class="_item">
-				<div class="img"> <a href="#"> <img src="https://placehold.co/340x340" alt=""> <span class="mark">국산</span> </a> </div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price"> <strong>10,500</strong> <em>원</em> </div>
-					<div class="per up"> <i class="ri-triangle-fill"></i> <span>25%</span> </div>
-				</div>
-			</div>
-			<div class="_item">
-				<div class="img"> <a href="#"> <img src="https://placehold.co/340x340" alt=""> <span class="mark">국산</span> </a> </div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price"> <strong>10,500</strong> <em>원</em> </div>
-					<div class="per down"> <i class="ri-triangle-fill"></i> <span>25%</span> </div>
-				</div>
-			</div>
-			<div class="_item">
-				<div class="img"> <a href="#"> <img src="https://placehold.co/340x340" alt=""> <span class="mark">국산</span> </a> </div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price"> <strong>10,500</strong> <em>원</em> </div>
-					<div class="per up"> <i class="ri-triangle-fill"></i> <span>25%</span> </div>
-				</div>
-			</div>
-			<div class="_item">
-				<div class="img"> <a href="#"> <img src="https://placehold.co/340x340" alt=""> <span class="mark">국산</span> </a> </div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price"> <strong>10,500</strong> <em>원</em> </div>
-					<div class="per down"> <i class="ri-triangle-fill"></i> <span>25%</span> </div>
-				</div>
-			</div>
-		</div>
-		<div class="sct_wrap">
 			<?php
 			$rel_skin_file = $skin_dir . '/' . $default['de_mobile_rel_list_skin'];
 			if (!is_file($rel_skin_file))
@@ -541,6 +545,7 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 			echo $list->run();
 			?>
 		</div>
+
 	</section>
 	<!-- } 관련상품 끝 -->
 <?php } ?>

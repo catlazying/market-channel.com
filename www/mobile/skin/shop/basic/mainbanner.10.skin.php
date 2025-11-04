@@ -48,17 +48,32 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         if($banner)
             echo '</a>'.PHP_EOL;
         echo '</div>';
-       
+
     }
 }
 
 if ($i > 0) {
     echo '</div>'.PHP_EOL;
-	
+
 	echo '<div class="btn_wr"><a href="#" class="pager-prev"><i class="fa fa-angle-left"></i></a><div id="slide-counter"></div><a href="#" class="pager-next"><i class="fa fa-angle-right"></i></a> </div>'.PHP_EOL;
  	echo '</div>'.PHP_EOL;
 ?>
-
+<style>
+.custom-dot {
+    width: 10px;
+    height: 10px;
+    background: #eee;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+    transition: background 0.2s;
+}
+.owl-dot.active .custom-dot,
+.owl-dot:hover .custom-dot {
+    background: #3399ff;
+    box-shadow: 0 0 2px #005099;
+}
+</style>
 
 <script>
 jQuery(function($){
@@ -74,7 +89,7 @@ jQuery(function($){
             } else {
                 index = event.item.index ? event.item.index + 1 : 1;
             }
-            
+
             $(event.target).next(".btn_wr").find(".slide-index").text(index);
         }
     }
@@ -96,9 +111,15 @@ jQuery(function($){
         autoplay:true,
         autoplayTimeout:5000,   // 5000은 5초
         autoplayHoverPause:true,
-        dots:false,
+        dots:true,
         onChanged:function(event){
             owl_show_page(event);
+        },
+        onInitialized: function(event) {
+            const dots = event.target.querySelectorAll('.owl-dot');
+            dots.forEach((dot, index) => {
+            dot.innerHTML = `<span class="custom-dot" data-slide="${index}"></span>`;
+            });
         },
     });
 

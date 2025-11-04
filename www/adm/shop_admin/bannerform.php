@@ -59,12 +59,8 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <td>
             <?php echo help("왼쪽 : 쇼핑몰화면 왼쪽에 출력합니다.\n메인 : 쇼핑몰 메인화면(index.php)에만 출력합니다."); ?>
             <select name="bn_position" id="bn_position">
-                <option value="메인비주얼1" <?php echo get_selected($bn['bn_position'], '메인비주얼1'); ?>>메인비주얼1</option>
-                <option value="메인비주얼2" <?php echo get_selected($bn['bn_position'], '메인비주얼2'); ?>>메인비주얼2</option>
-                <option value="메인비주얼3" <?php echo get_selected($bn['bn_position'], '메인비주얼3'); ?>>메인비주얼3</option>
+                <option value="메인비주얼" <?php echo get_selected($bn['bn_position'], '메인비주얼'); ?>>메인비주얼</option>
                 <option value="메인중간배너" <?php echo get_selected($bn['bn_position'], '메인중간배너'); ?>>메인중간배너</option>
-                <option value="메인레이어팝업1" <?php echo get_selected($bn['bn_position'], '메인레이어팝업1'); ?>>메인레이어팝업1</option>
-                <option value="메인레이어팝업2" <?php echo get_selected($bn['bn_position'], '메인레이어팝업2'); ?>>메인레이어팝업2</option>
             </select>
         </td>
     </tr>
