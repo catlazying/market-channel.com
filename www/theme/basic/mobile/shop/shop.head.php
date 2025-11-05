@@ -86,9 +86,9 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 					?>
  					</ul>
 				</li>
-				<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">신규상품</a></li>
-				<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">특가상품</a></li>
-				<li><a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">MD 추천상품</a></li>
+				<li><a href="<?php echo shop_type_url('3'); ?>">신규상품</a></li>
+				<li><a href="<?php echo shop_type_url('5'); ?>">특가상품</a></li>
+				<li><a href="<?php echo shop_type_url('2'); ?>">MD 추천상품</a></li>
 				<li>
 					<a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">업종별 상품</a>
 					<ul class="ty1">

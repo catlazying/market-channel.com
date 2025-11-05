@@ -376,7 +376,11 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 					<p id="sit_ov_soldout">상품의 재고가 부족하여 구매할 수 없습니다.</p>
 				<?php } ?>
 			</div>
-			<div id="sit_ov_btn"> <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish"><span class="sound_only">위시리스트</span><i class="ri-heart-add-fill"></i></a>
+			<div id="sit_ov_btn">
+				<?PHP if(G5_WISH_YN=='Y') { ?>
+					<a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish"><span class="sound_only">위시리스트</span><i class="ri-heart-add-fill"></i></a>
+				<?php } ?>
+
 				<?php if ($is_orderable) { ?>
 					<input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart">
 					<input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy" class="btn_submit">

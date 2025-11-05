@@ -72,12 +72,12 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 <script src="<?php echo G5_JS_URL; ?>/shop.mobile.list.js"></script>
 
 <div class="_schMenu">
-	<form name="frmdetailsearch" class="sch">
+	<form name="frmdetailsearch" class="sch" action="<?php echo G5_SHOP_URL; ?>/search.php" onsubmit="return search_submit(this);">
 		<input type="hidden" name="qsort" id="qsort" value="<?php echo $qsort ?>">
 		<input type="hidden" name="qorder" id="qorder" value="<?php echo $qorder ?>">
 		<input type="hidden" name="qcaid" id="qcaid" value="<?php echo $ca['ca_id'] ?>">
 		<input type="hidden" name="qname" value="1">
-		<input type="hidden" name="qbasic" value="1">
+		<input type="hidden" name="qbasic" value="0">
 
 		<input type="text" name="q" value="<?php echo $q; ?>" id="ssch_q"  maxlength="30" placeholder="상품명을 입력해 주세요">
 		<button type="submit"><i class="ri-search-line"></i></button>

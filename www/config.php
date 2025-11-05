@@ -255,6 +255,7 @@ define('G5_LIST_VIEW_STAR_YN', 'N');   // 리스트 후기 평점 여부
 define('G5_LIST_VIEW_ICON_YN', 'N');   // 리스트 후기 아이콘 여부
 define('G5_LIST_SORT_YN', 'N');   // 리스트 정렬 여부
 define('G5_NEXT_PROD_YN', 'N');   // 다음 상품 사용
+define('G5_WISH_YN', 'N');   // 위시리스트 사용 여부
 
 define('G5_REVIEW_USE', 'N');   // 후기 사용 여부
 define('G5_QNA_USE', 'N');   // 문의 사용 여부

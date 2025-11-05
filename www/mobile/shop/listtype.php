@@ -3,10 +3,10 @@ include_once('./_common.php');
 
 $type = isset($_REQUEST['type']) ? (int) preg_replace("/[^0-9]/", "", $_REQUEST['type']) : 1;
 if ($type === 1)      $g5['title'] = '히트상품';
-else if ($type === 2) $g5['title'] = '추천상품';
-else if ($type === 3) $g5['title'] = '최신상품';
+else if ($type === 2) $g5['title'] = 'MD 추천상품';
+else if ($type === 3) $g5['title'] = '신규상품';
 else if ($type === 4) $g5['title'] = '인기상품';
-else if ($type === 5) $g5['title'] = '세일상품';
+else if ($type === 5) $g5['title'] = '특가상품';
 else
     alert('상품유형이 아닙니다.');
 
@@ -20,7 +20,91 @@ $list_row   = $default['de_mobile_listtype_list_row'];   // 한 페이지에 몇
 $img_width  = $default['de_mobile_listtype_img_width'];  // 출력이미지 폭
 $img_height = $default['de_mobile_listtype_img_height']; // 출력이미지 높이
 ?>
-<div id="listtype"> 
+
+<script>
+var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
+</script>
+<script src="<?php echo G5_JS_URL; ?>/shop.mobile.list.js"></script>
+
+<div class="_schMenu">
+	<form name="frmdetailsearch" class="sch">
+		<input type="hidden" name="qsort" id="qsort" value="<?php echo $qsort ?>">
+		<input type="hidden" name="qorder" id="qorder" value="<?php echo $qorder ?>">
+		<input type="hidden" name="qcaid" id="qcaid" value="<?php echo $ca['ca_id'] ?>">
+		<input type="hidden" name="qname" value="1">
+		<input type="hidden" name="qbasic" value="1">
+
+		<input type="text" name="q" value="<?php echo $q; ?>" id="ssch_q"  maxlength="30" placeholder="상품명을 입력해 주세요">
+		<button type="submit"><i class="ri-search-line"></i></button>
+	</form>
+
+
+	<? if(strlen($ca['ca_id'])=='2'){ ?>
+		<div class="menu ty1" >
+			<?php // 업태별
+				$categories = show_shop_category_array($ca['ca_id'],'4');
+				if( $categories ){
+					foreach($categories as $category){
+						echo '<a href="'.$category['url'].'">';
+						echo '	<div class="img"><img src="'.G5_URL.'/images'.$category['ca_1'].'" alt=""></div>';
+						echo '	<div class="txt">'.$category['ca_name'].'</div>';
+						echo '</a>';
+					}
+				}
+			?>
+		</div>
+	<? } ?>
+	<? if(strlen($ca['ca_id'])>='4'){ ?>
+		<div class="menu ty3">
+			<a href="/shop/list-<?=substr($ca['ca_id'],0,4)?>" class="<?=(substr($ca['ca_id'],0,4)==$ca['ca_id'])?"active":""?>"><span>전체</span></a>
+			<?php // 업태별 strlen($ca['ca_id'])
+				$categories = show_shop_category_array(substr($ca['ca_id'],0,4),'6');
+				if( $categories ){
+					foreach($categories as $category){
+						echo '<a href="'.$category['url'].'" class="'.($ca['ca_id']==$category['ca_id']?"active":"").'">';
+						echo '	<span>'.$category['ca_name'].'</span>';
+						echo '</a>';
+					}
+				}
+			?>
+		</div>
+	<? } ?>
+</div>
+<?
+	if(G5_LIST_OLDCATE_YN == 'Y') {
+		$cate_skin = $skin_dir.'/listcategory.skin.php';
+		if(!is_file($cate_skin))
+				$cate_skin = G5_MSHOP_SKIN_PATH.'/listcategory.skin.php';
+		include $cate_skin;
+	}
+		// 상단 HTML
+		echo '<div id="sct_hhtml">'.conv_content($ca['ca_mobile_head_html'], 1).'</div>';
+
+			echo '<div id="sct_sortlst">';
+				echo '<div class="_shopListHead">';
+					echo '<div class="all">상품수 : <span class="total_count">0</span>개</div>';
+					echo '<div class="sort">';
+					// 	$sort_skin = $skin_dir.'/list.sort.skin.php';
+					// 	if(!is_file($sort_skin))
+					// 			$sort_skin = G5_MSHOP_SKIN_PATH.'/list.sort.skin.php';
+					// 	include $sort_skin;
+
+					// if(G5_LIST_SORT_YN=='Y') {
+					// 	// 상품 보기 타입 변경 버튼
+					// 	$sub_skin = $skin_dir.'/list.sub.skin.php';
+					// 	if(!is_file($sub_skin))
+					// 			$sub_skin = G5_MSHOP_SKIN_PATH.'/list.sub.skin.php';
+
+					// 	if(is_file($sub_skin)){
+					// 			include $sub_skin;
+					// 	}
+					// }
+					echo '</div>';
+				echo '</div>';
+			echo '</div>';
+
+?>
+<div id="listtype">
 <?php
 // 상품 출력순서가 있다면
 $order_by = ' it_order, it_id desc ';
@@ -73,6 +157,11 @@ else
 $qstr .= '&amp;type='.$type.'&amp;sort='.$sort;
 echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page=");
 ?>
-
+<script>
+	jQuery(function($){
+		var total_count = <?php echo number_format($total_count); ?>;
+		$('.total_count').text(total_count);
+	});
+</script>
 <?php
-include_once(G5_MSHOP_PATH.'/_tail.php'););
+include_once(G5_MSHOP_PATH.'/_tail.php');

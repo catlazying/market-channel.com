@@ -83,4 +83,4 @@ else
 $qstr .= '&amp;type='.$type.'&amp;sort='.$sort;
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page=");
 
-include_once('./_tail.php');');
+include_once('./_tail.php');

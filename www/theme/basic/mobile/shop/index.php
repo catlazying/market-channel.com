@@ -61,6 +61,17 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 	<div class="_hotWrap">
 		<div class="roll">
 			<div class="swiper-wrapper">
+				<?php
+				$mobile_main_skin_file = G5_MSHOP_SKIN_PATH . '/main.10.skin.php';
+				$mobile_main_list_mod = 4;
+				$mobile_main_img_width = 340;
+				$mobile_main_img_height = 340;
+				$sql = " select * from  {$g5['g5_shop_item_table']} where it_use='1' AND it_soldout!='1' AND it_type4 = '1' order by rand(), it_sum_qty desc  ";
+				$list = new item_list($mobile_main_skin_file, $mobile_main_list_mod, 0, $mobile_main_img_width, $mobile_main_img_height);
+				$list->set_query($sql);
+				echo $list->run();
+				?>
+				<?/*<!--
 				<div class="_item">
 					<div class="img">
 						<a href="#">
@@ -99,272 +110,8 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 						</div>
 					</div>
 				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per up">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">베트남</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
+				 -->*/?>
+
 			</div>
 		</div>
 		<div class="page">
@@ -431,7 +178,7 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 	</div>
 
 	<div class="_ban">
-		<a href="#"><img src="<?=G5_URL?>/images/img-ban.png" alt=""></a>
+		<?php echo display_banner('메인중간배너', 'banner.10.skin.php'); ?>
 	</div>
 
 	<div class="_defaultLayout">
@@ -440,99 +187,22 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 				<h3>마켓채널에서 주목하는 신상!</h3>
 			</div>
 			<div class="rig">
-				<a href="#" class="more"><span>전체보기</span></a>
+
+				<a href="<?php echo shop_type_url('3'); ?>" class="more"><span>전체보기</span></a>
 			</div>
 		</div>
 
 		<div class="_ovaList">
 			<?php
-
 			$mobile_main_skin_file = G5_MSHOP_SKIN_PATH . '/main.10.skin.php';
-
 			$mobile_main_list_mod = 4;
 			$mobile_main_img_width = 340;
 			$mobile_main_img_height = 340;
-			$sql = " select * from  {$g5['g5_shop_item_table']} where  it_use='1' ";
+			$sql = " select * from  {$g5['g5_shop_item_table']} where it_use='1' AND it_type3 = '1' order by rand() ";
 			$list = new item_list($mobile_main_skin_file, $mobile_main_list_mod, 0, $mobile_main_img_width, $mobile_main_img_height);
 			$list->set_query($sql);
 			echo $list->run();
 			?>
-			<div class="_item">
-				<div class="img">
-					<a href="#">
-						<img src="https://placehold.co/340x340" alt="">
-						<span class="mark">국산</span>
-					</a>
-				</div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price">
-						<strong>10,500</strong>
-						<em>원</em>
-					</div>
-					<div class="per up">
-						<i class="ri-triangle-fill"></i>
-						<span>25%</span>
-					</div>
-				</div>
-			</div>
-			<div class="_item">
-				<div class="img">
-					<a href="#">
-						<img src="https://placehold.co/340x340" alt="">
-						<span class="mark">국산</span>
-					</a>
-				</div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price">
-						<strong>10,500</strong>
-						<em>원</em>
-					</div>
-					<div class="per down">
-						<i class="ri-triangle-fill"></i>
-						<span>25%</span>
-					</div>
-				</div>
-			</div>
-			<div class="_item">
-				<div class="img">
-					<a href="#">
-						<img src="https://placehold.co/340x340" alt="">
-						<span class="mark">국산</span>
-					</a>
-				</div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price">
-						<strong>10,500</strong>
-						<em>원</em>
-					</div>
-					<div class="per up">
-						<i class="ri-triangle-fill"></i>
-						<span>25%</span>
-					</div>
-				</div>
-			</div>
-			<div class="_item">
-				<div class="img">
-					<a href="#">
-						<img src="https://placehold.co/340x340" alt="">
-						<span class="mark">국산</span>
-					</a>
-				</div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price">
-						<strong>10,500</strong>
-						<em>원</em>
-					</div>
-					<div class="per down">
-						<i class="ri-triangle-fill"></i>
-						<span>25%</span>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 
