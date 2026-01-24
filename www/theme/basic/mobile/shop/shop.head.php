@@ -135,6 +135,11 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 				<li>
 					<a href="/bbs/write.php?bo_table=qa">문의하기</a>
 				</li>
+				<?php if(substr($_SERVER['REMOTE_ADDR'],0,12)=='203.249.190.'){ ?>
+				<li>
+					<a href="/_test.php">_TEST_</a>
+				</li>
+				<?php } ?>
 			</ul>
 		</div>
 	</nav>

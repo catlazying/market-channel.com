@@ -36,6 +36,16 @@ if(!$is_admin) {
         alert($msg, G5_SHOP_URL);
 }
 
+// 가격변동 내역
+$chartPrice = null;
+$sql1 = " select it_id, it_price, it_time from {$g5['g5_shop_item_price_table']} where it_time >='".date("Y-m-d H:i:s",strtotime('-3month'))."' AND it_id='$it_id'  order by it_time";
+
+$result1 = sql_query($sql1);
+for ($i=0; $row1=sql_fetch_array($result1); $i++) {
+    $chartPrice[$i]['it_price'] = $row1['it_price'];
+    $chartPrice[$i]['it_time'] = date("Y-m-d",strtotime($row1['it_time']));
+}
+
 // 오늘 본 상품 저장 시작
 // tv 는 today view 약자
 $saved = false;
@@ -202,6 +212,7 @@ include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 echo run_replace('shop_it_mobile_head_html', '<div id="sit_hhtml">'.conv_content($it['it_mobile_head_html'], 1).'</div>', $it);
 ?>
 
+
 <?php if($is_orderable) { ?>
 <script src="<?php echo G5_JS_URL; ?>/shop.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <?php } ?>
@@ -219,11 +230,130 @@ else
     // 상품 구입폼
     include_once($skin_dir.'/item.form.skin.php');
     ?>
+<?php // 가격 변동 차트 (x축: 시간, y축: 가격)
+$jsChartData = [];
+if(is_array($chartPrice)) {
+    foreach($chartPrice as $idx => $row) {
+        $day = isset($row['it_time']) ? $row['it_time'] : "";
+        $price = isset($row['it_price']) ? (int)$row['it_price'] : 0;
+        // x축: 시간($day), y축: 가격($price)
+        $jsChartData[] = "['{$day}', {$price}]";
+    }
+}
+$jsChartData[] = "['". date("Y-m-d",strtotime($it['it_update_time']))."', {$it['it_price']}]";
+?>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawTimePriceChart);
 
+    function drawTimePriceChart() {
+        var dataRows = [
+            <?php echo implode(",", $jsChartData); ?>
+        ];
+
+        // PHP에서 넘어온 건 JS에서는 문자열이므로 eval로 파싱 필요
+        var jsParsedRows = [];
+        dataRows.forEach(function(raw){
+            // ex: "['2024-06-01', 3000]" => ['2024-06-01', 3000]
+            try {
+                var arr = eval(raw);
+                jsParsedRows.push(arr);
+            } catch (e) {
+                // 파싱 실패 시 무시
+            }
+        });
+
+        if(jsParsedRows.length){
+            var prices = jsParsedRows.map(function(row){ return row[1]; });
+            var minPrice = Math.min.apply(null, prices);
+            var maxPrice = Math.max.apply(null, prices);
+
+            var range = maxPrice - minPrice;
+            var lowerBound = Math.floor(minPrice - minPrice * 0.1);
+            var upperBound = Math.ceil(maxPrice + maxPrice * 0.1);
+        } else {
+            var lowerBound = 0, upperBound = 10000;
+        }
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '일자'); // x축: 시간
+        data.addColumn('number', '가격'); // y축: 가격
+        data.addRows(jsParsedRows);
+
+        // 마지막 데이터(최신 가격) 찾기
+        var lastIndex = jsParsedRows.length > 0 ? jsParsedRows.length - 1 : -1;
+        var balloonPrice = lastIndex >= 0 ? jsParsedRows[lastIndex][1] : null;
+        var balloonDate = lastIndex >= 0 ? jsParsedRows[lastIndex][0] : null;
+
+        var options = {
+            title: '',
+            curveType: 'function',
+            legend: { position: 'none' },
+            width: '100%',
+            height: '100%',
+            chartArea: {
+                left: "8%",
+                top: "0%",
+                width: "84%",
+                height: "75%"
+            },
+            hAxis: {
+                // title: '일자'
+            },
+            vAxis: {
+                // title: '가격',
+                format: 'decimal',
+                viewWindow: {
+                    min: lowerBound,
+                    max: upperBound
+                }
+            },
+            series: {
+                0: {}
+            },
+            annotations: {
+                textStyle: {
+                    fontSize: 15,
+                    color: '#111',
+                    auraColor: 'none',
+                    bold: true,
+                },
+                alwaysOutside: true
+            }
+        };
+
+        // 말풍선 annotation 데이터를 추가
+        // 구글 차트에서 annotation은 별도의 컬럼이 필요하다
+        // [date, price, annotation]
+        var annotatedRows = jsParsedRows.map(function(row, idx){
+            if(idx === lastIndex && balloonPrice !== null) {
+                return [row[0], row[1], balloonPrice.toLocaleString() + '원'];
+            } else {
+                return [row[0], row[1], null];
+            }
+        });
+
+        var annotatedData = new google.visualization.DataTable();
+        annotatedData.addColumn('string', '일자');
+        annotatedData.addColumn('number', '가격');
+        annotatedData.addColumn({type: 'string', role: 'annotation'});
+        annotatedData.addRows(annotatedRows);
+
+        var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+        // 말풍선을 포함한 데이터로 렌더링
+        chart.draw(annotatedData, options);
+    }
+</script>
+<section id="sit_rel">
+<h2>가격추이</h2>
+<div id="line_chart" style="width:100%;min-width:300px;max-width:100%;height:50vw;max-height:500px;min-height:220px;margin:0 auto;"></div>
 </div>
-
+</section>
 <?php
 // 하단 HTML
 echo run_replace('shop_it_mobile_tail_html', conv_content($it['it_mobile_tail_html'], 1), $it);
 
 include_once(G5_MSHOP_PATH.'/_tail.php');
+
+

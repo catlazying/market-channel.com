@@ -114,6 +114,11 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     <section id="sidx_lat">
         <?php echo latest('shop_basic', 'notice', 3, 30); ?>
     </section>
+    <script>
+    //토큰 호출:
+    window.AndroidApp.requestToken();
+    </script>
+
 
 <?php
-include_once(G5_MSHOP_PATH.'/_tail.php');');
+include_once(G5_MSHOP_PATH.'/_tail.php');

@@ -5,18 +5,8 @@ define("_INDEX_", TRUE);
 
 include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 ?>
-	<div class="_vis">
-		<div class="swiper-wrapper">
-			<div class="vis swiper-slide"><a href="#"><img src="<?=G5_URL?>/images/vis1.png" alt=""></a></div>
-			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=2" alt=""></a></div>
-			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=3" alt=""></a></div>
-			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=3" alt=""></a></div>
-			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=3" alt=""></a></div>
-			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=3" alt=""></a></div>
-			<div class="vis swiper-slide"><a href="#"><img src="https://placehold.co/860x360?text=3" alt=""></a></div>
-		</div>
-		<div class="page"></div>
-	</div>
+
+
 	<?php echo display_banner('메인비주얼', 'mainbanner.10.skin.php'); ?>
 
 	<div class="_mainLink">
@@ -31,7 +21,7 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 				}
 			}
 		?>
-
+		<!--
 		<a href="#">
 			<div class="img"><img src="<?=G5_URL?>/images/ico-link1.png" alt=""></div>
 			<div class="txt">한식</div>
@@ -52,6 +42,7 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 			<div class="img"><img src="<?=G5_URL?>/images/ico-link5.png" alt=""></div>
 			<div class="txt">기타</div>
 		</a>
+		-->
 	</div>
 
 	<div class="_hotHead">
@@ -134,7 +125,7 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 			}
 		?>
 
-
+		<!--
 		<a href="#">
 			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link1.svg" alt=""></div>
 			<div class="txt">연체류</div>
@@ -175,6 +166,7 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link10.svg" alt=""></div>
 			<div class="txt">기타</div>
 		</a>
+		-->
 	</div>
 
 	<div class="_ban">
@@ -205,87 +197,25 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 			?>
 		</div>
 	</div>
-
+	<?php if ($is_member) { ?>
 	<hr class="_line">
-
 	<div class="_defaultLayout">
 		<div class="_topArea">
 			<div class="lef">
 				<h3>내가 구매한 상품</h3>
 			</div>
 			<div class="rig">
-				<a href="#" class="more"><span>전체보기</span></a>
+				<a href="/shop/orderinquiry.php" class="more"><span>전체보기</span></a>
 			</div>
 		</div>
 
 		<div class="_buyList">
-
-			<div class="_item">
-				<div class="img">
-					<a href="#">
-						<img src="https://placehold.co/340x340" alt="">
-					</a>
-				</div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price">
-						<strong>10,500</strong>
-						<em>원</em>
-					</div>
-					<div class="wish">
-						<label class="_wish"><input type="checkbox"><i class="ri-star-line"></i><strong>4.2</strong><em>(15)</em></label>
-					</div>
-					<div class="move">
-						<span>무료배송</span>
-					</div>
-				</div>
-			</div>
-
-			<div class="_item">
-				<div class="img">
-					<a href="#">
-						<img src="https://placehold.co/340x340" alt="">
-					</a>
-				</div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price">
-						<strong>10,500</strong>
-						<em>원</em>
-					</div>
-					<div class="wish">
-						<label class="_wish"><input type="checkbox" checked><i class="ri-star-line"></i><strong>4.2</strong><em>(15)</em></label>
-					</div>
-					<div class="move">
-						<span>무료배송</span>
-					</div>
-				</div>
-			</div>
-
-			<div class="_item">
-				<div class="img">
-					<a href="#">
-						<img src="https://placehold.co/340x340" alt="">
-					</a>
-				</div>
-				<div class="info">
-					<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-					<div class="price">
-						<strong>10,500</strong>
-						<em>원</em>
-					</div>
-					<div class="wish">
-						<label class="_wish"><input type="checkbox"><i class="ri-star-line"></i><strong>4.2</strong><em>(15)</em></label>
-					</div>
-					<div class="move">
-						<span>무료배송</span>
-					</div>
-				</div>
-			</div>
-
+			<?php
+			include_once(G5_MSHOP_SKIN_PATH.'/main.purchased.skin.php');
+			?>
 		</div>
 	</div>
-
+	<?php } ?>
 
 <?php
 include_once(G5_THEME_MSHOP_PATH.'/shop.tail.php');

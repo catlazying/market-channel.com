@@ -9,21 +9,62 @@ const winSh = () => $win.scrollTop();
 const controllers = {
 	basic: {
 		action() {
+
 			let lastScrollY = 0;
 			let ticking = false;
+
+			// ✨ 추가: 미세 스크롤 무시(데드존) + 레이아웃 변경 잠금
+			const DELTA = 50;             // |currentY - lastScrollY| < 12px 이면 무시
+			const FIX_OFFSET = 70;         // fix 적용 기준
+			let layoutLock = false;        // 레이아웃 변경 중 잠깐 토글 금지
+			let layoutLockTimer = null;
+
+			const lockLayout = (ms = 280) => {
+				layoutLock = true;
+				clearTimeout(layoutLockTimer);
+				layoutLockTimer = setTimeout(() => (layoutLock = false), ms);
+			};
+
+			// 높이가 바뀌는 영역 관찰(스와이퍼 래퍼 셀렉터로 교체하세요)
+			// 예: .kv-swiper, .swiper, .main-visual 등
+			const swiperEl = document.querySelector('.swiper'); // <-- 필요에 맞게 수정
+			if (swiperEl && 'ResizeObserver' in window) {
+				const ro = new ResizeObserver(() => lockLayout(300));
+				ro.observe(swiperEl);
+			}
+
+			// 윈도우 리사이즈도 잠깐 잠금
+			$win.on('resize', () => lockLayout(350));
 
 			const updateScrollState = () => {
 				const currentY = $win.scrollTop();
 
+				// 레이아웃 변경 중엔 상태 고정 (값만 업데이트)
+				if (layoutLock) {
+					lastScrollY = currentY;
+					ticking = false;
+					return;
+				}
+
+				const diff = currentY - lastScrollY;
+
+				// 미세 흔들림은 무시
+				if (Math.abs(diff) < DELTA) {
+					ticking = false;
+					return;
+				}
+
 				if (currentY === 0) {
 					$html.removeClass('fix out in');
-				} else if (currentY > 70) {
+				} else if (currentY > FIX_OFFSET) {
 					$html.addClass('fix');
 
-					if (currentY > lastScrollY) {
-						$html.removeClass('in');
+					if (diff > 0) {
+						// 아래로 스크롤 → 헤더 숨김
+						$html.removeClass('in');      // out만 남겨도 되고 필요시 $html.addClass('out')
 					} else {
-						$html.addClass('out in');
+						// 위로 스크롤 → 헤더 노출
+						$html.addClass('out in');     // in을 붙이고 싶으면 유지
 					}
 				}
 
@@ -37,6 +78,8 @@ const controllers = {
 					requestAnimationFrame(updateScrollState);
 				}
 			};
+
+			$win.on('scroll load', requestScrollUpdate);
 
 			$win.on('scroll load', requestScrollUpdate);
 

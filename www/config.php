@@ -11,7 +11,11 @@ include_once($g5_path['path'].'/version.php');   // 설정 파일
 
 // 기본 시간대 설정
 date_default_timezone_set("Asia/Seoul");
-
+if( substr($_SERVER['REMOTE_ADDR'],0,12) == "203.249.190." ){
+	header("Pragma: no-cache");
+	ini_set('display_errors', '1');
+	error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+ }
 /********************
     경로 상수
 ********************/
@@ -255,7 +259,7 @@ define('G5_LIST_VIEW_STAR_YN', 'N');   // 리스트 후기 평점 여부
 define('G5_LIST_VIEW_ICON_YN', 'N');   // 리스트 후기 아이콘 여부
 define('G5_LIST_SORT_YN', 'N');   // 리스트 정렬 여부
 define('G5_NEXT_PROD_YN', 'N');   // 다음 상품 사용
-define('G5_WISH_YN', 'N');   // 위시리스트 사용 여부
+define('G5_WISH_YN', 'Y');   // 위시리스트 사용 여부
 
 define('G5_REVIEW_USE', 'N');   // 후기 사용 여부
 define('G5_QNA_USE', 'N');   // 문의 사용 여부

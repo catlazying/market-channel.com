@@ -4,7 +4,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 ?>
-
+<style>
+input, textarea, select {
+  font-size: 16px;
+  /* transform: scale(0.8);
+  transform-origin: left top; */
+}
+</style>
 <div id="mb_login" class="mbskin">
     <h1><?php echo $g5['title'] ?></h1>
 
@@ -38,7 +44,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     </section>
     </form>
 
-
+<?php if(G5_MARKET_YN=='N') { ?>
     <?php // 쇼핑몰 사용시 여기부터 ?>
     <?php if (isset($default['de_level_sell']) && $default['de_level_sell'] == 1) { // 상품구입 권한 ?>
 
@@ -106,7 +112,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
     <?php } ?>
     <?php // 쇼핑몰 사용시 여기까지 반드시 복사해 넣으세요 ?>
-
+<?php } ?>
 </div>
 
 <script>

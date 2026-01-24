@@ -28,7 +28,7 @@ foreach((array) $list as $row){
         $li_clear = '';
 
 
-            echo "<div class=\"_item <?php echo $li_clear ?>\">\n";
+            echo "<div class=\"_item\">\n";
 			echo "	<div class=\"img\"> <a href=\"{$item_link_href}\"> \n";
             echo get_it_image($row['it_id'], $this->img_width, $this->img_height, '', '', stripslashes($row['it_name']))."\n";
 

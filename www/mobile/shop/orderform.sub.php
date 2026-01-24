@@ -45,6 +45,7 @@ ob_start();
                         b.ca_id,
                         b.ca_id2,
                         b.ca_id3,
+                        b.it_origin,
                         b.it_notax
                    from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
                   where a.od_id = '$s_cart_id'
@@ -179,10 +180,14 @@ ob_start();
             <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
             <input type="hidden" name="cp_price[<?php echo $i; ?>]" value="0">
             <div class="li_name">
-							<div class="_nation">
-								<span>말레이시아</span>
-								<span>말레이시아</span>
-							</div>
+                <div class="_nation">
+                    <?php
+                        $origins = explode(',', $row['it_origin']);
+                        foreach ($origins as $origin) {
+                            echo "<span>".$origin."</span>\n";
+                        }
+                    ?>
+                </div>
                 <?php echo $it_name; ?>
             </div>
             <div class="li_op_wr">
@@ -195,7 +200,9 @@ ob_start();
                 <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
                 <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
                 <span class="prqty_sc li_prqty_sp"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
-                 <!-- <span class="total_point li_prqty_sp"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span> -->
+                <?php if($config['cf_use_point']) { ?>
+                    <span class="total_point li_prqty_sp"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>
+                <?php } ?>
 
             </div>
             <div class="total_price total_span"><span>주문금액 </span><strong><?php echo number_format($sell_price); ?></strong></div>
@@ -237,9 +244,10 @@ ob_start();
             <?php } ?>
             <dt class="sod_bsk_dvr">배송비</dt>
             <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
-
-            <!-- <dt class="sod_bsk_point">포인트</dt>
-            <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd> -->
+            <?php if($config['cf_use_point']) { ?>
+                <dt class="sod_bsk_point">포인트</dt>
+                <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
+            <?php } ?>
             <dt class="sod_bsk_cnt">총계</dt>
             <dd class="sod_bsk_cnt">
                 <?php $tot_price = $tot_sell_price + $send_cost; // 총계 = 주문상품금액합계 + 배송비 ?>
@@ -304,14 +312,14 @@ if($is_kakaopay_use) {
 
                 </li>
                 <?php } ?>
+                <li>
+                    <label for="od_hp">핸드폰<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_hp" value="<?php echo get_text($member['mb_hp']); ?>" id="od_hp" required class="frm_input required" maxlength="20">
+                </li>
 
                 <li>
-                    <label for="od_tel">전화번호<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_tel" value="<?php echo get_text($member['mb_tel']); ?>" id="od_tel" required class="frm_input required" maxlength="20">
-                </li>
-                <li>
-                    <label for="od_hp">핸드폰</label>
-                    <input type="text" name="od_hp" value="<?php echo get_text($member['mb_hp']); ?>" id="od_hp" class="frm_input" maxlength="20">
+                    <label for="od_tel">전화번호</label>
+                    <input type="text" name="od_tel" value="<?php echo get_text($member['mb_tel']); ?>" id="od_tel" class="frm_input" maxlength="20">
                 </li>
                 <li>
                     <strong>주소</strong>
@@ -411,7 +419,7 @@ if($is_kakaopay_use) {
                 <?php if($is_member) { ?>
                 <li>
                     <label for="ad_subject">배송지명</label>
-                    <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20">
+                    <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20" value="기본배송지">
                     <input type="checkbox" name="ad_default" id="ad_default" value="1">
                     <label for="ad_default" class="ad_default">기본배송지로 설정</label>
 
@@ -421,62 +429,55 @@ if($is_kakaopay_use) {
                 ?>
                 <li>
                     <label for="od_b_name">이름<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" maxlength="20">
+                    <input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" maxlength="20"value="<?php echo isset($member['mb_name']) ? get_text($member['mb_name']) : ''; ?>">
                 </li>
                 <li>
-                    <label for="od_b_tel">전화번호<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_b_tel" id="od_b_tel" required class="frm_input required" maxlength="20">
+                    <label for="od_b_hp">핸드폰<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_b_hp" id="od_b_hp" required class="frm_input required" maxlength="20" value="<?php echo get_text($member['mb_hp']); ?>" >
                 </li>
                 <li>
-                    <label for="od_b_hp">핸드폰</label>
-                    <input type="text" name="od_b_hp" id="od_b_hp" class="frm_input" maxlength="20">
+                    <label for="od_b_tel">전화번호</label>
+                    <input type="text" name="od_b_tel" id="od_b_tel"  class="frm_input" maxlength="20" value="<?php echo get_text($member['mb_tel']); ?>">
                 </li>
+
                 <li>
                     <strong>주소</strong>
                     <label for="od_b_zip" class="sound_only">우편번호<strong class="sound_only"> 필수</strong></label>
-                    <span class="add_num"><input type="text" name="od_b_zip" id="od_b_zip" required class="frm_input required" size="5" maxlength="6">
+                    <span class="add_num"><input type="text" name="od_b_zip" id="od_b_zip" required class="frm_input required" size="5" maxlength="6" value="<?php echo get_text($member['mb_2']); ?>">
                     <button type="button" class="btn_frmline  btn_addsch" onclick="win_zip('forderform', 'od_b_zip', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon');">주소 검색</button></span>
                     <label for="od_b_addr1" class="sound_only">기본주소<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required">
+                    <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" value="<?php echo get_text($member['mb_3']); ?>" >
                     <label for="od_b_addr2" class="sound_only">상세주소</label>
-                    <input type="text" name="od_b_addr2" id="od_b_addr2" class="frm_input frm_address">
+                    <input type="text" name="od_b_addr2" id="od_b_addr2" class="frm_input frm_address" value="<?php echo get_text($member['mb_4']); ?>">
                     <label for="od_b_addr3" class="sound_only">참고항목</label>
-                    <input type="text" name="od_b_addr3" id="od_b_addr3" class="frm_input frm_address" readonly="readonly">
-                    <input type="hidden" name="od_b_addr_jibeon" value="">
+                    <input type="text" name="od_b_addr3" id="od_b_addr3" class="frm_input frm_address" readonly="readonly" value="<?php echo get_text($member['mb_5']); ?>">
+                    <input type="hidden" name="od_b_addr_jibeon"  value="<?php echo get_text($member['mb_6']); ?>">
                 </li>
-
-
-
-
 
                 <li>
                     <label for="">매장출입 및 적재정보</label>
-                    <input type="text" name="" id="" class="frm_input">
+                    <input type="text" name="add_info_1" class="frm_input">
                 </li>
                 <li>
                     <label for="">배송지 간판명</label>
-                    <input type="text" name="" id="" class="frm_input">
+                    <input type="text" name="add_info_2" class="frm_input">
                 </li>
                 <li>
                     <label for="">비밀번호</label>
-                    <input type="text" name="" id="" class="frm_input">
+                    <input type="text" name="add_info_3" class="frm_input">
                 </li>
                 <li>
                     <label for="">잠금장치위치</label>
-                    <input type="text" name="" id="" class="frm_input">
+                    <input type="text" name="add_info_4" class="frm_input">
                 </li>
                 <li>
                     <label for="">적재위치</label>
-                    <input type="text" name="" id="" class="frm_input">
+                    <input type="text" name="add_info_5" class="frm_input">
 										<div class="_redInfo">
 											* 위 정보가 없을 경우 문앞 상온 적재될 수 있습니다.<br>
 											(아이스박스 포장 없음)
 										</div>
                 </li>
-
-
-
-
 
                 <li>
                     <label for="od_memo">비고</label>
@@ -579,9 +580,10 @@ if($is_kakaopay_use) {
         </div>
 
         <?php
-        if (!$default['de_card_point'])
-            echo '<p id="sod_frm_pt_alert"><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
-
+        if($config['cf_use_point']) {
+            if (!$default['de_card_point'])
+                echo '<p id="sod_frm_pt_alert"><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
+        }
         $multi_settle = 0;
         $checked = '';
 
@@ -1515,7 +1517,7 @@ function pay_approval()
         f.Amt.value       = f.good_mny.value;
         f.BuyerName.value   = pf.od_name.value;
         f.BuyerEmail.value  = pf.od_email.value;
-        f.BuyerTel.value    = pf.od_hp.value ? pf.od_hp.value : pf.od_tel.value;
+        f.BuyerTel.value    = pf.od_hp.value;
 
         f.DirectShowOpt.value = "";     // 간편결제 요청 값 초기화
         f.DirectEasyPay.value = "";     // 간편결제 요청 값 초기화
@@ -1669,7 +1671,7 @@ function orderfield_check(f)
         if( (f.od_pwd.value.length<3) || (f.od_pwd.value.search(/([^A-Za-z0-9]+)/)!=-1) )
             error_field(f.od_pwd, "회원이 아니신 경우 주문서 조회시 필요한 비밀번호를 3자리 이상 입력해 주십시오.");
     }
-    check_field(f.od_tel, "주문하시는 분 전화번호를 입력하십시오.");
+    check_field(f.od_hp, "주문하시는 분 전화번호를 입력하십시오.");
     check_field(f.od_addr1, "주소검색을 이용하여 주문하시는 분 주소를 입력하십시오.");
     //check_field(f.od_addr2, " 주문하시는 분의 상세주소를 입력하십시오.");
     check_field(f.od_zip, "");
@@ -1686,7 +1688,7 @@ function orderfield_check(f)
     }
 
     check_field(f.od_b_name, "받으시는 분 이름을 입력하십시오.");
-    check_field(f.od_b_tel, "받으시는 분 전화번호를 입력하십시오.");
+    check_field(f.od_b_hp, "받으시는 분 핸드폰 번호를 입력하십시오.");
     check_field(f.od_b_addr1, "주소검색을 이용하여 받으시는 분 주소를 입력하십시오.");
     //check_field(f.od_b_addr2, "받으시는 분의 상세주소를 입력하십시오.");
     check_field(f.od_b_zip, "");

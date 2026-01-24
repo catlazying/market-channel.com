@@ -175,18 +175,22 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 			<dt>가공형태</dt>
 			<dd><?php echo $info_data['product_composition']; ?></dd>
 		</dl>
+		<?/*
 		<dl>
 			<dt>과세여부</dt>
 			<dd><?php echo ($it['it_notax']==1)?"비과세":"과세"; ?></dd>
 		</dl>
+		*/?>
 		<dl>
 			<dt>규격</dt>
 			<dd><?php echo $info_data['quantity']; ?></dd>
 		</dl>
+		<?/*
 		<dl>
 			<dt>배송료</dt>
 			<dd><?php echo $sc_method?></dd>
 		</dl>
+		*/?>
 		<dl>
 			<dt>무게</dt>
 			<dd><?php echo $info_data['weight']; ?></dd>

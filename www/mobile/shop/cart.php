@@ -26,6 +26,7 @@ $sql = " select a.ct_id,
                 a.ct_status,
                 a.ct_send_cost,
                 a.it_sc_type,
+                b.it_origin,
                 b.ca_id
            from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
           where a.od_id = '$s_cart_id' ";
@@ -119,10 +120,14 @@ $cart_count = sql_num_rows($result);
                     <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>" class="selec_chk" checked>
                     <label for="ct_chk_<?php echo $i; ?>"><span></span><b class="sound_only">상품선택</b></label>
                 </div>
-								<div class="_nation">
-									<span>말레이시아</span>
-									<span>말레이시아</span>
-								</div>
+                <div class="_nation">
+                    <?php
+                        $origins = explode(',', $row['it_origin']);
+                        foreach ($origins as $origin) {
+                            echo "<span>".$origin."</span>\n";
+                        }
+                    ?>
+                </div>
                 <div class="li_name"><?php echo $it_name; ?></div>
                 <div class="total_img"><?php echo $image; ?></div>
                 <div class="li_mod"><?php echo $mod_options; ?></div>
@@ -132,7 +137,10 @@ $cart_count = sql_num_rows($result);
                 <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
                 <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
                 <span class="prqty_sc li_prqty_sp"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
-                <!-- <span class="total_point li_prqty_sp"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span> -->
+                <?php if($config['cf_use_point']) { ?>
+                    <span class="total_point li_prqty_sp"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>
+                <?php } ?>
+
             </div>
              <div class="total_price total_span"><span>소계 </span><strong><?php echo number_format($sell_price); ?></strong>원</div>
         </li>
@@ -171,8 +179,10 @@ $cart_count = sql_num_rows($result);
             <?php } ?>
 
             <?php if ($tot_price > 0) { ?>
-            <!-- <dt>포인트</dt>
-            <dd><strong><?php echo number_format($tot_point); ?> 점</strong></dd> -->
+            <?php if($config['cf_use_point']) { ?>
+                <dt>포인트</dt>
+                <dd><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
+            <?php } ?>
             <dt class="sod_bsk_cnt">총계</dt>
             <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?></strong> 원</dd>
             <?php } ?>

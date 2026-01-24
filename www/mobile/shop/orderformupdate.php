@@ -60,7 +60,7 @@ $sql = "select * from {$g5['g5_shop_order_table']} limit 1";
 $check_tmp = sql_fetch($sql);
 
 if(!isset($check_tmp['od_other_pay_type'])){
-    $sql = "ALTER TABLE `{$g5['g5_shop_order_table']}` 
+    $sql = "ALTER TABLE `{$g5['g5_shop_order_table']}`
             ADD COLUMN `od_other_pay_type` VARCHAR(100) NOT NULL DEFAULT '' AFTER `od_settle_case`; ";
     sql_query($sql, false);
 }
@@ -560,7 +560,7 @@ if($tno) {
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
                 break;
         }
-        
+
         if(function_exists('add_order_post_log')) add_order_post_log($cancel_msg);
         die("Receipt Amount Error");
     }
@@ -617,6 +617,20 @@ $od_memo          = clean_xss_tags($od_memo, 0, 1, 0, 0);
 $od_deposit_name  = clean_xss_tags($od_deposit_name);
 $od_tax_flag      = $default['de_tax_flag_use'];
 
+$add_info_1 = isset($_REQUEST['add_info_1']) ? clean_xss_tags($_REQUEST['add_info_1'], 1, 1) : '';
+$add_info_2 = isset($_REQUEST['add_info_2']) ? clean_xss_tags($_REQUEST['add_info_2'], 1, 1) : '';
+$add_info_3 = isset($_REQUEST['add_info_3']) ? clean_xss_tags($_REQUEST['add_info_3'], 1, 1) : '';
+$add_info_4 = isset($_REQUEST['add_info_4']) ? clean_xss_tags($_REQUEST['add_info_4'], 1, 1) : '';
+$add_info_5 = isset($_REQUEST['add_info_5']) ? clean_xss_tags($_REQUEST['add_info_5'], 1, 1) : '';
+$add_info_arr = array(
+    'info_1' => $add_info_1,
+    'info_2' => $add_info_2,
+    'info_3' => $add_info_3,
+    'info_4' => $add_info_4,
+    'info_5' => $add_info_5,
+);
+$add_info_arr_json = json_encode($add_info_arr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
             set od_id             = '$od_id',
@@ -671,7 +685,8 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_ip             = '$REMOTE_ADDR',
                 od_settle_case    = '$od_settle_case',
                 od_other_pay_type = '$od_other_pay_type',
-                od_test           = '{$default['de_card_test']}'
+                od_test           = '{$default['de_card_test']}',
+                add_info          = '$add_info_arr_json'
                 ";
 $result = sql_query($sql, false);
 

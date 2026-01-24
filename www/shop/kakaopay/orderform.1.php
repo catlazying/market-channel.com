@@ -2,7 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 if( ! $is_kakaopay_use) return;
-
+// G5_IS_MOBILE
 if( $is_mobile_order ){
     include_once(G5_SHOP_PATH.'/kakaopay/mobile_orderform.1.php');
     return;
@@ -66,7 +66,7 @@ if($default['de_tax_flag_use']) {
 <input type="hidden" name="closeUrl"    value="<?php echo $closeUrl; ?>">
 <input type="hidden" name="popupUrl"    value="<?php echo $popupUrl; ?>">
 <input type="hidden" name="nointerest"  value="<?php echo $cardNoInterestQuota ?>" >
-<input type="hidden" name="quotabase"   value="<?php echo $cardQuotaBase ?>" >	
+<input type="hidden" name="quotabase"   value="<?php echo $cardQuotaBase ?>" >
 <?php if($default['de_tax_flag_use']) { ?>
 <input type="hidden" name="tax"         value="">
 <input type="hidden" name="taxfree"     value="">
@@ -117,14 +117,14 @@ if($default['de_tax_flag_use']) {
 
         var pf = document.forderform,
             inicis_kk_form = document.forms[inicis_kakaopay_request];
-        
+
         inicis_kk_form.removeAttribute("target");
         inicis_kk_form.gopaymethod.value = "onlykakaopay";
         inicis_kk_form.acceptmethod.value = "cardonly";
 
         inicis_kk_form.price.value = inicis_kk_form.good_mny.value = pf.good_mny.value;
         inicis_kk_form.goodname.value = (typeof pf.od_goods_name != "undefined") ? pf.od_goods_name.value : "";
-        
+
         if( inicis_kk_form.goodname.value == "" ){
             if( jQuery("#LGD_PRODUCTINFO").length ){
                 inicis_kk_form.goodname.value = jQuery("#LGD_PRODUCTINFO").val();
@@ -167,7 +167,7 @@ if($default['de_tax_flag_use']) {
             alert(save_result);
             return false;
         }
-        
+
         if(inicis_kakao_signature(inicis_kk_form)) {
             setTimeout(function(){
                 INIStdPay.pay(inicis_kakaopay_request);

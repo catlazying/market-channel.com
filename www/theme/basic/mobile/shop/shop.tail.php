@@ -52,6 +52,38 @@ if ($config['cf_analytics']) {
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/sns.js"></script>
-
+<script>
+    function getAppToken() {
+        if (window.AndroidApp) {
+            window.AndroidApp.requestToken();
+        } else if (window.webkit && window.webkit.messageHandlers.iosApp) {
+            window.webkit.messageHandlers.iosApp.postMessage("requestToken");
+        }
+    }
+    window.setPushToken = function(token) {
+		if (token) {
+			$.ajax({
+				url: '/plugin/etc/tokenProc.php',
+				type: 'POST',
+				data: { action:"create",token: token },
+				success: function(response) {
+				}
+			});
+		}
+    };
+</script>
 <?php
+$headers = getallheaders();
+$ua = isset($headers['user-agent']) ? $headers['user-agent'] : '';
+if (preg_match('/AppVersion\/([^\s]+)/i', $ua) &&  $_SESSION['ss_mb_id']) {
+	?>
+	<script>
+		$(document).ready(function() {
+			getAppToken();
+		});
+	</script>
+	<?php
+}
+
 include_once(G5_THEME_PATH.'/tail.sub.php');
+?>

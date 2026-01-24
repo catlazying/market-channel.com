@@ -1,5 +1,5 @@
 <?php
-$sub_menu = "900900";
+$sub_menu = "900770";
 include_once("./_common.php");
 
 $bg_no = isset($_REQUEST['bg_no']) ? clean_xss_tags($_REQUEST['bg_no'], 1, 1) : '';

@@ -189,10 +189,6 @@ if($is_kakaopay_use) {
             <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
             <input type="hidden" name="cp_price[<?php echo $i; ?>]" value="0">
             <div class="li_name">
-							<div class="_nation">
-								<span>말레이시아</span>
-								<span>말레이시아</span>
-							</div>
                 <?php echo $it_name; ?>
             </div>
             <div class="li_op_wr">
@@ -445,7 +441,7 @@ if($is_kakaopay_use) {
 
 
 
-
+            <!--
 
                 <li>
                     <label for="">매장출입 및 적재정보</label>
@@ -472,7 +468,7 @@ if($is_kakaopay_use) {
 										</div>
                 </li>
 
-
+            -->
 
 
 

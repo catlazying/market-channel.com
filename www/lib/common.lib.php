@@ -129,7 +129,7 @@ function set_session($session_name, $value)
 	global $g5;
 
 	static $check_cookie = null;
-	
+
 	if( $check_cookie === null ){
 		$cookie_session_name = session_name();
 		if( ! isset($g5['session_cookie_samesite']) && ! ($cookie_session_name && isset($_COOKIE[$cookie_session_name]) && $_COOKIE[$cookie_session_name]) && ! headers_sent() ){
@@ -157,9 +157,9 @@ function get_session($session_name)
 function set_cookie($cookie_name, $value, $expire, $path='/', $domain=G5_COOKIE_DOMAIN, $secure=false, $httponly=true)
 {
     global $g5;
-    
+
     $c = run_replace('set_cookie_params', array('path'=>$path, 'domain'=>$domain, 'secure'=>$secure, 'httponly'=>$httponly), $cookie_name);
-    
+
     if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
         $c['secure'] = true;
     }
@@ -205,7 +205,7 @@ function alert($msg='', $url='', $error=true, $post=false)
 function alert_close($msg, $error=true)
 {
     global $g5, $config, $member, $is_member, $is_admin, $board;
-    
+
     run_event('alert_close', $msg, $error);
 
     $msg = strip_tags($msg, '<br>');
@@ -257,13 +257,13 @@ function url_auto_link($str)
 {
     global $g5;
     global $config;
-    
+
     if ($replace_str = run_replace('url_auto_link_before', '', $str)) {
         return $replace_str;
     }
-    
+
     $ori_str = $str;
-    
+
     // 140326 유창화님 제안코드로 수정
     // http://sir.kr/pg_lecture/461
     // http://sir.kr/pg_lecture/463
@@ -631,7 +631,7 @@ function check_html_link_nofollow($type=''){
 
 /**
  * HTMLPurifier 필터를 거친 HTML 코드를 반환
- * 
+ *
  * http://htmlpurifier.org/
  * Standards-Compliant HTML Filtering
  * Safe  : HTML Purifier defeats XSS with an audited whitelist
@@ -835,7 +835,7 @@ function get_next_num($table)
 function get_group($gr_id, $is_cache=false)
 {
     global $g5;
-    
+
     if( is_array($gr_id) ){
         return array();
     }
@@ -861,11 +861,11 @@ function get_group($gr_id, $is_cache=false)
 
 /**
  * 회원 정보를 얻는다
- * 
+ *
  * @param string $mb_id
  * @param string $fields
  * @param bool $is_cache
- * 
+ *
  * @return array
  */
 function get_member($mb_id, $fields = '*', $is_cache = false)
@@ -1141,11 +1141,11 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
 function insert_use_point($mb_id, $point, $po_id='')
 {
     global $g5, $config;
-    
+
     if ($replace_insert = run_replace('insert_use_point_before', '', $mb_id, $point, $po_id)) {
         return $replace_insert;
     }
-    
+
     if($config['cf_point_term'])
         $sql_order = " order by po_expire_date asc, po_id asc ";
     else
@@ -1413,7 +1413,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
     $name = get_text($name, 0, true);
     $namekey = ($mb_id && $name) ? $mb_id."\t".$name : '';
-    
+
     // id는 유니크하지만 닉네임 또는 이름은 변경이 가능하다
     // name의 경우 비회원은 게시판에 동일한 이름을 등록할수 있다.
     if ($namekey && isset($cache['idname:' . $namekey]) && $cache['idname:' . $namekey]) {
@@ -1533,7 +1533,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $str .= $str2;
     $str .= '<noscript class="sv_nojs">' . $str2 . '</noscript>';
     $str .= "</span>";
-    
+
     if ($namekey) {
         $cache['idname:' . $namekey] = $str;
     } else if ($mb_id && !$name) {
@@ -1759,7 +1759,7 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
 
     $is_debug = get_permission_debug_show();
-    
+
     $start_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
 
     if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
@@ -1896,10 +1896,10 @@ function sql_free_result($result)
 
 /**
  * MySQL PASSWORD() 함수로 생성된 비밀번호의 hash 값을 반환
- * 
+ *
  * MySQL 버전에 따라 결과가 다르게 나올 수 있음.
  * MySQL 8.0.11 버전 이상에서는 오류 발생(PASSWORD 함수가 제거됨)으로 사용할 수 없음.
- * 
+ *
  * @deprecated 이 함수는 안전하지 않으므로 사용하지 않는 것을 권장 함
  * @see get_encrypt_string() and check_password()
  * @param string $value
@@ -2298,7 +2298,7 @@ function normalize_utf8_string($string) {
     if (G5_DB_CHARSET === 'utf8mb4' || !function_exists('mb_ord')) {
         return $string;
     }
-    
+
     // Unicode 특수 문자를 일반 문자로 변환
     $normalized = preg_replace_callback('/[\x{1D400}-\x{1D7FF}]/u', '_callback_normalizeString', $string);
 
@@ -2414,7 +2414,7 @@ function is_utf8($str)
 function utf8_strcut( $str, $size, $suffix='...' )
 {
     if( function_exists('mb_strlen') && function_exists('mb_substr') ){
-        
+
         if(mb_strlen($str)<=$size) {
             return $str;
         } else {
@@ -2467,7 +2467,7 @@ function sql_real_escape_string($str, $link=null)
 
     if(!$link)
         $link = $g5['connect_db'];
-    
+
     if(function_exists('mysqli_connect') && G5_MYSQLI_USE) {
         return mysqli_real_escape_string($link, $str);
     }
@@ -2548,7 +2548,7 @@ function get_uniqid()
     if ($get_uniqid_key = run_replace('get_uniqid_key', '')) {
         return $get_uniqid_key;
     }
-    
+
     sql_query(" LOCK TABLE {$g5['uniqid_table']} WRITE ");
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
@@ -2645,7 +2645,7 @@ function delete_editor_thumbnail($contents)
 {
     if(!$contents)
         return;
-    
+
     run_event('delete_editor_thumbnail_before', $contents);
 
     // $contents 중 img 태그 추출
@@ -2878,7 +2878,7 @@ class html_process {
         // 현재접속자 처리
         $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         $tmp_row = sql_fetch($tmp_sql);
-        $http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']; 
+        $http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
 
         if ($tmp_row['cnt']) {
             $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
@@ -2909,7 +2909,7 @@ class html_process {
             }
 
             array_multisort($order, SORT_ASC, $index, SORT_ASC, $links);
-            
+
             $links = run_replace('html_process_css_files', $links);
 
             foreach($links as $link) {
@@ -2937,13 +2937,13 @@ class html_process {
             }
 
             array_multisort($order, SORT_ASC, $index, SORT_ASC, $scripts);
-            
+
             $scripts = run_replace('html_process_script_files', $scripts);
 
             foreach($scripts as $js) {
                 if(!trim($js[1]))
                     continue;
-                
+
                 $add_version_str = (stripos($js[1], $http_host) !== false) ? '?ver='.G5_JS_VER : '';
                 $js[1] = preg_replace('#\.js([\'\"]?>)<\/script>$#i', '.js'.$add_version_str.'$1</script>', $js[1]);
 
@@ -2973,9 +2973,9 @@ class html_process {
         if($javascript)
             $nl = "\n";
         $buffer = preg_replace('#(</head>[^<]*<body[^>]*>)#', "$javascript{$nl}$1", $buffer);
-        
+
         $meta_tag = run_replace('html_process_add_meta', '');
-        
+
         if( $meta_tag ){
             /*
             </title>content<body>
@@ -3057,7 +3057,7 @@ function board_notice($bo_notice, $wr_id, $insert=false)
 function googl_short_url($longUrl)
 {
     global $config;
-    
+
     // 구글 짧은 주소는 서비스가 종료 되었습니다.
     return function_exists('run_replace') ? run_replace('googl_short_url', $longUrl) : $longUrl;
 }
@@ -3100,7 +3100,7 @@ function insert_member_cert_history($mb_id, $name, $hp, $birth, $type)
     if( !isset($g5['member_cert_history']) ){
         $g5['member_cert_history_table'] = G5_TABLE_PREFIX.'member_cert_history';
     }
-    
+
     // 멤버 본인인증 정보 변경 내역 테이블 없을 경우 생성
     if(isset($g5['member_cert_history_table']) && !sql_query(" DESC {$g5['member_cert_history_table']} ", false)) {
         sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['member_cert_history_table']}` (
@@ -3195,7 +3195,7 @@ if (!function_exists("get_sock")) {
             $host = $res[1];
             $get  = $res[2];
         }
-        
+
         $header = '';
 
         // 80번 포트로 소캣접속 시도
@@ -3417,15 +3417,15 @@ function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len
     }
 
     $str_len = strlen($str);
-    
+
     $i = 0;
     while($i <= $str_len){
         $result = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
-        
+
         if( $check_entities ){
             $result = str_replace(array('&colon;', '&lpar;', '&rpar;', '&NewLine;', '&Tab;'), '', $result);
         }
-        
+
         $result = preg_replace('#([^\p{L}]|^)(?:javascript|jar|applescript|vbscript|vbs|wscript|jscript|behavior|mocha|livescript|view-source)\s*:(?:.*?([/\\\;()\'">]|$))#ius',
                 '$1$2', $result);
 
@@ -3442,7 +3442,7 @@ function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len
 function clean_xss_attributes($str)
 {
     $xss_attributes_string = 'onAbort|onActivate|onAttribute|onAfterPrint|onAfterScriptExecute|onAfterUpdate|onAnimationCancel|onAnimationEnd|onAnimationIteration|onAnimationStart|onAriaRequest|onAutoComplete|onAutoCompleteError|onAuxClick|onBeforeActivate|onBeforeCopy|onBeforeCut|onBeforeDeactivate|onBeforeEditFocus|onBeforePaste|onBeforePrint|onBeforeScriptExecute|onBeforeUnload|onBeforeUpdate|onBegin|onBlur|onBounce|onCancel|onCanPlay|onCanPlayThrough|onCellChange|onChange|onClick|onClose|onCommand|onCompassNeedsCalibration|onContextMenu|onControlSelect|onCopy|onCueChange|onCut|onDataAvailable|onDataSetChanged|onDataSetComplete|onDblClick|onDeactivate|onDeviceLight|onDeviceMotion|onDeviceOrientation|onDeviceProximity|onDrag|onDragDrop|onDragEnd|onDragEnter|onDragLeave|onDragOver|onDragStart|onDrop|onDurationChange|onEmptied|onEnd|onEnded|onError|onErrorUpdate|onExit|onFilterChange|onFinish|onFocus|onFocusIn|onFocusOut|onFormChange|onFormInput|onFullScreenChange|onFullScreenError|onGotPointerCapture|onHashChange|onHelp|onInput|onInvalid|onKeyDown|onKeyPress|onKeyUp|onLanguageChange|onLayoutComplete|onLoad|onLoadedData|onLoadedMetaData|onLoadStart|onLoseCapture|onLostPointerCapture|onMediaComplete|onMediaError|onMessage|onMouseDown|onMouseEnter|onMouseLeave|onMouseMove|onMouseOut|onMouseOver|onMouseUp|onMouseWheel|onMove|onMoveEnd|onMoveStart|onMozFullScreenChange|onMozFullScreenError|onMozPointerLockChange|onMozPointerLockError|onMsContentZoom|onMsFullScreenChange|onMsFullScreenError|onMsGestureChange|onMsGestureDoubleTap|onMsGestureEnd|onMsGestureHold|onMsGestureStart|onMsGestureTap|onMsGotPointerCapture|onMsInertiaStart|onMsLostPointerCapture|onMsManipulationStateChanged|onMsPointerCancel|onMsPointerDown|onMsPointerEnter|onMsPointerLeave|onMsPointerMove|onMsPointerOut|onMsPointerOver|onMsPointerUp|onMsSiteModeJumpListItemRemoved|onMsThumbnailClick|onOffline|onOnline|onOutOfSync|onPage|onPageHide|onPageShow|onPaste|onPause|onPlay|onPlaying|onPointerCancel|onPointerDown|onPointerEnter|onPointerLeave|onPointerLockChange|onPointerLockError|onPointerMove|onPointerOut|onPointerOver|onPointerUp|onPopState|onProgress|onPropertyChange|onqt_error|onRateChange|onReadyStateChange|onReceived|onRepeat|onReset|onResize|onResizeEnd|onResizeStart|onResume|onReverse|onRowDelete|onRowEnter|onRowExit|onRowInserted|onRowsDelete|onRowsEnter|onRowsExit|onRowsInserted|onScroll|onSearch|onSeek|onSeeked|onSeeking|onSelect|onSelectionChange|onSelectStart|onStalled|onStorage|onStorageCommit|onStart|onStop|onShow|onSyncRestored|onSubmit|onSuspend|onSynchRestored|onTimeError|onTimeUpdate|onTimer|onTrackChange|onTransitionEnd|onToggle|onTouchCancel|onTouchEnd|onTouchLeave|onTouchMove|onTouchStart|onTransitionCancel|onTransitionEnd|onUnload|onURLFlip|onUserProximity|onVolumeChange|onWaiting|onWebKitAnimationEnd|onWebKitAnimationIteration|onWebKitAnimationStart|onWebKitFullScreenChange|onWebKitFullScreenError|onWebKitTransitionEnd|onWheel';
-    
+
     do {
         $count = $temp_count = 0;
 
@@ -3471,7 +3471,7 @@ function clean_xss_attributes($str)
 
 function clean_relative_paths($path){
     $path_len = strlen($path);
-    
+
     $i = 0;
     while($i <= $path_len){
         $result = str_replace('../', '', str_replace('\\', '/', $path));
@@ -3578,7 +3578,7 @@ function replace_filename($name)
     $usec = get_microtime();
     $file_path = pathinfo($name);
     $ext = $file_path['extension'];
-    $return_filename = sha1($ss_id.$_SERVER['REMOTE_ADDR'].$usec); 
+    $return_filename = sha1($ss_id.$_SERVER['REMOTE_ADDR'].$usec);
     if( $ext )
         $return_filename .= '.'.$ext;
 
@@ -3652,7 +3652,7 @@ function login_password_check($mb, $pass, $hash)
                 $sql = "ALTER TABLE `{$g5['member_table']}` ADD `mb_password2` varchar(255) NOT NULL default '' AFTER `mb_password`";
                 sql_query($sql);
             }
-            
+
             $new_password = create_hash($pass);
             $sql = " update {$g5['member_table']} set mb_password = '$new_password', mb_password2 = '$hash' where mb_id = '$mb_id' ";
             sql_query($sql);
@@ -3696,7 +3696,7 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     $p = @parse_url(trim(str_replace('\\', '', $url)));
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
     $is_host_check = false;
-    
+
     // url을 urlencode 를 2번이상하면 parse_url 에서 scheme와 host 값을 가져올수 없는 취약점이 존재함
     if ( $is_redirect && !isset($p['host']) && urldecode($url) != $url ){
         $i = 0;
@@ -3849,7 +3849,7 @@ function get_params_merge_url($params, $url=''){
         . (isset($p['host']) ? $p['host'] : '')
         . ((isset($p['path']) && $url) ? $p['path'] : '')
         . ((isset($p['port']) && $p['port']) ? ":{$p['port']}" : '');
-    
+
     $ori_params = '';
     if( $url ){
         $ori_params = !empty($p['query']) ? $p['query'] : '';
@@ -3862,12 +3862,12 @@ function get_params_merge_url($params, $url=''){
             $p['fragment'] = preg_replace('/^#/', '', $freg);
         }
     }
-    
+
     $q = array();
     if( $ori_params ){
         parse_str( $ori_params, $q );
     }
-    
+
     if( is_array($params) && $params ){
         $q = array_merge($q, $params);
     }
@@ -4025,7 +4025,7 @@ function get_member_profile_img($mb_id='', $width='', $height='', $alt='profile_
 
     static $no_profile_cache = '';
     static $member_cache = array();
-    
+
     $src = '';
 
     if( $mb_id ){
@@ -4083,9 +4083,9 @@ function get_head_title($title){
 
 function is_sms_send($is_type=''){
     global $config;
-    
+
     $is_sms_send = false;
-    
+
     // 토큰키를 사용한다면
     if(isset($config['cf_icode_token_key']) && $config['cf_icode_token_key']){
         $is_sms_send = true;
@@ -4134,7 +4134,7 @@ function safe_replace_regex($str, $str_case=''){
 }
 
 function get_real_client_ip() {
-    
+
     return run_replace('get_real_client_ip', $_SERVER['REMOTE_ADDR']);
 }
 
@@ -4143,7 +4143,7 @@ function check_mail_bot($ip=''){
     //아이피를 체크하여 메일 크롤링을 방지합니다.
     $check_ips = array('211.249.40.');
     $bot_message = 'bot 으로 판단되어 중지합니다.';
-    
+
     if($ip){
         foreach( $check_ips as $c_ip ){
             if( preg_match('/^'.preg_quote($c_ip).'/', $ip) ) {
@@ -4154,13 +4154,13 @@ function check_mail_bot($ip=''){
 
     // user agent를 체크하여 메일 크롤링을 방지합니다.
     $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-    if ($user_agent === 'Carbon' || strpos($user_agent, 'BingPreview') !== false || strpos($user_agent, 'Slackbot') !== false) { 
+    if ($user_agent === 'Carbon' || strpos($user_agent, 'BingPreview') !== false || strpos($user_agent, 'Slackbot') !== false) {
         die($bot_message);
-    } 
+    }
 }
 
 function get_call_func_cache($func, $args=array()){
-    
+
     static $cache = array();
 
     $key = md5(serialize($args));
@@ -4176,7 +4176,7 @@ function get_call_func_cache($func, $args=array()){
     } catch (Exception $e) {
         return null;
     }
-    
+
     return $result;
 }
 
@@ -4204,14 +4204,14 @@ function is_include_path_check($path='', $is_input='')
             if ( $peer_count && $peer_count > $slash_count ){
                 return false;
             }
-            
+
             $dirname_doc_root = !empty($_SERVER['DOCUMENT_ROOT']) ? dirname($_SERVER['DOCUMENT_ROOT']) : dirname(dirname(dirname(__DIR__)));
-            
+
             // 웹서버 폴더만 허용
             if ($dirname_doc_root && file_exists($path) && strpos(realpath($path), realpath($dirname_doc_root)) !== 0) {
                 return false;
             }
-            
+
             try {
                 // whether $path is unix or not
                 $unipath = strlen($path)==0 || substr($path, 0, 1) != '/';
@@ -4247,7 +4247,7 @@ function is_include_path_check($path='', $is_input='')
                 //echo 'Caught exception: ',  $e->getMessage(), "\n";
                 return false;
             }
-            
+
             if (preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) || preg_match('/pear(cmd)?\.php/i', $replace_path)){
                 return false;
             }
@@ -4263,7 +4263,7 @@ function is_include_path_check($path='', $is_input='')
         }
 
         $extension = pathinfo($path, PATHINFO_EXTENSION);
-        
+
         if($extension && preg_match('/(jpg|jpeg|png|gif|bmp|conf|php\-x)$/i', $extension)) {
             return false;
         }
@@ -4327,4 +4327,23 @@ function option_array_checked($option, $arr=array()){
     }
 
     return $checked;
+}
+
+function replaceName($str){
+    if(G5_MARKET_YN=='N') {
+        $res = $str;
+    }else{
+        if($str=='주문') $res = "주문완료(입금전)";
+        else if($str=='입금') $res = "입금확인 및 배송중";
+        else if($str=='완료') $res = "배송완료";
+        else $res = $str;
+
+    }
+    return $res;
+}
+
+## fcm save
+function test(){
+    echo "-----------------------------";
+
 }

@@ -36,7 +36,7 @@ if(defined('G5_THEME_MSHOP_PATH')) {
                         order by io_type, ct_id
                         limit 1 ";
             $ct = sql_fetch($sql);
-            $ct_name = get_text($ct['it_name']).' '.get_text($ct['ct_option']);
+            $ct_name = get_text($ct['it_name']).' ('.get_text($ct['ct_option']).')';
 
             $sql = " select count(*) as cnt
                         from {$g5['g5_shop_cart_table']}
@@ -47,16 +47,16 @@ if(defined('G5_THEME_MSHOP_PATH')) {
 
             switch($row['od_status']) {
                 case '주문':
-                    $od_status = '<span class="status_01">입금확인중</span>';
+                    $od_status = '<span class="status_01">주문완료(입금전)</span>';
                     break;
                 case '입금':
-                    $od_status = '<span class="status_02">입금완료</span>';
+                    $od_status = '<span class="status_02" title="입금완료">입금확인 및 배송중</span>';
                     break;
                 case '준비':
-                    $od_status = '<span class="status_03">상품준비중</span>';
+                    $od_status = '<span class="status_03" title="상품준비중">입금확인 및 배송중</span>';
                     break;
                 case '배송':
-                    $od_status = '<span class="status_04">상품배송</span>';
+                    $od_status = '<span class="status_04" title="상품배송">입금확인 및 배송중</span>';
                     break;
                 case '완료':
                     $od_status = '<span class="status_05">배송완료</span>';

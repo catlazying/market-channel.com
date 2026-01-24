@@ -135,6 +135,12 @@ $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page;
 $g5['title'] = $html_title;
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
+if(G5_MARKET_YN=='Y') {
+    // 추가 카테고리
+    $cateAddSel = array(30,40);
+
+    $cateAddAry = null;
+}
 // 분류리스트
 $category_select = '';
 $script = '';
@@ -145,18 +151,24 @@ $sql .= " order by ca_order, ca_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    $len = strlen($row['ca_id']) / 2 - 1;
+    if(in_array(substr($row['ca_id'], 0, 2), $cateAddSel)){
+        $cateAddAry[substr($row['ca_id'], 0, 2)][] = array("ca_id"=>$row['ca_id'],"ca_name"=>$row['ca_name']);
 
-    $nbsp = "";
-    for ($i=0; $i<$len; $i++)
-        $nbsp .= "&nbsp;&nbsp;&nbsp;";
+    }else{
 
-    $category_select .= "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
+        $len = strlen($row['ca_id']) / 2 - 1;
+        $nbsp = "";
+        for ($i=0; $i<$len; $i++)
+            $nbsp .= "&nbsp;&nbsp;&nbsp;";
 
-    $script .= "ca_use['{$row['ca_id']}'] = {$row['ca_use']};\n";
-    $script .= "ca_stock_qty['{$row['ca_id']}'] = {$row['ca_stock_qty']};\n";
-    //$script .= "ca_explan_html['$row[ca_id]'] = $row[ca_explan_html];\n";
-    $script .= "ca_sell_email['{$row['ca_id']}'] = '{$row['ca_sell_email']}';\n";
+        $category_select .= "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
+
+        $script .= "ca_use['{$row['ca_id']}'] = {$row['ca_use']};\n";
+        $script .= "ca_stock_qty['{$row['ca_id']}'] = {$row['ca_stock_qty']};\n";
+        //$script .= "ca_explan_html['$row[ca_id]'] = $row[ca_explan_html];\n";
+        $script .= "ca_sell_email['{$row['ca_id']}'] = '{$row['ca_sell_email']}';\n";
+    }
+
 }
 
 // 재입고알림 설정 필드 추가
@@ -274,10 +286,207 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             </td>
         </tr>
         <?php } ?>
+        <?php for ($i=1; $i<=2; $i++) { ?>
+        <tr>
+            <th scope="row">
+                <input type="text" name="it_<?php echo $i ?>_subj" id="it_<?php echo $i ?>_subj" value="<?php
+                    if (!empty($it['it_'.$i.'_subj'])) {
+                        echo get_text($it['it_'.$i.'_subj']);
+                    } else {
+                        echo isset($cateAddAry[$cateAddSel[($i-1)]][0]['ca_name']) ? $cateAddAry[$cateAddSel[($i-1)]][0]['ca_name'] : '';
+                    }
+                ?>" class="frm_input" readonly>
+            </th>
+            <td>
+                <input type="text" name="it_<?php echo $i ?>" value="<?php echo get_text($it['it_'.$i]) ?>" id="it_<?php echo $i ?>" class="frm_input" size="95">
+
+                <input type="hidden" name="chk_ca_<?php echo $i ?>" value="1" id="chk_ca_<?php echo $i ?>">
+                <input type="hidden" name="chk_all_<?php echo $i ?>" value="1" id="chk_all_<?php echo $i ?>">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_<?php echo $i ?>" value="1" id="chk_ca_<?php echo $i ?>">
+                <label for="chk_ca_<?php echo $i ?>">분류적용</label>
+                <input type="checkbox" name="chk_all_<?php echo $i ?>" value="1" id="chk_all_<?php echo $i ?>">
+                <label for="chk_all_<?php echo $i ?>">전체적용</label>
+            </td>
+        </tr>
+        <?php } ?>
+
         </tbody>
         </table>
     </div>
 </section>
+
+<script>
+$(function() {
+    <?php
+    if (isset($cateAddSel) && is_array($cateAddSel)) {
+        foreach($cateAddSel as $key => $value){
+    ?>
+           window.cateAddAry<?php echo  ($key+1) ?> = <?php echo json_encode($cateAddAry[$value], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES); ?>;
+    <?php
+        }
+    }
+    ?>
+
+    // cateAddAry1, cateAddAry2 중복 선언 가능성 있음, PHP 에서도 echo 되고 있음. PHP echo 까지 중복되면 의도한 데이터만 사용 권장함.
+    // => 만약 PHP에서 cateAddAry1/2 변수를 json_encode 등으로 echo 한다면 아래 JS 하드코드는 지워도 무방함.
+    // 현재 하드코딩된 상태 유지. 아래 개선: 이미 window 전역에 선언된 값 있으면 덮어쓰지 않도록 함.
+    // if (typeof window.cateAddAry1 === 'undefined') {
+    //     window.cateAddAry1 = [{"ca_id":"30","ca_name":"업태별"},{"ca_id":"3010","ca_name":"한식"},{"ca_id":"301020","ca_name":"새우류"},{"ca_id":"301030","ca_name":"연체류"},{"ca_id":"301040","ca_name":"게류"},{"ca_id":"301050","ca_name":"가공수산"},{"ca_id":"301060","ca_name":"어패류"},{"ca_id":"301070","ca_name":"특수부위"},{"ca_id":"301080","ca_name":"초밥류"},{"ca_id":"301090","ca_name":"기타냉동"},{"ca_id":"3010a0","ca_name":"공산품"},{"ca_id":"3020","ca_name":"중식"},{"ca_id":"302010","ca_name":"새우류"},{"ca_id":"302020","ca_name":"연체류"},{"ca_id":"302030","ca_name":"게류"},{"ca_id":"302040","ca_name":"가공수산"},{"ca_id":"302050","ca_name":"어패류"},{"ca_id":"302060","ca_name":"특수부위"},{"ca_id":"302070","ca_name":"초밥류"},{"ca_id":"302080","ca_name":"기타냉동"},{"ca_id":"302090","ca_name":"공산품"},{"ca_id":"3040","ca_name":"양식및기타"},{"ca_id":"304010","ca_name":"새우류"},{"ca_id":"304020","ca_name":"연체류"},{"ca_id":"304030","ca_name":"게류"},{"ca_id":"304040","ca_name":"가공수산"},{"ca_id":"304050","ca_name":"어패류"},{"ca_id":"304060","ca_name":"특수부위"},{"ca_id":"304070","ca_name":"초밥류"},{"ca_id":"304080","ca_name":"기타냉동"},{"ca_id":"304090","ca_name":"공산품"},{"ca_id":"3050","ca_name":"기타"}];
+    // }
+    // if (typeof window.cateAddAry2 === 'undefined') {
+    //     window.cateAddAry2 = [{"ca_id":"40","ca_name":"조리방식별"},{"ca_id":"4010","ca_name":"찜"},{"ca_id":"401010","ca_name":"새우류"},{"ca_id":"401020","ca_name":"연체류"},{"ca_id":"401030","ca_name":"게류"},{"ca_id":"401040","ca_name":"가공수산"},{"ca_id":"401050","ca_name":"어패류"},{"ca_id":"401060","ca_name":"특수부위"},{"ca_id":"401070","ca_name":"초밥류"},{"ca_id":"401080","ca_name":"기타냉동"},{"ca_id":"401090","ca_name":"공산품"},{"ca_id":"4020","ca_name":"탕"},{"ca_id":"402010","ca_name":"새우류"},{"ca_id":"402020","ca_name":"연체류"},{"ca_id":"402030","ca_name":"게류"},{"ca_id":"402040","ca_name":"가공수산"},{"ca_id":"402050","ca_name":"어패류"},{"ca_id":"402060","ca_name":"특수부위"},{"ca_id":"402070","ca_name":"초밥류"},{"ca_id":"402080","ca_name":"기타냉동"},{"ca_id":"402090","ca_name":"공산품"},{"ca_id":"4030","ca_name":"볶음"},{"ca_id":"403010","ca_name":"새우류"},{"ca_id":"403020","ca_name":"연체류"},{"ca_id":"403030","ca_name":"게류"},{"ca_id":"403040","ca_name":"가공수산"},{"ca_id":"403050","ca_name":"어패류"},{"ca_id":"403060","ca_name":"특수부위"},{"ca_id":"403070","ca_name":"초밥류"},{"ca_id":"403080","ca_name":"기타냉동"},{"ca_id":"403090","ca_name":"공산품"},{"ca_id":"4040","ca_name":"조림"},{"ca_id":"404010","ca_name":"새우류"},{"ca_id":"404020","ca_name":"연체류"},{"ca_id":"404030","ca_name":"게류"},{"ca_id":"404040","ca_name":"가공수산"},{"ca_id":"404050","ca_name":"어패류"},{"ca_id":"404060","ca_name":"특수부위"},{"ca_id":"404070","ca_name":"초밥류"},{"ca_id":"404080","ca_name":"기타냉동"},{"ca_id":"404090","ca_name":"공산품"}];
+    // }
+
+    // 1, 2차 여분필드 클릭시 레이어 팝업 띄우기
+    for (var i = 1; i <= 2; i++) {
+        // input 의 click 이벤트 중첩(중복) 등록 방지
+        var $input = $('input[name="it_' + i + '"]');
+        if($input.length) {
+            $input.off('click.itemform_extra') // 혹시 여러번 실행되거나 ajax 삽입 등 대비해서 기존 이벤트 제거
+                  .on('click.itemform_extra', function(e) {
+                      e.preventDefault();
+                      showExtraFieldPopup($(this).attr('name'));
+                  });
+        }
+    }
+
+    function showExtraFieldPopup(inputName) {
+        // 이미 열려있다면 삭제
+        $('#extra_field_popup_layer').remove();
+
+        // 팝업 생성
+        var $layer = $('<div/>', { id: 'extra_field_popup_layer' }).css({
+            position: 'fixed',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: '9999',
+            background: '#fff',
+            border: '2px solid #888',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.16)',
+            padding: '30px 20px 20px 20px',
+            minWidth: '340px',
+            maxWidth: '90vw'
+        });
+
+        // 필드 라벨
+        var $label = $('input[name="' + inputName + '_subj"]');
+        var labelText = $label.length ? $label.val() : '';
+
+        // 현재 input value
+        var $originInput = $('input[name="' + inputName + '"]');
+        var inputValue = ($originInput.length ? $originInput.val() : '').trim();
+
+        // cateAddAry1, cateAddAry2 값 체크박스용 표시
+        // inputValue "," 기준 분할, trim, 빈문자 제거
+        var fieldNum = inputName.replace(/^\D+/, ''); // inputName 앞 영문자 제거, 숫자만 추출
+        var checkedValues = inputValue ? inputValue.split(',').map(function(v) { return v.trim(); }).filter(Boolean) : [];
+
+        function makeCheckboxList(arr, fieldClass) {
+            var html = "<div style='max-height:450px;overflow-y:auto;padding-bottom:8px;'>";
+            var lastLength = 0;
+            for(var i=0;i<arr.length;i++) {
+                var o = arr[i];
+                if(!o.ca_id || !o.ca_name) continue;
+                // 두자리 ca_id(10, 20, 30, 40 등)는 숨김 처리
+                if (o.ca_id.length === 2) continue;
+
+                // 4자리, 6자리, 8자리 시작 전 <br><br> 삽입
+                var len = o.ca_id.length;
+                if ((len === 4  ) && lastLength !== len) {
+                    html += "<br><br>";
+                }
+                if (( len === 6 || len === 8) && lastLength !== len) {
+                    html += "<br>";
+                }
+                lastLength = len;
+
+                var isChecked = checkedValues.indexOf(o.ca_id) !== -1 ? "checked" : "";
+                // ca_id, ca_name XSS 방지 (텍스트 노드로 변환)
+                html += "<label style='display:inline-block;margin:0 8px 6px 0;'>" +
+                    // 4자리보다 큰 경우에만 체크박스 출력 (ex: 6자리, 8자리 등)
+                    (o.ca_id.length > 4
+                        ? "<input type='checkbox' class='" + fieldClass + "' value='" + $('<div>').text(o.ca_id).html() + "' " + isChecked + "> "
+                        : ""
+                    ) +
+                    $('<div>').text(o.ca_name).html() +
+                    "</label>";
+            }
+            html += "</div>";
+            return html;
+        }
+
+        // cateAddAry1, cateAddAry2 모두 체크박스 렌더링
+        var boxs = "";
+        // cateAddAry1, cateAddAry2 등 동적 전역 변수에서 가져옴 (window["cateAddAry" + fieldNum])
+        var targetCateArr = window["cateAddAry" + fieldNum];
+        if(Array.isArray(targetCateArr)) {
+            boxs += makeCheckboxList(targetCateArr, "popup-cate" + fieldNum);
+        }
+
+        // 동적 html 조립
+        $layer.html(
+            '<h3 style="font-size:1.2em;margin:0 0 12px 0;">' + labelText + ' 값 입력</h3>' +
+            boxs +
+            '<textarea style="width:100%;min-height:40px;" id="popup_field_textarea">' +
+                $('<div>').text(inputValue).html() +
+            '</textarea>' +
+            '<div style="margin-top:12px; text-align:right;">' +
+                '<button type="button" id="popup_field_ok" style="margin-right:8px;">확인</button>' +
+                '<button type="button" id="popup_field_cancel">취소</button>' +
+            '</div>'
+        );
+        $('body').append($layer);
+
+        // 체크박스 변화시 textarea에 값 반영
+        $layer.on("change", "input[type=checkbox]", function() {
+            var vals = [];
+            $layer.find("input[type=checkbox]:checked").each(function() {
+                vals.push($(this).val());
+            });
+            $('#popup_field_textarea').val(vals.join(","));
+        });
+
+        // textarea 입력 변화시 체크박스 상태 동기화
+        $layer.on('input', '#popup_field_textarea', function() {
+            var updated = $(this).val().split(',').map(function(v){ return v.trim(); }).filter(Boolean);
+            $layer.find("input[type=checkbox]").each(function() {
+                $(this).prop('checked', updated.indexOf($(this).val()) !== -1);
+            });
+        });
+
+        // 확인 버튼 클릭
+        $layer.on('click', '#popup_field_ok', function() {
+            var val = $('#popup_field_textarea').val();
+            if($originInput.length) $originInput.val(val);
+            $layer.remove();
+        });
+        // 취소 버튼 클릭
+        $layer.on('click', '#popup_field_cancel', function() {
+            $layer.remove();
+        });
+
+        // ESC 키로 닫기
+        function escClose(e) {
+            if(e.key === "Escape") {
+                $layer.remove();
+                $(document).off('keydown', escClose);
+            }
+        }
+        $(document).on('keydown', escClose);
+    }
+
+    // 기타 잠재적 오류 노트:
+    // - cateAddAry1/2 가 PHP에서도 별도로 echo 된다면 여기 JS 중복선언 주의
+    // - input[name="it_1"], input[name="it_2"] 이 두개만 팝업 처리됨
+    // - 팝업은 한 번에 1개만 열림
+    // - 만약 팝업이 열려있는데 스크립트 재실행시(ajax 등) 레이어 잔존 가능 → showExtraFieldPopup 내에서 항상 기존 삭제!
+    // - XSS 혹은 자동공백 등 단일 입력 시 "," 공백 주의
+});
+</script>
+
 
 
 <section id="anc_sitfrm_skin">
@@ -1732,7 +1941,7 @@ $(function(){
             <col class="grid_3">
         </colgroup>
         <tbody>
-        <?php for ($i=1; $i<=10; $i++) { ?>
+        <?php for ($i=3; $i<=10; $i++) { ?>
         <tr>
             <th scope="row">여분필드<?php echo $i ?></th>
             <td class="td_extra">

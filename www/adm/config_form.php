@@ -8,6 +8,24 @@ if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
 }
 
+// 제품가격변동 테이블이 없을 경우 생성
+if (!sql_query(" DESC {$g5['g5_shop_item_price_table']} ", false)) {
+    sql_query(
+        " CREATE TABLE IF NOT EXISTS `{$g5['g5_shop_item_price_table']}` (
+            `it_id` varchar(20) NOT NULL DEFAULT '',
+            `it_cust_price` int(11) NOT NULL DEFAULT '0',
+            `it_price` int(11) NOT NULL DEFAULT '0',
+            `it_stock_qty` int(11) NOT NULL DEFAULT '0',
+            `it_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+            `it_ip` varchar(25) NOT NULL DEFAULT '',
+            `it_purchase_price` int(11) NOT NULL DEFAULT '0',
+            KEY (`it_id`),
+            KEY `it_time` (`it_time`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8; ",
+        false
+    );
+}
+
 // https://github.com/gnuboard/gnuboard5/issues/296 이슈처리
 $sql = " select * from {$g5['config_table']} limit 1";
 $config = sql_fetch($sql);

@@ -528,30 +528,30 @@ if($od['od_pg'] == 'lg') {
                     <th scope="row">희망배송일</th>
                     <td><?php echo substr($od['od_hope_date'],0,10).' ('.get_yoil($od['od_hope_date']).')' ;?></td>
                 </tr>
-
-
-
                 <?php }?>
 
+                <?php
+                    $add_info = json_decode($od['add_info'], true);
+                ?>
                 <tr>
                     <th scope="row">매장출입 및 적재정보</th>
-                    <td>매장출입 및 적재정보</td>
+                    <td><?php if( isset($add_info['info_1']) && $add_info['info_1'] ) { echo $add_info['info_1']; }?></td>
                 </tr>
                 <tr>
                     <th scope="row">배송지 간판명</th>
-                    <td>간판명</td>
+                    <td><?php if( isset($add_info['info_2']) && $add_info['info_2'] ) { echo $add_info['info_2']; }?></td>
                 </tr>
                 <tr>
                     <th scope="row">비밀번호</th>
-                    <td>비밀번호</td>
+                    <td><?php if( isset($add_info['info_3']) && $add_info['info_3'] ) { echo $add_info['info_3']; }?></td>
                 </tr>
                 <tr>
                     <th scope="row">잠금장치위치</th>
-                    <td>잠금장치 위치</td>
+                    <td><?php if( isset($add_info['info_4']) && $add_info['info_4'] ) { echo $add_info['info_4']; }?></td>
                 </tr>
                 <tr>
                     <th scope="row">적재위치</th>
-                    <td>적재위치</td>
+                    <td><?php if( isset($add_info['info_5']) && $add_info['info_5'] ) { echo $add_info['info_5']; }?></td>
                 </tr>
 								<?php
                 if ($od['od_memo'])
@@ -636,33 +636,35 @@ if($od['od_pg'] == 'lg') {
         </ul>
     </section>
 
-    <section id="sod_fin_cancel">
-        <h2>주문취소</h2>
-        <?php
-        // 취소한 내역이 없다면
-        if ($cancel_price == 0) {
-            if ($custom_cancel) {
-        ?>
-        <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
+    <?php if($od['od_status']=='주문'){ ?>
+        <section id="sod_fin_cancel">
+            <h2>주문취소</h2>
+            <?php
+            // 취소한 내역이 없다면
+            if ($cancel_price == 0) {
+                if ($custom_cancel) {
+            ?>
+            <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
-        <div id="sod_fin_cancelfrm">
-            <form method="post" action="<?php echo G5_SHOP_URL; ?>/orderinquirycancel.php" onsubmit="return fcancel_check(this);">
-            <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
-            <input type="hidden" name="token"  value="<?php echo $token; ?>">
+            <div id="sod_fin_cancelfrm">
+                <form method="post" action="<?php echo G5_SHOP_URL; ?>/orderinquirycancel.php" onsubmit="return fcancel_check(this);">
+                <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
+                <input type="hidden" name="token"  value="<?php echo $token; ?>">
 
-            <label for="cancel_memo" class="sound_only">취소사유</label>
-            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required" maxlength="100" placeholder="취소사유">
-            <input type="submit" value="확인" class="btn_frmline">
+                <label for="cancel_memo" class="sound_only">취소사유</label>
+                <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required" maxlength="100" placeholder="취소사유">
+                <input type="submit" value="확인" class="btn_frmline">
 
-            </form>
-        </div>
-        <?php
-            }
-        } else {
-        ?>
-        <p>주문 취소, 반품, 품절된 내역이 있습니다.</p>
-        <?php } ?>
-    </section>
+                </form>
+            </div>
+            <?php
+                }
+            } else {
+            ?>
+            <p>주문 취소, 반품, 품절된 내역이 있습니다.</p>
+            <?php } ?>
+        </section>
+    <?php } ?>
 
      <?php if ($od['od_settle_case'] == '가상계좌' && $od['od_misu'] > 0 && $default['de_card_test'] && $is_admin && $od['od_pg'] == 'kcp') {
     preg_match("/\s{1}([^\s]+)\s?/", $od['od_bank_account'], $matchs);

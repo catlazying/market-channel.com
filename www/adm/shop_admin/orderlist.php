@@ -13,7 +13,7 @@ $where = array();
 $doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
 $sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], array('od_id', 'od_cart_price', 'od_receipt_price', 'od_cancel_price', 'od_misu', 'od_cash'))) ? $_GET['sort1'] : '';
 $sort2 = (isset($_GET['sort2']) && in_array($_GET['sort2'], array('desc', 'asc'))) ? $_GET['sort2'] : 'desc';
-$sel_field = (isset($_GET['sel_field']) && in_array($_GET['sel_field'], array('od_id', 'mb_id', 'od_name', 'od_tel', 'od_hp', 'od_b_name', 'od_b_tel', 'od_b_hp', 'od_deposit_name', 'od_invoice')) ) ? $_GET['sel_field'] : ''; 
+$sel_field = (isset($_GET['sel_field']) && in_array($_GET['sel_field'], array('od_id', 'mb_id', 'od_name', 'od_tel', 'od_hp', 'od_b_name', 'od_b_tel', 'od_b_hp', 'od_deposit_name', 'od_invoice')) ) ? $_GET['sel_field'] : '';
 $od_status = isset($_GET['od_status']) ? get_search_string($_GET['od_status']) : '';
 $search = isset($_GET['search']) ? get_search_string($_GET['search']) : '';
 $save_search = isset($_GET['save_search']) ? get_search_string($_GET['save_search']) : '';
@@ -25,9 +25,9 @@ $od_misu = isset($_GET['od_misu']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['od_
 $od_cancel_price = isset($_GET['od_cancel_price']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['od_cancel_price']) : '';
 $od_refund_price = isset($_GET['od_refund_price']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['od_refund_price']) : '';
 $od_receipt_point = isset($_GET['od_receipt_point']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['od_receipt_point']) : '';
-$od_coupon = isset($_GET['od_coupon']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['od_coupon']) : ''; 
-$od_settle_case = isset($_GET['od_settle_case']) ? clean_xss_tags($_GET['od_settle_case'], 1, 1) : ''; 
-$od_escrow = isset($_GET['od_escrow']) ? clean_xss_tags($_GET['od_escrow'], 1, 1) : ''; 
+$od_coupon = isset($_GET['od_coupon']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['od_coupon']) : '';
+$od_settle_case = isset($_GET['od_settle_case']) ? clean_xss_tags($_GET['od_settle_case'], 1, 1) : '';
+$od_escrow = isset($_GET['od_escrow']) ? clean_xss_tags($_GET['od_escrow'], 1, 1) : '';
 
 $tot_itemcount = $tot_orderprice = $tot_receiptprice = $tot_ordercancel = $tot_misu = $tot_couponprice = 0;
 $sql_search = "";
@@ -193,15 +193,15 @@ if( function_exists('pg_setting_check') ){
     <input type="radio" name="od_status" value="" id="od_status_all"    <?php echo get_checked($od_status, '');     ?>>
     <label for="od_status_all">전체</label>
     <input type="radio" name="od_status" value="주문" id="od_status_odr" <?php echo get_checked($od_status, '주문'); ?>>
-    <label for="od_status_odr">주문</label>
+    <label for="od_status_odr"><?= replaceName('주문') ?></label>
     <input type="radio" name="od_status" value="입금" id="od_status_income" <?php echo get_checked($od_status, '입금'); ?>>
-    <label for="od_status_income">입금</label>
+    <label for="od_status_income"><?= replaceName('입금') ?></label>
     <input type="radio" name="od_status" value="준비" id="od_status_rdy" <?php echo get_checked($od_status, '준비'); ?>>
     <label for="od_status_rdy">준비</label>
     <input type="radio" name="od_status" value="배송" id="od_status_dvr" <?php echo get_checked($od_status, '배송'); ?>>
     <label for="od_status_dvr">배송</label>
     <input type="radio" name="od_status" value="완료" id="od_status_done" <?php echo get_checked($od_status, '완료'); ?>>
-    <label for="od_status_done">완료</label>
+    <label for="od_status_done"><?= replaceName('완료') ?></label>
     <input type="radio" name="od_status" value="전체취소" id="od_status_cancel" <?php echo get_checked($od_status, '전체취소'); ?>>
     <label for="od_status_cancel">전체취소</label>
     <input type="radio" name="od_status" value="부분취소" id="od_status_pcancel" <?php echo get_checked($od_status, '부분취소'); ?>>
@@ -399,7 +399,7 @@ if( function_exists('pg_setting_check') ){
     <tr class="<?php echo $bg; ?>">
         <td headers="odrstat" class="odrstat">
             <input type="hidden" name="current_status[<?php echo $i ?>]" value="<?php echo $row['od_status'] ?>">
-            <?php echo $row['od_status']; ?>
+            <?php echo replaceName($row['od_status']); ?>
         </td>
         <td headers="odrpay" class="odrpay">
             <input type="hidden" name="current_settle_case[<?php echo $i ?>]" value="<?php echo $row['od_settle_case'] ?>">
@@ -471,12 +471,12 @@ if( function_exists('pg_setting_check') ){
     if ($od_status == '준비') $change_status = "배송";
     if ($od_status == '배송') $change_status = "완료";
     ?>
-    <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> '<?php echo $od_status ?>'상태에서 '<strong><?php echo $change_status ?></strong>'상태로 변경합니다.</label>
+    <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> '<?php echo replaceName($od_status) ?>'상태에서 '<strong><?php echo replaceName($change_status) ?></strong>'상태로 변경합니다.</label>
     <?php if($od_status == '주문' || $od_status == '준비') { ?>
     <input type="checkbox" name="od_send_mail" value="1" id="od_send_mail" checked="checked">
-    <label for="od_send_mail"><?php echo $change_status; ?>안내 메일</label>
+    <label for="od_send_mail"><?php echo replaceName($change_status); ?>안내 메일</label>
     <input type="checkbox" name="send_sms" value="1" id="od_send_sms" checked="checked">
-    <label for="od_send_sms"><?php echo $change_status; ?>안내 SMS</label>
+    <label for="od_send_sms"><?php echo replaceName($change_status); ?>안내 SMS</label>
     <?php } ?>
     <?php if($od_status == '준비') { ?>
     <input type="checkbox" name="send_escrow" value="1" id="od_send_escrow">
@@ -489,8 +489,8 @@ if( function_exists('pg_setting_check') ){
 
 <div class="local_desc02 local_desc">
 <p>
-    &lt;무통장&gt;인 경우에만 &lt;주문&gt;에서 &lt;입금&gt;으로 변경됩니다. 가상계좌는 입금시 자동으로 &lt;입금&gt;처리됩니다.<br>
-    &lt;준비&gt;에서 &lt;배송&gt;으로 변경시 &lt;에스크로배송등록&gt;을 체크하시면 에스크로 주문에 한해 PG사에 배송정보가 자동 등록됩니다.<br>
+    &lt;무통장&gt;인 경우에만 &lt;<?= replaceName('주문') ?>&gt;에서 &lt;<?= replaceName('입금') ?>&gt;으로 변경됩니다. 가상계좌는 입금시 자동으로 &lt;<?= replaceName('입금') ?>&gt;처리됩니다.<br>
+    &lt;준비&gt;에서 &lt;<?= replaceName('배송') ?>&gt;으로 변경시 &lt;에스크로배송등록&gt;을 체크하시면 에스크로 주문에 한해 PG사에 배송정보가 자동 등록됩니다.<br>
     <strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.
 </p>
 </div>

@@ -1,5 +1,5 @@
 <?php
-$sub_menu = "900800";
+$sub_menu = "900740";
 include_once("./_common.php");
 @include_once(G5_PLUGIN_PATH."/sms5/JSON.php");
 

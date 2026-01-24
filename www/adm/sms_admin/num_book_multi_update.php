@@ -1,5 +1,5 @@
 <?php
-$sub_menu = "900800";
+$sub_menu = "900740";
 include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "w");
@@ -8,7 +8,7 @@ $g5['title'] = "전화번호부";
 
 $post_bk_no = (isset($_POST['bk_no']) && is_array($_POST['bk_no'])) ? $_POST['bk_no'] : array();
 
-for ($i=0; $i<count($post_bk_no); $i++) 
+for ($i=0; $i<count($post_bk_no); $i++)
 {
     $bk_no = $post_bk_no[$i];
     if (!trim($bk_no)) continue;

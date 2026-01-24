@@ -91,7 +91,7 @@ foreach((array) $list as $row){
         echo display_price(get_price($row), $row['it_tel_inq'])."\n";
         echo "</div>\n";
     }
-        
+
     // 위시리스트 + 공유 버튼 시작 {
     echo "<div class=\"sct_op_btn\">\n";
         echo "<button type=\"button\" class=\"btn_wish\" data-it_id=\"{$row['it_id']}\"><span class=\"sound_only\">위시리스트</span><i class=\"fa fa-heart-o\" aria-hidden=\"true\"></i></button>\n";
@@ -141,5 +141,5 @@ $(function (){
     $('.sct_sns_bg, .sct_sns_cls').click(function(){
 	    $('.sct_sns_wrap').hide();
 	});
-});			
+});
 </script>

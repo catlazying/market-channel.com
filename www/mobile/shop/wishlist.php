@@ -47,10 +47,14 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             <div class="wish_img"><a href="<?php echo shop_item_url($row['it_id']); ?>"><?php echo $image; ?></a></div>
             <div class="wish_info">
 
-							<div class="_nation">
-								<span>말레이시아</span>
-								<span>말레이시아</span>
-							</div>
+                <div class="_nation">
+                    <?php
+                        $origins = explode(',', $row['it_origin']);
+                        foreach ($origins as $origin) {
+                            echo "<span>".$origin."</span>\n";
+                        }
+                    ?>
+                </div>
                 <a href="<?php echo shop_item_url($row['it_id']); ?>" class="wish_prd"><?php echo stripslashes($row['it_name']); ?></a>
                 <span class="info_price"><?php echo display_price(get_price($row), $row['it_tel_inq'])."\n"; ?></span>
                 <span class="info_date"><?php echo substr($row['wi_time'], 2, 17); ?></span>

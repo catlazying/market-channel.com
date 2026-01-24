@@ -20,7 +20,7 @@ $od_refund_price = isset($_REQUEST['od_refund_price']) ? clean_xss_tags($_REQUES
 $od_receipt_point = isset($_REQUEST['od_receipt_point']) ? clean_xss_tags($_REQUEST['od_receipt_point'], 1, 1) : '';
 $od_coupon = isset($_REQUEST['od_coupon']) ? clean_xss_tags($_REQUEST['od_coupon'], 1, 1) : '';
 $od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
-$od_escrow = isset($_REQUEST['od_escrow']) ? clean_xss_tags($_REQUEST['od_escrow'], 1, 1) : ''; 
+$od_escrow = isset($_REQUEST['od_escrow']) ? clean_xss_tags($_REQUEST['od_escrow'], 1, 1) : '';
 
 $sort1 = isset($_REQUEST['sort1']) ? clean_xss_tags($_REQUEST['sort1'], 1, 1) : '';
 $sort2 = isset($_REQUEST['sort2']) ? clean_xss_tags($_REQUEST['sort2'], 1, 1) : '';
@@ -122,7 +122,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
         <p>
-            현재 주문상태 <strong><?php echo $od['od_status'] ?></strong>
+            현재 주문상태 <strong><?php echo replaceName($od['od_status']) ?></strong>
             |
             주문일시 <strong><?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>)</strong>
             |
@@ -240,7 +240,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <input type="hidden" name="ct_id[<?php echo $chk_cnt; ?>]" value="<?php echo $opt['ct_id']; ?>">
                     <?php echo get_text($opt['ct_option']); ?>
                 </td>
-                <td class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
+                <td class="td_mngsmall"><?php echo replaceName($opt['ct_status']); ?></td>
                 <td class="td_num">
                     <label for="ct_qty_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo get_text($opt['ct_option']); ?> 수량</label>
                     <input type="text" name="ct_qty[<?php echo $chk_cnt; ?>]" id="ct_qty_<?php echo $chk_cnt; ?>" value="<?php echo $opt['ct_qty']; ?>" required class="frm_input required" size="5">
@@ -268,11 +268,13 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <p>
             <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
             <strong>주문 및 장바구니 상태 변경</strong>
-            <input type="submit" name="ct_status" value="주문" onclick="document.pressed=this.value" class="btn_02 color_01">
-            <input type="submit" name="ct_status" value="입금" onclick="document.pressed=this.value" class="btn_02 color_02">
+            <button type="submit" name="ct_status" value="주문" onclick="document.pressed=this.value" class="btn_02 color_01"><?= replaceName('주문') ?></button>
+            <button type="submit" name="ct_status" value="입금" onclick="document.pressed=this.value" class="btn_02 color_02"><?= replaceName('입금') ?></button>
+<?php if(G5_MARKET_YN=='N') { ?>
             <input type="submit" name="ct_status" value="준비" onclick="document.pressed=this.value" class="btn_02 color_03">
             <input type="submit" name="ct_status" value="배송" onclick="document.pressed=this.value" class="btn_02 color_04">
-            <input type="submit" name="ct_status" value="완료" onclick="document.pressed=this.value" class="btn_02 color_05">
+<?php } ?>
+            <button type="submit" name="ct_status" value="완료" onclick="document.pressed=this.value" class="btn_02 color_05"><?= replaceName('완료') ?></button>
             <input type="submit" name="ct_status" value="취소" onclick="document.pressed=this.value" class="btn_02 color_06">
             <input type="submit" name="ct_status" value="반품" onclick="document.pressed=this.value" class="btn_02 color_06">
             <input type="submit" name="ct_status" value="품절" onclick="document.pressed=this.value" class="btn_02 color_06">
@@ -280,7 +282,12 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </div>
 
     <div class="local_desc01 local_desc">
-        <p>주문, 입금, 준비, 배송, 완료는 장바구니와 주문서 상태를 모두 변경하지만, 취소, 반품, 품절은 장바구니의 상태만 변경하며, 주문서 상태는 변경하지 않습니다.</p>
+        <p>
+        <?= replaceName('주문') ?>, <?= replaceName('입금') ?>,
+        <?php if(G5_MARKET_YN=='N') { ?>
+         준비, 배송,
+        <?php } ?> <?= replaceName('완료') ?>는
+        장바구니와 주문서 상태를 모두 변경하지만, 취소, 반품, 품절은 장바구니의 상태만 변경하며, 주문서 상태는 변경하지 않습니다.</p>
         <p>개별적인(이곳에서의) 상태 변경은 모든 작업을 수동으로 처리합니다. 예를 들어 주문에서 입금으로 상태 변경시 입금액(결제금액)을 포함한 모든 정보는 수동 입력으로 처리하셔야 합니다.</p>
     </div>
 
@@ -306,7 +313,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     if(isset($tmp_row['P_TID']) && $tmp_row['P_TID']){
 ?>
 <div class="od_test_caution">주의) 이 주문은 결제취소된 내역이 있습니다. 이니시스 관리자 상점에서 반드시 재확인을 해 주세요.</div>
-<?php 
+<?php
     }   //end if
 }   //end if
 ?>
@@ -585,7 +592,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <td><?php echo $od['od_invoice']; ?></td>
                 </tr>
                 <tr>
-                    <th scope="row">배송일시</th>
+                    <th scope="row">
+                    <?php if(G5_MARKET_YN=='N') { echo "배송일시"; }else{ echo "출고일시"; } ?>
+                    </th>
                     <td><?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?></td>
                 </tr>
                 <?php } ?>
@@ -634,7 +643,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                             $cash = unserialize($od['od_cash_info']);
                             $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
                         } else if($od['od_pg'] == 'nicepay') {
-                            
+
                             $od_tid = $od['od_tno'];
                             $cash_type = 0;
 
@@ -838,7 +847,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="od_invoice_time">배송일시</label></th>
+                    <th scope="row"><label for="od_invoice_time"><?php if(G5_MARKET_YN=='N') { echo "배송일시"; }else{ echo "출고일시"; } ?></label></th>
                     <td>
                         <input type="checkbox" id="od_invoice_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="chk_invoice_time()">
                         <label for="od_invoice_chk">현재 시간으로 설정</label><br>
@@ -1027,6 +1036,30 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <th scope="row">전달 메세지</th>
                     <td><?php if ($od['od_memo']) echo get_text($od['od_memo'], 1);else echo "없음";?></td>
                 </tr>
+
+                <? $add_info = json_decode($od['add_info'], true); ?>
+                <tr>
+                    <th scope="row">매장출입 및 적재정보</th>
+                    <td><?php echo get_text($add_info['info_1'], 1); ?></td>
+                </tr>
+
+                <tr>
+                    <th scope="row">배송지 간판명</th>
+                    <td><?php echo get_text($add_info['info_2'], 1); ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">비밀번호</th>
+                    <td><?php echo get_text($add_info['info_3'], 1); ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">잠금장치위치</th>
+                    <td><?php echo get_text($add_info['info_4'], 1); ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">적재위치</th>
+                    <td><?php echo get_text($add_info['info_5'], 1); ?></td>
+                </tr>
+
                 </tbody>
                 </table>
             </div>

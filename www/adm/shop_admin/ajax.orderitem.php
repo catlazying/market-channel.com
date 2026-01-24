@@ -76,7 +76,7 @@ $result = sql_query($sql);
 
             // 조건부무료
             if($row['it_sc_type'] == 2) {
-                
+
                 // 합계금액 계산
                 $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                            SUM(ct_qty) as qty
@@ -114,7 +114,7 @@ $result = sql_query($sql);
                 <td class="td_itopt_tl">
                     <?php echo $opt['ct_option']; ?>
                 </td>
-                <td class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
+                <td class="td_mngsmall"><?php echo replaceName($opt['ct_status']); ?></td>
                 <td class="td_cntsmall"><?php echo $opt['ct_qty']; ?></td>
                 <td class="td_num"><?php echo number_format($opt_price); ?></td>
                 <td class="td_num"><?php echo number_format($ct_price['stotal']); ?></td>

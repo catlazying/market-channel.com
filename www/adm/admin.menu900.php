@@ -9,6 +9,9 @@ $menu["menu900"] = array(
     array('900500', '이모티콘 그룹', '' . G5_SMS5_ADMIN_URL . '/form_group.php', 'emoticon_group'),
     array('900600', '이모티콘 관리', '' . G5_SMS5_ADMIN_URL . '/form_list.php', 'emoticon_list'),
     array('900700', '휴대폰번호 그룹', '' . G5_SMS5_ADMIN_URL . '/num_group.php', 'hp_group', 1),
-    array('900800', '휴대폰번호 관리', '' . G5_SMS5_ADMIN_URL . '/num_book.php', 'hp_manage', 1),
-    array('900900', '휴대폰번호 파일', '' . G5_SMS5_ADMIN_URL . '/num_book_file.php', 'hp_file', 1)
+    array('900740', '휴대폰번호 관리', '' . G5_SMS5_ADMIN_URL . '/num_book.php', 'hp_manage', 1),
+    array('900770', '휴대폰번호 파일', '' . G5_SMS5_ADMIN_URL . '/num_book_file.php', 'hp_file', 1),
+    array('900800', '푸시 발송관리', '' . G5_ADMIN_URL . '/fcm_list.php', 'fcm_list', 1),
+    array('900810', '푸시 발송내역', '' . G5_ADMIN_URL . '/fcm_send_list.php', 'fcm_send_list', 1),
+    array('900820', '푸시 저장목록', '' . G5_ADMIN_URL . '/fcm_push_list.php', 'fcm_push_list', 1),
 );

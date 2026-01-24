@@ -1,5 +1,5 @@
 <?php
-$sub_menu = "900900";
+$sub_menu = "900770";
 include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "w");
@@ -12,7 +12,7 @@ if (!$upload_bg_no)
 
 $bg_no = $upload_bg_no;
 
-if (! (isset($_FILES['csv']['size']) && $_FILES['csv']['size'])) 
+if (! (isset($_FILES['csv']['size']) && $_FILES['csv']['size']))
     alert_after('파일을 선택해주세요.');
 
 $file = $_FILES['csv']['tmp_name'];
@@ -32,7 +32,7 @@ switch ($ext) {
         $data = file($file);
         $num_rows = count($data) + 1;
         $csv = array();
-        foreach ($data as $item) 
+        foreach ($data as $item)
         {
             $item = explode(',', $item);
 
@@ -40,7 +40,7 @@ switch ($ext) {
 
             array_push($csv, $item);
 
-            if (count($item) < 2) 
+            if (count($item) < 2)
                 alert_after('올바른 파일이 아닙니다.');
         }
         break;
@@ -112,7 +112,7 @@ for ($i = 1; $i <= $num_rows; $i++) {
 
             $res = sql_fetch("select * from {$g5['sms5_book_table']} where bk_hp='$hp'");
 
-            if (isset($res['bk_hp']) && $res['bk_hp']) 
+            if (isset($res['bk_hp']) && $res['bk_hp'])
             {
                 array_push($dupl_hp, $hp);
                 $overlap++;
@@ -153,7 +153,7 @@ if ($result)
     }
     else
         echo "html += \"<br><span class=\\\"sms5_txt_success\\\">총 ".number_format($success)." 건의 휴대폰번호 등록을 완료하였습니다.</span>\";";
-} 
+}
 else
     echo "html += \"<br><span class=\\\"sms5_txt_fail\\\">등록할 수 없습니다.</font>\";";
 echo "html += \"</li></ul>\";";

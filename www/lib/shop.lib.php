@@ -59,6 +59,11 @@ class item_list
     protected $ca_id2 = "";
     protected $ca_id3 = "";
 
+    // 확장된 카테고리 it_1
+    protected $exp_it_1 = "";
+    protected $exp_it_2 = "";
+    protected $exp_it_3 = "";
+
     // 노출순서
     protected $order_by = "it_order, it_id desc";
 
@@ -138,6 +143,15 @@ class item_list
             $this->ca_id3 = $ca_id;
         } else {
             $this->ca_id = $ca_id;
+        }
+    }
+    function exp_category($ca_id, $level=1) {
+        if ($level == 2) {
+            $this->exp_it_2 = $ca_id;
+        } else if ($level == 3) {
+            $this->exp_it_3 = $ca_id;
+        } else {
+            $this->exp_it_1 = $ca_id;
         }
     }
 
@@ -274,7 +288,7 @@ class item_list
                 $where[] = " it_type{$this->type} = '1' ";
             }
 
-            if ($this->ca_id || $this->ca_id2 || $this->ca_id3) {
+            if ($this->ca_id || $this->ca_id2 || $this->ca_id3 || $this->exp_it_1 || $this->exp_it_2 || $this->exp_it_3) {
                 $where_ca_id = array();
                 if ($this->ca_id) {
                     $where_ca_id[] = " ca_id like '{$this->ca_id}%' ";
@@ -284,6 +298,15 @@ class item_list
                 }
                 if ($this->ca_id3) {
                     $where_ca_id[] = " ca_id3 like '{$this->ca_id3}%' ";
+                }
+                if ($this->exp_it_1) {
+                    $where_ca_id[] = " it_1 REGEXP CONCAT('(^|,)', '{$this->exp_it_1}', '[0-9]*($|,)') ";
+                }
+                if ($this->exp_it_2) {
+                    $where_ca_id[] = " it_2 REGEXP CONCAT('(^|,)', '{$this->exp_it_2}', '[0-9]*($|,)') ";
+                }
+                if ($this->exp_it_3) {
+                    $where_ca_id[] = " it_3 REGEXP CONCAT('(^|,)', '{$this->exp_it_3}', '[0-9]*($|,)') ";
                 }
                 $where[] = " ( " . implode(" or ", $where_ca_id) . " ) ";
             }
@@ -301,6 +324,7 @@ class item_list
                 $sql_common = " from `{$g5['g5_shop_item_table']}` ";
             }
             $sql_where = " where " . implode(" and ", $where);
+
             $sql_limit = " limit " . $this->from_record . " , " . ($this->list_mod * $this->list_row);
 
             $sql = $sql_select . $sql_common . $sql_where . $sql_order . $sql_limit;

@@ -474,6 +474,20 @@ else if ($w == "d")
     itemdelete($it_id);
 }
 */
+/// 상품 가격 로그 테이블 시작
+    $sql_common = "";
+    $sql_common .= " , it_cust_price = '".$it_cust_price."' ";
+    $sql_common .= " , it_price = '".$it_price."' ";
+    $sql_common .= " , it_stock_qty = '".$it_stock_qty."' ";
+    $sql_common .= " , it_ip = '".$_SERVER['REMOTE_ADDR']."' ";
+    $sql_common .= " , it_purchase_price = '".$it_purchase_price."' ";
+    $sql_common .= " , it_time = '".G5_TIME_YMDHIS."' ";
+
+    $sql = " insert {$g5['g5_shop_item_price_table']}
+                set it_id = '$it_id'
+					$sql_common	";
+    sql_query($sql);
+/// 상품 가격 로그 테이블 끝
 
 if ($w == "" || $w == "u")
 {

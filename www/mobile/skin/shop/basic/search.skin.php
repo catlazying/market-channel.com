@@ -18,24 +18,28 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <label for="ssch_q" class="sound_only">검색어</label>
             <input type="text" name="q" value="<?php echo $q; ?>" id="ssch_q" class="frm_input" maxlength="30">
             <button type="submit" class="sch_submit"><span class="sound_only">검색</span><i class="fa fa-search"></i></button>
-            <p>
-                상세검색을 선택하지 않거나, 상품가격을 입력하지 않으면 전체에서 검색합니다.<br>
-                검색어는 최대 30글자까지, 여러개의 검색어를 공백으로 구분하여 입력 할수 있습니다.
-            </p> 
-        </div> 
-        <div class="chk_box">
-            <strong class="sound_only">검색범위</strong>
-            <input type="checkbox" name="qname" id="ssch_qname" <?php echo $qname_check?'checked="checked"':'';?> class="selec_chk"> <label for="ssch_qname"><span></span>상품명</label>
-            <input type="checkbox" name="qexplan" id="ssch_qexplan" <?php echo $qexplan_check?'checked="checked"':'';?> class="selec_chk"> <label for="ssch_qexplan"><span></span> <span class="sound_only">상품</span>설명</label>
-            <input type="checkbox" name="qbasic" id="ssch_qbasic" value="1" <?php echo $qbasic_check?'checked="checked"':'';?> class="selec_chk"> <label for="ssch_qbasic"><span></span> 기본설명</label>
-            <input type="checkbox" name="qid" id="ssch_qid" <?php echo $qid_check?'checked="checked"':'';?> class="selec_chk"> <label for="ssch_qid"><span></span><span class="sound_only"> 상품</span>코드</label>
-            <br>
-            <strong class="sound_only">상품가격 (원)</strong>
-            <label for="ssch_qfrom" class="sound_only">최소 가격</label>
-            <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" id="ssch_qfrom" class="frm_input" size="6"> 원 ~
-            <label for="ssch_qto" class="sound_only">최대 가격</label>
-            <input type="text" name="qto" value="<?php echo $qto; ?>" id="ssch_qto" class="frm_input" size="6"> 원<br>
+            <?php if(G5_MARKET_YN=='N') { ?>
+                <p>
+                    상세검색을 선택하지 않거나, 상품가격을 입력하지 않으면 전체에서 검색합니다.<br>
+                    검색어는 최대 30글자까지, 여러개의 검색어를 공백으로 구분하여 입력 할수 있습니다.
+                </p>
+            <?php } ?>
         </div>
+        <?php if(G5_MARKET_YN=='N') { ?>
+            <div class="chk_box">
+                <strong class="sound_only">검색범위</strong>
+                <input type="checkbox" name="qname" id="ssch_qname" <?php echo $qname_check?'checked="checked"':'';?> class="selec_chk"> <label for="ssch_qname"><span></span>상품명</label>
+                <input type="checkbox" name="qexplan" id="ssch_qexplan" <?php echo $qexplan_check?'checked="checked"':'';?> class="selec_chk"> <label for="ssch_qexplan"><span></span> <span class="sound_only">상품</span>설명</label>
+                <input type="checkbox" name="qbasic" id="ssch_qbasic" value="1" <?php echo $qbasic_check?'checked="checked"':'';?> class="selec_chk"> <label for="ssch_qbasic"><span></span> 기본설명</label>
+                <input type="checkbox" name="qid" id="ssch_qid" <?php echo $qid_check?'checked="checked"':'';?> class="selec_chk"> <label for="ssch_qid"><span></span><span class="sound_only"> 상품</span>코드</label>
+                <br>
+                <strong class="sound_only">상품가격 (원)</strong>
+                <label for="ssch_qfrom" class="sound_only">최소 가격</label>
+                <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" id="ssch_qfrom" class="frm_input" size="6"> 원 ~
+                <label for="ssch_qto" class="sound_only">최대 가격</label>
+                <input type="text" name="qto" value="<?php echo $qto; ?>" id="ssch_qto" class="frm_input" size="6"> 원<br>
+            </div>
+        <?php } ?>
         </form>
     </div>
     <!-- } 상세검색 항목 끝 -->
@@ -53,7 +57,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         ?>
         </ul>
     </div>
-    <!-- } 검색된 분류 끝 -->  
+    <!-- } 검색된 분류 끝 -->
     <div id="ssch_sort">
         <button type="button" class="btn_sort">상품정렬 <i class="fa fa-caret-down" aria-hidden="true"></i> </button>
         <ul>

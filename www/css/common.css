@@ -1788,6 +1788,9 @@ box-shadow:0 0 8rem rgba(65,98,255,0.8);}
 .sit_ov_tbl tr:first-child td,.sit_ov_tbl tr:first-child th {border:none;}
 .sit_ov_tbl dl {width:calc(50% - 5rem);display:flex;font-size:13rem;}
 .sit_ov_tbl dl dt {width:80rem;font-weight:600;}
+.sit_ov_tbl dl:nth-child(1),
+.sit_ov_tbl dl:nth-child(2) {width:100%;}
+.sit_ov_tbl dl:nth-child(2) dt {width:80rem !important;}
 .sit_ov_tbl dl:nth-child(even) dt {width:60rem;}
 .sit_ov_tbl dl dd {width:0;flex-grow:1;color:#999;}
 .sit_ov_ro {padding:2rem 2rem 3rem;border:0;background:transparent;text-align:right;vertical-align:middle;}

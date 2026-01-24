@@ -14,7 +14,12 @@ $sfl = in_array($sfl, array('ca_name', 'ca_id', 'ca_mb_id')) ? $sfl : '';
 
 if ($stx != "") {
     if ($sfl != "") {
-        $sql_search .= " $where $sfl like '%$stx%' ";
+        if($sfl=='ca_id'){
+            $sql_search .= " $where ca_id like '$stx%' ";
+        }else{
+            $sql_search .= " $where $sfl like '%$stx%' ";
+        }
+
         $where = " and ";
     }
     if (isset($save_stx) && $save_stx && ($save_stx != $stx))
