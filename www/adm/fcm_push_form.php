@@ -1,5 +1,5 @@
 <?php
-$sub_menu = "900810";
+$sub_menu = "900800";
 include_once("./_common.php");
 
 $page_size = 20;
@@ -46,20 +46,12 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
                 <select name="send_type" id="send_type" class="frm_input" style="width: 200px;">
                     <option value="">발송구분 선택</option>
                     <option value="회원가입" <?php echo ($write['send_type']=='회원가입') ? 'selected' : ''; ?>>회원가입</option>
-                    <option value="상품구매" <?php echo ($write['send_type']=='상품구매') ? 'selected' : ''; ?>>상품구매</option>
-                    <option value="상품발송" <?php echo ($write['send_type']=='상품발송') ? 'selected' : ''; ?>>상품 발송</option>
+                    <option value="주문완료" <?php echo ($write['send_type']=='주문완료') ? 'selected' : ''; ?>>주문완료</option>
+                    <option value="입금확인" <?php echo ($write['send_type']=='입금확인') ? 'selected' : ''; ?>>입금확인</option>
+                    <option value="배송완료" <?php echo ($write['send_type']=='배송완료') ? 'selected' : ''; ?>>배송완료</option>
                 </select>
             </td>
         </tr>
-        <tr>
-            <th scope="row"><label for="send_target">발송대상</label></th>
-            <td>
-                <select name="send_target" id="send_target" class="frm_input" style="width: 200px;">
-                    <option value="전체" <?php echo ($write['send_target']=='전체') ? 'selected' : ''; ?>>전체</option>
-                </select>
-            </td>
-        </tr>
-
         <tr>
             <th scope="row"><label for="fcm_title">메시지 제목<strong class="sound_only"> 필수</strong></label></th>
             <td><input type="text" name="fcm_title" id="fcm_title" required value="<?php echo get_sanitize_input($write['fcm_title']); ?>" class="frm_input required" style="width:100%;"></td>
@@ -80,7 +72,15 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
             <th scope="row"><label for="fcm_image">이미지</label></th>
             <td><input type="text" name="fcm_image" id="fcm_image" value="<?php echo $write['fcm_image']; ?>" class="frm_input" style="width:100%;"></td>
         </tr>
-
+        <tr>
+            <th scope="row"><label for="send_type">사용</label></th>
+            <td>
+                <select name="viewYn" id="viewYn" class="frm_input" style="width: 200px;">
+                    <option value="Y" <?php echo ($write['viewYn']=='Y') ? 'selected' : ''; ?>>Yes</option>
+                    <option value="N" <?php echo ($write['viewYn']=='N') ? 'selected' : ''; ?>>No</option>
+                </select>
+            </td>
+        </tr>
         <?php if ($w == 'u') {?>
         <tr>
             <th scope="row">업데이트</th>
@@ -92,7 +92,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     </div>
     <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="확인" class="btn_submit" accesskey="s">
-        <a href="./fcm_push_list.php?<?php echo clean_query_string($_SERVER['QUERY_STRING']); ?>">목록</a>
+        <a href="./fcm_list.php?<?php echo clean_query_string($_SERVER['QUERY_STRING']); ?>">목록</a>
     </div>
 </form>
 

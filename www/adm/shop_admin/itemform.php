@@ -299,9 +299,6 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             </th>
             <td>
                 <input type="text" name="it_<?php echo $i ?>" value="<?php echo get_text($it['it_'.$i]) ?>" id="it_<?php echo $i ?>" class="frm_input" size="95">
-
-                <input type="hidden" name="chk_ca_<?php echo $i ?>" value="1" id="chk_ca_<?php echo $i ?>">
-                <input type="hidden" name="chk_all_<?php echo $i ?>" value="1" id="chk_all_<?php echo $i ?>">
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_<?php echo $i ?>" value="1" id="chk_ca_<?php echo $i ?>">

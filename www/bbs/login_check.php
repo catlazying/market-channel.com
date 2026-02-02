@@ -6,6 +6,8 @@ $g5['title'] = "로그인 검사";
 $mb_id       = isset($_POST['mb_id']) ? trim($_POST['mb_id']) : '';
 $mb_password = isset($_POST['mb_password']) ? trim($_POST['mb_password']) : '';
 
+$apple_login       = isset($_POST['apple_login']) ? trim($_POST['apple_login']) : '';
+
 run_event('member_login_check_before', $mb_id);
 
 if (!$mb_id || run_replace('check_empty_member_login_password', !$mb_password, $mb_id))
@@ -113,7 +115,7 @@ if ($url) {
 
     // $_POST 배열변수에서 아래의 이름을 가지지 않은 것만 넘김
     $post_check_keys = array('mb_id', 'mb_password', 'x', 'y', 'url');
-    
+
     //소셜 로그인 추가
     if($is_social_login){
         $post_check_keys[] = 'provider';

@@ -11,6 +11,7 @@ $app_version = '';
 $platform = '';
 $device_id = '';
 
+// 플랫폼별로 파싱 (android/ios 구분)
 if (
     preg_match('/AppVersion\/([^\s]+)\s+Device\/([^\s]+)\s+Android\/([^\s]+)/i', $ua, $matches)
 ) {
@@ -18,7 +19,15 @@ if (
     $app_version = $matches[1];
     $device_id = $matches[2]." / ".$matches[3];
     $platform = "android";
+} else if (
+    preg_match('/AppVersion\/([^\s]+)\s+Device\/([^\s]+)\s+iOS\/([^\s]+)/i', $ua, $matches)
+) {
+    // 예시: "xxx AppVersion/1.0.2 Device/abcd1234 IOS/16.5"
+    $app_version = $matches[1];
+    $device_id = $matches[2]." / ".$matches[3];
+    $platform = "ios";
 }
+
 
 // POST 변수 세팅
 $action = (isset($_POST['action'])) ? $_POST['action'] : '';

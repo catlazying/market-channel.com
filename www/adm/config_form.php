@@ -7,6 +7,22 @@ auth_check_menu($auth, $sub_menu, 'r');
 if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
 }
+// uniqid 테이블이 없을 경우 생성
+if (!sql_query(" DESC g5_member_apple ", false)) {
+    sql_query(
+        "CREATE TABLE `g5_member_apple` (
+        `ap_id` int(11) NOT NULL AUTO_INCREMENT,
+        `ap_apple` varchar(255) NOT NULL DEFAULT '',
+        `ap_name` varchar(255) NOT NULL DEFAULT '',
+        `ap_email` varchar(255) NOT NULL DEFAULT '',
+        `ap_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        PRIMARY KEY (`ap_id`),
+        KEY `ap_apple` (`ap_apple`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+",
+        false
+    );
+}
 
 // 제품가격변동 테이블이 없을 경우 생성
 if (!sql_query(" DESC {$g5['g5_shop_item_price_table']} ", false)) {

@@ -118,6 +118,19 @@ for ($i=0; $i<$cnt; $i++)
             }
 
             sql_query($sql);
+
+            //notification_send // 배송완료 주문완료  입금확인
+            $send_type = '배송완료';
+            $user_id = $ct['mb_id'];
+            $mb_nick = get_member($user_id, 'mb_nick');
+            $prodName = array();
+            $prodName = $ct['it_name']." ".$ct['ct_qty']." / ";
+
+            $data = [
+                '{{상호명}}' => $mb_nick,
+                '{{상품명}}' => $prodName
+            ];
+            notification_send($send_type ,$user_id ,$data);
         }
         /* 주문 수정에서 "품절" 선택시 해당 상품 자동 품절 처리하기
         else if ($ct_status == '품절') {
@@ -223,7 +236,7 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                     case 'inicis':
                         include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
                         $cancel_msg = '쇼핑몰 운영자 승인 취소';
-                        
+
                         $args = array(
                             'paymethod' => get_type_inicis_paymethod($od['od_settle_case']),
                             'tid' => $od['od_tno'],
@@ -247,9 +260,9 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                     case 'nicepay':
                         include_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
                         $cancel_msg = '쇼핑몰 운영자 승인 취소';
-                        
+
                         $tno = $od['od_tno'];
-                        
+
                         $cancelAmt = $od['od_receipt_price'];
 
                         // 0:전체 취소, 1:부분 취소(별도 계약 필요)
@@ -288,7 +301,7 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                         $c_PayPlus = new C_PP_CLI_T;
 
                         $c_PayPlus->mf_clear();
-                        
+
                         $ordr_idxx = $od['od_id'];
                         $tno = $od['od_tno'];
                         $tran_cd = '00200000';
@@ -383,3 +396,7 @@ if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {
     else
         goto_url($url);
 }
+
+# end of file
+
+

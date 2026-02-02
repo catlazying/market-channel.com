@@ -17,6 +17,7 @@ if(!empty($_POST['fcm_message'])){ $fcm_message = $_POST['fcm_message']; }
 if(!empty($_POST['fcm_image'])){ $fcm_image = $_POST['fcm_image']; }
 if(!empty($_POST['fcm_link'])){ $fcm_link = $_POST['fcm_link']; }
 if(!empty($_POST['fcm_memo'])){ $fcm_memo = $_POST['fcm_memo']; }
+if(!empty($_POST['viewYn'])){ $viewYn = $_POST['viewYn']; }
 
 $addParamAry = array();
 if(!empty($title )){ $addParamAry[] = " title ='$title' "; }
@@ -27,11 +28,12 @@ if(!empty($fcm_message )){ $addParamAry[] = " fcm_message ='$fcm_message' "; }
 if(!empty($fcm_image )){ $addParamAry[] = " fcm_image ='$fcm_image' "; }
 if(!empty($fcm_link )){ $addParamAry[] = " fcm_link ='$fcm_link' "; }
 if(!empty($fcm_memo )){ $addParamAry[] = " fcm_memo ='$fcm_memo' "; }
+if(!empty($viewYn )){ $addParamAry[] = " viewYn ='$viewYn' "; }
 
 if ($w == '') {
     $addParams = ",".implode(",",$addParamAry);
     $sql = " insert {$notificationSetTable}
-             set rdate = CURDATE(), rdatetime = NOW(), mdatetime = NOW(), viewYn='Y' ".$addParams;
+             set rdate = CURDATE(), rdatetime = NOW(), mdatetime = NOW() ".$addParams;
     sql_query($sql);
     $ma_id = sql_insert_id();
 
@@ -54,4 +56,4 @@ if ($w == '') {
 
 }
 
-goto_url("./fcm_push_list.php");
+goto_url("./fcm_list.php");

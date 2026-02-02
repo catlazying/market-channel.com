@@ -21,6 +21,7 @@ if(!empty($_POST['user_id'])){ $user_id = $_POST['user_id']; }
 if(!empty($_POST['send_date'])){ $send_date = $_POST['send_date']; }
 if(!empty($_POST['send_type'])){ $send_type = $_POST['send_type']; }
 if(!empty($_POST['reservationTime'])){ $reservationTime = $_POST['reservationTime']; }
+if(!empty($_POST['send_target'])){ $send_target = $_POST['send_target']; }
 
 $addParamAry = array();
 if(!empty($fcm_device )){ $addParamAry[] = " fcm_device ='$fcm_device' "; }
@@ -39,10 +40,25 @@ if(!empty($reservationTime )){ $addParamAry[] = " reservationTime ='$reservation
 
 if ($w == '') {
     $addParams = ",".implode(",",$addParamAry);
-    $sql = " insert {$notificationCronTable}
-             set rdate = CURDATE(), rdatetime = NOW(), mdatetime = NOW(), viewYn='Y', ecnt=0 ".$addParams;
-    sql_query($sql);
-    $ma_id = sql_insert_id();
+
+    if($send_target=='ALL'){
+
+        // 토큰 회원만큼 돌려
+        $qry = sql_query("select * from fcm_notification_tokens where is_active =1 ");
+        while($res = sql_fetch_array($qry)) {
+            $user_id = $res['user_id'];
+            $user_token = $res['push_token'];
+            if(!empty($user_id) && !empty($user_token)){
+                $sql = " insert {$notificationCronTable} set rdate = CURDATE(), rdatetime = NOW(), mdatetime = NOW(), viewYn='Y', user_id ='$user_id', user_token ='$user_token', ecnt=0 ".$addParams;
+                sql_query($sql);
+            }
+        }
+    }else{
+        $sql = " insert {$notificationCronTable}
+        set rdate = CURDATE(), rdatetime = NOW(), mdatetime = NOW(), viewYn='Y', ecnt=0 ".$addParams;
+        sql_query($sql);
+    }
+    // $ma_id = sql_insert_id();
 
 } elseif ($w == 'u') {
     $addParams = ",".implode(",",$addParamAry);
@@ -63,7 +79,7 @@ if ($w == '') {
 
 }
 
-goto_url("./fcm_list.php");
+goto_url("./fcm_send_list.php");
 
 /*
 안드로이드

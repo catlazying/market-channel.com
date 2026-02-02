@@ -1,47 +1,4 @@
-<?
-// function getGoogleOAuthToken() {
-//     //  서비스 계정 JSON 파일 경로
-//     $serviceAccountPath = $_SERVER['DOCUMENT_ROOT'].'/adm/notification/market-channel-de339-firebase-adminsdk-fbsvc-41af331df3.json';
-
-//     //  JSON 파일 읽기
-//     $jsonKey = json_decode(file_get_contents($serviceAccountPath), true);
-//     $tokenUrl = "https://oauth2.googleapis.com/token";
-
-//     //  JWT 생성을 위한 정보 설정
-//     $header = base64_encode(json_encode(["alg" => "RS256", "typ" => "JWT"]));
-//     $iat = time();
-//     $exp = $iat + 3600; // 1시간 유효
-//     $claimSet = base64_encode(json_encode([
-//         "iss" => $jsonKey["client_email"],
-//         "scope" => "https://www.googleapis.com/auth/firebase.messaging",
-//         "aud" => $tokenUrl,
-//         "exp" => $exp,
-//         "iat" => $iat
-//     ]));
-
-//     //  서명 생성 (RSA SHA-256)
-//     $data = "$header.$claimSet";
-//     $privateKey = openssl_pkey_get_private($jsonKey["private_key"]);
-//     openssl_sign($data, $signature, $privateKey, "sha256WithRSAEncryption");
-//     $signedJWT = "$data." . base64_encode($signature);
-
-//     //  OAuth 2.0 토큰 요청
-//     $postData = http_build_query([
-//         "grant_type" => "urn:ietf:params:oauth:grant-type:jwt-bearer",
-//         "assertion" => $signedJWT
-//     ]);
-
-//     $ch = curl_init($tokenUrl);
-//     curl_setopt($ch, CURLOPT_POST, true);
-//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//     curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/x-www-form-urlencoded"]);
-//     curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-//     $response = curl_exec($ch);
-//     curl_close($ch);
-
-//     $result = json_decode($response, true);
-//     return $result["access_token"] ?? null;
-// }
+<?php
 
 // JWT를 위한 Base64Url 인코딩 도우미 함수
 function base64UrlEncode($data) {
@@ -134,6 +91,10 @@ function sendFCMMessage($accessToken, $deviceToken, $title, $body, $imageUrl, $l
                     "image" => $imageUrl
                 ],
                 "apns" => [
+                    "headers" => [
+                        "apns-priority" => "10", // 즉시 전송 (중요!)
+                        "apns-push-type" => "alert" // 알림 형태 명시
+                    ],
                     "payload" => [
                         "aps" => [
                             "sound" => "default", // 푸시 올 때 소리 재생
@@ -146,7 +107,6 @@ function sendFCMMessage($accessToken, $deviceToken, $title, $body, $imageUrl, $l
                 ]
             ]
         ];
-        $data = "";
     }else{
         $data = [
             "message" => [
@@ -173,7 +133,7 @@ function sendFCMMessage($accessToken, $deviceToken, $title, $body, $imageUrl, $l
 
     // print_r($headers);
     // echo "<pre>";
-    print_r($data);
+    // print_r($data);
     if(!empty($data)){
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POST, true);

@@ -17,7 +17,7 @@ var kakao_javascript_apikey = "<?php echo $config['cf_kakao_js_apikey']; ?>";
 <?php } ?>
 
 <!-- 메인상품진열 10 시작 { -->
-<div class="_shopList">
+
 <?php
 $is_gallery_list = ($this->ca_id && isset($_COOKIE['ck_itemlist'.$this->ca_id.'_type'])) ? $_COOKIE['ck_itemlist'.$this->ca_id.'_type'] : '';
 if(!$is_gallery_list){
@@ -175,7 +175,8 @@ foreach((array) $list as $row){
 
 if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 }
-?></div>
+?>
+
 <!-- } 상품진열 10 끝 -->
 <?php if(G5_LIST_SORT_YN=='Y' || G5_LIST_SNSSHARE_YN=='Y') { ?>
 <?php if( !defined('G5_IS_SHOP_AJAX_LIST') ) { ?>

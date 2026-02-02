@@ -6,7 +6,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/common.php');
 // $CERTKEY = '1640DB58-6D1A-463B-9D7B-B5273DE67F83';
 // $StartDate = "20251129";
 // $EndDate = "20251130";
-
+/*
 $BaroService_URL = 'https://ws.baroservice.com/BANKACCOUNT.asmx?WSDL';		//실서비스용
 $CERTKEY = 'C206B6E4-47C7-4640-B822-DB32EC75EF7D';
 $StartDate = date("Ymd",strtotime("-1day"));
@@ -15,6 +15,7 @@ $BaroService_BANKACCOUNT = new SoapClient($BaroService_URL, array(
     'trace' => 'true',
     'encoding' => 'UTF-8' //소스를 ANSI로 사용할 경우 euc-kr로 수정
 ));
+*/
 // ---------------------------------------------------------------------------------------------------
 // API 레퍼런스 : https://dev.barobill.co.kr/docs/references/계좌조회-API#GetDailyBankAccountTransLog
 // ---------------------------------------------------------------------------------------------------

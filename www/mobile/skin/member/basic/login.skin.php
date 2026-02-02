@@ -22,11 +22,13 @@ input, textarea, select {
         <input type="text" name="mb_id" id="login_id" placeholder="아이디는 사업자번호를 입력해주세요" required class="frm_input required" maxLength="20">
         <label for="login_pw" class="sound_only">비밀번호<strong class="sound_only"> 필수</strong></label>
         <input type="password" name="mb_password" id="login_pw" placeholder="비밀번호를 입력해주세요" required class="frm_input required" maxLength="20">
-
+        <input type="hidden" name="auto_login" value="1">
+        <?/* <!--
         <div id="login_info" class="chk_box">
             <input type="checkbox" name="auto_login" id="login_auto_login" class="selec_chk">
             <label for="login_auto_login"><span></span> 자동로그인</label>
         </div>
+        --> */ ?>
 		<button type="submit" class="btn_submit">로그인</button>
     </div>
 
@@ -44,6 +46,25 @@ input, textarea, select {
     </section>
     </form>
 
+<?php if($apps=='IOS'){ ?>
+    <div id="appleid-signin"
+     data-color="black"
+     data-border="true"
+     data-type="sign-in"
+     data-height="40"></div>
+
+    <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+
+    <script>
+    AppleID.auth.init({
+        clientId: 'marketchannel.login',
+        scope: 'name email',
+        redirectURI: 'https://market-channel.com/plugin/apple/appleProc.php',
+        state: 'origin:web',
+        usePopup: false
+    });
+    </script>
+<?php } ?>
 <?php if(G5_MARKET_YN=='N') { ?>
     <?php // 쇼핑몰 사용시 여기부터 ?>
     <?php if (isset($default['de_level_sell']) && $default['de_level_sell'] == 1) { // 상품구입 권한 ?>
@@ -117,9 +138,10 @@ input, textarea, select {
 
 <script>
 jQuery(function($){
-    $("#login_auto_login").click(function(){
+    $("#login_auto_login").on('change',function(){
         if (this.checked) {
             this.checked = confirm("자동로그인을 사용하시면 다음부터 회원아이디와 비밀번호를 입력하실 필요가 없습니다.\n\n공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인을 사용하시겠습니까?");
+            // alert("자동로그인을 사용하시면 다음부터 회원아이디와 비밀번호를 입력하실 필요가 없습니다.\n\n공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인 사용에 동의하실 경우, 체크박스를 다시 선택 해제하지 마십시오.");
         }
     });
 });

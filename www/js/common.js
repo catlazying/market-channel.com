@@ -69,7 +69,7 @@ function number_format(data)
     var cutlen = 3;
     var comma = ',';
     var i;
-    
+
     data = data + '';
 
     var sign = data.match(/^[\+\-]/);
@@ -361,7 +361,8 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
     }
 
     // 핀치 줌 현상 제거
-    var vContent = "width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10";
+    // var vContent = "width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10";
+    var vContent = "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, viewport-fit=cover";
     $("#meta_viewport").attr("content", vContent + ",user-scalable=no");
 
     var zip_case = 1;   //0이면 레이어, 1이면 페이지에 끼워 넣기, 2이면 새창
@@ -407,7 +408,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
         if(of[frm_jibeon] !== undefined){
             of[frm_jibeon].value = data.userSelectedType;
         }
-        
+
         setTimeout(function(){
             $("#meta_viewport").attr("content", vContent);
             of[frm_addr2].focus();

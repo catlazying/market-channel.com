@@ -136,7 +136,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 					<a href="/bbs/write.php?bo_table=qa">문의하기</a>
 				</li>
 				<li>
-					<a href="/_test.php">_TEST_</a>
+					<!-- <a href="/_test.php">_TEST_</a> -->
 				</li>
 			</ul>
 		</div>

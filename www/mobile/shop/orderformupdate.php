@@ -690,6 +690,22 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 ";
 $result = sql_query($sql, false);
 
+//notification_send // 배송완료 주문완료  입금확인
+$send_type = '주문완료';
+$user_id = $member['mb_id'];
+$mb_nick = get_member($user_id, 'mb_nick');
+$prodName = array();
+$sql = " select it_name,ct_qty from {$g5['g5_shop_cart_table']} where od_id = '$od_id' and ct_select = '1' ";
+$qry = sql_query($sql);
+while($val = sql_fetch_array($qry)) {
+    $prodName[] = $val['it_name']." ".$val['ct_qty']." / ";
+}
+$data = [
+    '{{상호명}}' => $mb_nick,
+    '{{상품명}}' => implode(",",$prodName)
+];
+notification_send($send_type ,$user_id ,$data);
+
 // 정말로 insert 가 되었는지 한번더 체크한다.
 $exists_sql = "select od_id, od_tno, od_ip from {$g5['g5_shop_order_table']} where od_id = '$od_id'";
 $exists_order = sql_fetch($exists_sql);
@@ -1040,3 +1056,9 @@ if( $is_noti_pay ){
 }
 
 goto_url(G5_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);
+
+
+
+# end of file
+
+

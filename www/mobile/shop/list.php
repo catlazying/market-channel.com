@@ -69,7 +69,7 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
 <script>
 var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 </script>
-<script src="<?php echo G5_JS_URL; ?>/shop.mobile.list.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/shop.mobile.list.js?v=1.0.0"></script>
 
 <div class="_schMenu">
 	<?php include_once(G5_MSHOP_SKIN_PATH.'/list.search.skin.php'); ?>
@@ -160,7 +160,9 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 				$order_by = 'it_order, it_id desc';
 
 		$error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
-
+?>
+	<div class="_shopList" id="sct_wrap">
+<?
 		// 리스트 스킨
 		$skin_file = is_include_path_check($skin_dir.'/'.$ca['ca_mobile_skin']) ? $skin_dir.'/'.$ca['ca_mobile_skin'] : $skin_dir.'/list.10.skin.php';
 
@@ -223,7 +225,7 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 				echo '<div class="sct_nofile">'.str_replace(G5_PATH.'/', '', $skin_file).' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
 		}
 		?>
-
+	</div>
 		<?php
 		$qstr1 = '';
 		if($total_count > $items) {
@@ -250,6 +252,9 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 		$('.total_count').text(total_count);
 	});
 </script>
+<style>
+.no_more_item {display: none;}
+</style>
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
 

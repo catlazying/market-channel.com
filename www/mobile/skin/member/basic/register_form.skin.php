@@ -1,6 +1,13 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+if(empty($member['mb_name']) && !empty($_SESSION['name'])){
+	$member['mb_name'] = $_SESSION['name'];
+}
+if(empty($member['mb_email']) && !empty($_SESSION['email'])){
+	$member['mb_email'] = $_SESSION['email'];
+}
+
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 add_javascript('<script src="'.G5_JS_URL.'/jquery.register_form.js"></script>', 0);
@@ -170,11 +177,6 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 							<input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_simple']) && $member['mb_certify']) { echo "readonly"; } ?> maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호<?php if ($config['cf_req_tel']) { ?> (필수)<?php } ?>">
 					</li>
 					<?php } ?>
-
-
-
-
-
 				</ul>
 				<div class="_topArea mt20">
 				</div>
@@ -190,6 +192,28 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 						<br>
 						<input type="text" name="mb_addr3" value="<?php echo get_text($member['mb_addr3']) ?>" id="reg_mb_addr3" class="frm_input frm_address" size="50" readonly="readonly" placeholder="참고항목">
 						<input type="hidden" name="mb_addr_jibeon" value="<?php echo get_text($member['mb_addr_jibeon']); ?>">
+						<?php if( $apps == "IOS"){?>
+							<button onclick="requestCamera()" type="button" class="btn_cancel">사업자등록증 촬영하기</button>
+							<img id="preview" style="width: 200px;" />
+							<input type="hidden" name="mb_profile">
+
+							<script>
+								function requestCamera() {
+									if (window.webkit && window.webkit.messageHandlers.openCamera) {
+										window.webkit.messageHandlers.openCamera.postMessage("");
+									} else {
+										alert("Native 앱 환경이 아닙니다.");
+									}
+								}
+								window.onImageCaptured  = function (base64Data) {
+									var imgBase = "data:image/jpeg;base64," + base64Data;
+									const imageElement = document.getElementById('preview');
+									imageElement.src = imgBase;
+									document.querySelector('input[name="mb_profile"]').value = imgBase;
+								}
+							</script>
+ 						<?php  } ?>
+
 					</li>
 					<?php } ?>
 				</ul>

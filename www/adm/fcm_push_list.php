@@ -7,7 +7,7 @@ $colspan = 8;
 
 auth_check_menu($auth, $sub_menu, "r");
 
-$g5['title'] = "푸시 저장목록";
+$g5['title'] = "푸시 회원목록";
 
 if ($page < 1) $page = 1;
 
@@ -32,9 +32,13 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 <form name="search_form" id="search_form" action=<?php echo $_SERVER['SCRIPT_NAME'];?> class="local_sch01 local_sch" method="get">
 <label for="st" class="sound_only">검색대상</label>
-<input type="hidden" name="st" id="st" value="fcm_title" >
+    <select name="st" id="st">
+        <option value="user_id">아이디</option>
+        <option value="push_token">푸시토큰</option>
+        <option value="last_push_at">마지막전송일</option>
+    </select>
 <label for="sv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-<input type="text" name="sv" value="<?php echo $sv ?>" id="sv" required class="required frm_input" placeholder="제목검색">
+<input type="text" name="sv" value="<?php echo $sv ?>" id="sv" required class="required frm_input" placeholder="아이디검색">
 <input type="submit" value="검색" class="btn_submit">
 </form>
 
@@ -52,7 +56,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
         <th scope="col">활성화</th>
         <th scope="col">마지막전송일</th>
         <th scope="col">등록일</th>
-        <th scope="col">삭제</th>
+        <th scope="col" style="width: 80px;">삭제</th>
      </tr>
      </thead>
      <tbody>
@@ -77,7 +81,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
         <td class="td_datetime"><?php echo date('Y-m-d h:i', strtotime($res['last_push_at']))?></td>
         <td class="td_datetime"><?php echo date('Y-m-d', strtotime($res['created_at']))?></td>
         <td rowspan="2">
-            <a href="./contentformupdate.php?w=d&amp;co_id=<?php echo $row['co_id']; ?>" onclick="return delete_confirm(this);" class="btn btn_02">삭제</a>
+            <a href="./fcm_push_update.php?w=d&amp;co_id=<?php echo $res['idx']; ?>" onclick="return delete_confirm(this);" class="btn btn_02">삭제</a>
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">

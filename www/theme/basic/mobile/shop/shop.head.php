@@ -90,7 +90,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 				<li><a href="<?php echo shop_type_url('5'); ?>">특가상품</a></li>
 				<li><a href="<?php echo shop_type_url('2'); ?>">MD 추천상품</a></li>
 				<li>
-					<a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">업종별 상품</a>
+					<a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=30">업종별 상품</a>
 					<ul class="ty1">
 					<?php // 업태별
 						$categories = show_shop_category_array(30,'4');
@@ -103,7 +103,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 					</ul>
 				</li>
 				<li>
-					<a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">요리별 상품</a>
+					<a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=40">요리별 상품</a>
 					<ul class="ty3">
 					<?php // 조리방식별
 						$categories = show_shop_category_array(40,'4');
@@ -137,7 +137,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 				</li>
 				<?php if(substr($_SERVER['REMOTE_ADDR'],0,12)=='203.249.190.'){ ?>
 				<li>
-					<a href="/_test.php">_TEST_</a>
+					<a href="/_test.php">_TEST[<?= $_SERVER['REMOTE_ADDR'] ?>]_</a>
 				</li>
 				<?php } ?>
 			</ul>

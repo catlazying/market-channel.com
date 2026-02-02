@@ -67,6 +67,7 @@ if ($config['cf_analytics']) {
 				type: 'POST',
 				data: { action:"create",token: token },
 				success: function(response) {
+					//alert(response);
 				}
 			});
 		}

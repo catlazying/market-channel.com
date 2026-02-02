@@ -1,5 +1,14 @@
 # market-channel.com
 
+
+
+// 웹에서 앱으로 로그아웃 신호 보내기
+if (window.webkit && window.webkit.messageHandlers.iosApp) {
+    window.webkit.messageHandlers.iosApp.postMessage("logout");
+}
+
+
+
 <?/* 감춤처리 <!--
 -->*/?>
 

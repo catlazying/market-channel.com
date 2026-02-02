@@ -4342,6 +4342,45 @@ function replaceName($str){
     return $res;
 }
 
+function notification_send($send_type, $user_id, $dataAry){
+    $sql = " select * from fcm_notification_set where send_type = '".$send_type."' ";
+    $row = sql_fetch($sql);
+    $send_type = "즉시";
+    $fcm_title = strip_tags(clean_xss_attributes($row['fcm_title']));
+    $fcm_message = $row['fcm_message'];
+    $fcm_image = $row['fcm_image'];
+    $fcm_link = $row['fcm_link'];
+    $fcm_message = str_replace(array_keys($dataAry), array_values($dataAry), $fcm_message);
+
+    $qry = sql_query("select * from fcm_notification_tokens where user_id ='".$user_id."' ");
+    while($res = sql_fetch_array($qry)) {
+        $user_id = $res['user_id'];
+        $user_token = $res['push_token'];
+        $fcm_device = $res['platform'];
+        if(!empty($user_id) && !empty($user_token)){
+
+            $addParamAry = array();
+            if(!empty($fcm_device )){ $addParamAry[] = " fcm_device ='$fcm_device' "; }
+            if(!empty($fcm_title )){ $addParamAry[] = " fcm_title ='$fcm_title' "; }
+            if(!empty($fcm_message )){ $addParamAry[] = " fcm_message ='$fcm_message' "; }
+            if(!empty($fcm_image )){ $addParamAry[] = " fcm_image ='$fcm_image' "; }
+            if(!empty($fcm_link )){ $addParamAry[] = " fcm_link ='$fcm_link' "; }
+            if(!empty($user_token )){ $addParamAry[] = " user_token ='$user_token' "; }
+            if(!empty($user_id )){ $addParamAry[] = " user_id ='$user_id' "; }
+            if(!empty($send_type )){ $addParamAry[] = " send_type ='$send_type' "; }
+            $addParams = ",".implode(",",$addParamAry);
+            $sql = " insert fcm_notification_cron set rdate = CURDATE(), rdatetime = NOW(), mdatetime = NOW(), viewYn='Y', ecnt=0 ".$addParams;
+            sql_query($sql);
+
+        }
+    }
+}
+function logSave($saveTxt,$fname=''){
+    $openFile = $_SERVER['DOCUMENT_ROOT']."/data/tmp/".$fname."".date("Ymd").".log";
+    $fp = fopen($openFile, "a+");
+    fwrite($fp, $saveTxt."\n");
+    fclose($fp);
+}
 ## fcm save
 function test(){
     echo "-----------------------------";

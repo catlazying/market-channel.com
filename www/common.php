@@ -41,6 +41,19 @@ if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
     include_once('cloudflare.check.php');    // cloudflare 의 ip 대역인지 체크
 }
 
+// user agent를 확인
+$apps = "";
+if($_SERVER['HTTP_USER_AGENT'] != "shell"){
+    $headers = getallheaders();
+    $ua = isset($headers['user-agent']) ? $headers['user-agent'] : '';
+    if (strpos($ua, 'iOS') !== false) {
+        $apps = "IOS";
+    }else if (strpos($ua, 'Android') !== false) {
+        $apps = "ANDROID";
+    }
+}
+
+
 function g5_path()
 {
     $chroot = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], dirname(__FILE__)));
