@@ -1,0 +1,12 @@
+.gitignore
+.vscode/
+sftp.json
+tasks.json
+imagess/
+images/
+.DS_Store
+*.md
+*.apk
+_info/
+*.zip
+www/adm/notification/*-firebase-adminsdk-*.json
