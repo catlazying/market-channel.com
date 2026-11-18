@@ -165,6 +165,16 @@ const controllers = {
 
 		}
 	},
+	cttPri: {
+		selector : '.ctt_privacy',
+		action() {
+			$('.ctt_privacy table').each(function() {
+				if (!$(this).parent().hasClass('ova')) {
+					$(this).wrap('<div class="ova"></div>');
+				}
+			});
+		}
+	},
 };
 
 function initControllers() {

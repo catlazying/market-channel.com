@@ -74,7 +74,7 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 <div class="_schMenu">
 	<?php include_once(G5_MSHOP_SKIN_PATH.'/list.search.skin.php'); ?>
 
-	<? if(strlen($ca['ca_id'])=='2'){ ?>
+	<? if(strlen($ca['ca_id'])=='2' && true==false){ ?>
 		<div class="menu ty1" >
 			<?php // 업태별
 				$categories = show_shop_category_array($ca['ca_id'],'4');

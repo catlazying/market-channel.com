@@ -21,28 +21,7 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 				}
 			}
 		?>
-		<!--
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-link1.png" alt=""></div>
-			<div class="txt">한식</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-link2.png" alt=""></div>
-			<div class="txt">중식</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-link3.png" alt=""></div>
-			<div class="txt">일식</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-link4.png" alt=""></div>
-			<div class="txt">양식</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-link5.png" alt=""></div>
-			<div class="txt">기타</div>
-		</a>
-		-->
+
 	</div>
 
 	<div class="_hotHead">
@@ -62,46 +41,7 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 				$list->set_query($sql);
 				echo $list->run();
 				?>
-				<?/*<!--
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">국산</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per up">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				<div class="_item">
-					<div class="img">
-						<a href="#">
-							<img src="https://placehold.co/340x340" alt="">
-							<span class="mark">국산</span>
-						</a>
-					</div>
-					<div class="info">
-						<div class="subject"><a href="#">최상급 급냉 숫꽃게5kg 최상급 급냉 숫꽃게5kg</a></div>
-						<div class="price">
-							<strong>10,500</strong>
-							<em>원</em>
-						</div>
-						<div class="per down">
-							<i class="ri-triangle-fill"></i>
-							<span>25%</span>
-						</div>
-					</div>
-				</div>
-				 -->*/?>
+
 
 			</div>
 		</div>
@@ -125,48 +65,6 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 			}
 		?>
 
-		<!--
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link1.svg" alt=""></div>
-			<div class="txt">연체류</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link2.svg" alt=""></div>
-			<div class="txt">새우류</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link3.svg" alt=""></div>
-			<div class="txt">갑각류</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link4.svg" alt=""></div>
-			<div class="txt">조개류</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link5.svg" alt=""></div>
-			<div class="txt">생선류</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link6.svg" alt=""></div>
-			<div class="txt">가공제품</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link7.svg" alt=""></div>
-			<div class="txt">튀김류</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link8.svg" alt=""></div>
-			<div class="txt">냉동식품</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link9.svg" alt=""></div>
-			<div class="txt">특수상품</div>
-		</a>
-		<a href="#">
-			<div class="img"><img src="<?=G5_URL?>/images/ico-menu-link10.svg" alt=""></div>
-			<div class="txt">기타</div>
-		</a>
-		-->
 	</div>
 
 	<div class="_ban">

@@ -43,7 +43,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </form>
     </div>
     <!-- } 상세검색 항목 끝 -->
-
+<?php if($total_count > 0) { ?>
     <!-- 검색된 분류 시작 { -->
     <div id="ssch_cate">
         <ul>
@@ -105,7 +105,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         ?>
     </div>
     <!-- } 검색결과 끝 -->
-
+<?php }else{ ?>
+    <div class="empty_list">검색된 상품이 하나도 없습니다.</div>
+<?php } ?>
 </div>
 <!-- } 검색 끝 -->
 

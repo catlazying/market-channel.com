@@ -17,8 +17,8 @@ header('P3P: CP="ALL CURa ADMa DEVa TAIa OUR BUS IND PHY ONL UNI PUR FIN COM NAV
 if (!defined('G5_SET_TIME_LIMIT')) define('G5_SET_TIME_LIMIT', 0);
 @set_time_limit(G5_SET_TIME_LIMIT);
 
-if( version_compare( PHP_VERSION, '5.2.17' , '<' ) ){
-    die(sprintf('PHP 5.2.17 or higher required. Your PHP version is %s', PHP_VERSION));
+if( version_compare( PHP_VERSION, '8.4.0' , '<' ) ){
+    die(sprintf('PHP 8.4.0 or higher required. Your PHP version is %s', PHP_VERSION));
 }
 
 //==========================================================================================================================
@@ -108,6 +108,8 @@ function array_map_deep($fn, $array)
 // SQL Injection 대응 문자열 필터링
 function sql_escape_string($str)
 {
+    $str = isset($str) ? (string) $str : '';
+
     if(defined('G5_ESCAPE_PATTERN') && defined('G5_ESCAPE_REPLACE')) {
         $pattern = G5_ESCAPE_PATTERN;
         $replace = G5_ESCAPE_REPLACE;
@@ -433,8 +435,8 @@ define('G5_CAPTCHA_PATH',   G5_PLUGIN_PATH.'/'.G5_CAPTCHA_DIR);
 // QUERY_STRING
 $qstr = '';
 
-if (isset($_REQUEST['sca']))  {
-    $sca = clean_xss_tags(trim($_REQUEST['sca']));
+if (isset($_REQUEST['sca']) && !is_array($_REQUEST['sca']))  {
+    $sca = clean_xss_tags(trim((string)$_REQUEST['sca']));
     if ($sca) {
         $sca = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $sca);
         $qstr .= '&amp;sca=' . urlencode($sca);
@@ -443,8 +445,8 @@ if (isset($_REQUEST['sca']))  {
     $sca = '';
 }
 
-if (isset($_REQUEST['sfl']))  {
-    $sfl = trim($_REQUEST['sfl']);
+if (isset($_REQUEST['sfl']) && !is_array($_REQUEST['sfl']))  {
+    $sfl = trim((string)$_REQUEST['sfl']);
     $sfl = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*\s\#]/", "", $sfl);
     if ($sfl)
         $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
@@ -453,16 +455,16 @@ if (isset($_REQUEST['sfl']))  {
 }
 
 
-if (isset($_REQUEST['stx']))  { // search text (검색어)
-    $stx = get_search_string(trim($_REQUEST['stx']));
+if (isset($_REQUEST['stx']) && !is_array($_REQUEST['stx']))  { // search text (검색어)
+    $stx = get_search_string(trim((string)$_REQUEST['stx']));
     if ($stx || $stx === '0')
         $qstr .= '&amp;stx=' . urlencode(cut_str($stx, 20, ''));
 } else {
     $stx = '';
 }
 
-if (isset($_REQUEST['sst']))  {
-    $sst = trim($_REQUEST['sst']);
+if (isset($_REQUEST['sst']) && !is_array($_REQUEST['sst']))  {
+    $sst = trim((string)$_REQUEST['sst']);
     $sst = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*\s]/", "", $sst);
     if ($sst)
         $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
@@ -470,7 +472,8 @@ if (isset($_REQUEST['sst']))  {
     $sst = '';
 }
 
-if (isset($_REQUEST['sod']))  { // search order (검색 오름, 내림차순)
+if (isset($_REQUEST['sod']) && !is_array($_REQUEST['sod']))  { // search order (검색 오름, 내림차순)
+    $sod = (string)$_REQUEST['sod'];
     $sod = preg_match("/^(asc|desc)$/i", $sod) ? $sod : '';
     if ($sod)
         $qstr .= '&amp;sod=' . urlencode($sod);
@@ -478,7 +481,8 @@ if (isset($_REQUEST['sod']))  { // search order (검색 오름, 내림차순)
     $sod = '';
 }
 
-if (isset($_REQUEST['sop']))  { // search operator (검색 or, and 오퍼레이터)
+if (isset($_REQUEST['sop']) && !is_array($_REQUEST['sop']))  { // search operator (검색 or, and 오퍼레이터)
+    $sop = (string)$_REQUEST['sop'];
     $sop = preg_match("/^(or|and)$/i", $sop) ? $sop : '';
     if ($sop)
         $qstr .= '&amp;sop=' . urlencode($sop);
@@ -486,15 +490,15 @@ if (isset($_REQUEST['sop']))  { // search operator (검색 or, and 오퍼레이�
     $sop = '';
 }
 
-if (isset($_REQUEST['spt']))  { // search part (검색 파트[구간])
-    $spt = (int)$spt;
+if (isset($_REQUEST['spt']) && !is_array($_REQUEST['spt']))  { // search part (검색 파트[구간])
+    $spt = (int)$_REQUEST['spt'];
     if ($spt)
         $qstr .= '&amp;spt=' . urlencode($spt);
 } else {
     $spt = '';
 }
 
-if (isset($_REQUEST['page'])) { // 리스트 페이지
+if (isset($_REQUEST['page']) && !is_array($_REQUEST['page'])) { // 리스트 페이지
     $page = (int)$_REQUEST['page'];
     if ($page)
         $qstr .= '&amp;page=' . urlencode($page);
@@ -502,33 +506,33 @@ if (isset($_REQUEST['page'])) { // 리스트 페이지
     $page = '';
 }
 
-if (isset($_REQUEST['w'])) {
-    $w = substr($w, 0, 2);
+if (isset($_REQUEST['w']) && !is_array($_REQUEST['w'])) {
+    $w = substr((string)$_REQUEST['w'], 0, 2);
 } else {
     $w = '';
 }
 
 /** @var int $wr_id 게시판 글의 ID */
-if (isset($_REQUEST['wr_id'])) {
+if (isset($_REQUEST['wr_id']) && !is_array($_REQUEST['wr_id'])) {
     $wr_id = (int)$_REQUEST['wr_id'];
 } else {
     $wr_id = 0;
 }
 
 if (isset($_REQUEST['bo_table']) && ! is_array($_REQUEST['bo_table'])) {
-    $bo_table = preg_replace('/[^a-z0-9_]/i', '', trim($_REQUEST['bo_table']));
+    $bo_table = preg_replace('/[^a-z0-9_]/i', '', trim((string)$_REQUEST['bo_table']));
     $bo_table = substr($bo_table, 0, 20);
 } else {
     $bo_table = '';
 }
 
 // URL ENCODING
-if (isset($_REQUEST['url'])) {
-    $url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', trim($_REQUEST['url']));
+if (isset($_REQUEST['url']) && !is_array($_REQUEST['url'])) {
+    $url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', trim((string)$_REQUEST['url']));
     $urlencode = urlencode($url);
 } else {
     $url = '';
-    $urlencode = urlencode($_SERVER['REQUEST_URI']);
+    $urlencode = urlencode(isset($_SERVER['REQUEST_URI']) ? (string)$_SERVER['REQUEST_URI'] : '');
     if (G5_DOMAIN) {
         $p = @parse_url(G5_DOMAIN);
         $p['path'] = isset($p['path']) ? $p['path'] : '/';
@@ -538,7 +542,7 @@ if (isset($_REQUEST['url'])) {
 
 if (isset($_REQUEST['gr_id'])) {
     if (!is_array($_REQUEST['gr_id'])) {
-        $gr_id = preg_replace('/[^a-z0-9_]/i', '', trim($_REQUEST['gr_id']));
+        $gr_id = preg_replace('/[^a-z0-9_]/i', '', trim((string)$_REQUEST['gr_id']));
     }
 } else {
     $gr_id = '';

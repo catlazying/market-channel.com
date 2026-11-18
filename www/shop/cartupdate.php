@@ -47,7 +47,7 @@ if($act == "buy")
         $ct_chk = isset($post_ct_chk[$i]) ? 1 : 0;
         if($ct_chk) {
             $it_id = isset($post_it_ids[$i]) ? safe_replace_regex($post_it_ids[$i], 'it_id') : '';
-            
+
             if( !$it_id ) continue;
 
             // 본인인증, 성인인증체크
@@ -148,12 +148,12 @@ else // 장바구니에 담기
     $post_io_ids = (isset($_POST['io_id']) && is_array($_POST['io_id'])) ? $_POST['io_id'] : array();
     $post_io_types = (isset($_POST['io_type']) && is_array($_POST['io_type'])) ? $_POST['io_type'] : array();
     $post_ct_qtys = (isset($_POST['ct_qty']) && is_array($_POST['ct_qty'])) ? $_POST['ct_qty'] : array();
-    
+
     if ($count && $sw_direct) {
         // 바로구매에 있던 장바구니 자료를 지운다.
         sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
     }
-    
+
     for($i=0; $i<$count; $i++) {
         // 보관함의 상품을 담을 때 체크되지 않은 상품 건너뜀
         if($act == 'multi' && ! (isset($post_chk_it_id[$i]) && $post_chk_it_id[$i]))
@@ -353,7 +353,7 @@ else // 장바구니에 담기
                 if($point < 0)
                     $point = 0;
             }
-            
+
             $ct_send_cost = isset($_REQUEST['ct_send_cost']) ? (int) $_REQUEST['ct_send_cost'] : 0;
 
             // 배송비결제
@@ -361,7 +361,7 @@ else // 장바구니에 담기
                 $ct_send_cost = 2; // 무료
             else if($it['it_sc_type'] > 1 && $it['it_sc_method'] == 1)
                 $ct_send_cost = 1; // 착불
-            
+
             $io_value = sql_real_escape_string(strip_tags($io_value));
             $remote_addr = get_real_client_ip();
 

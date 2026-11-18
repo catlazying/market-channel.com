@@ -21,6 +21,7 @@ $admin = get_admin("super");
 		</div>
 		<ul class="info">
 			<li>회사명 : <?php echo $default['de_admin_company_name']; ?></li>
+            <li>주소 : <?php echo $default['de_admin_company_addr']; ?></li><br>
 			<li>대표자명 : <?php echo $default['de_admin_company_owner']; ?></li>
 			<li>사업자등록번호 : <span><?php echo $default['de_admin_company_saupja_no']; ?></span></li>
 			<li>통신판매업 : <?php echo $default['de_admin_tongsin_no']; ?></li>

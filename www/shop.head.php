@@ -1,4 +1,5 @@
 <?php
+///// www/theme/basic/mobile/shop/shop.head.php 여기로  /////
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $q = isset($_GET['q']) ? clean_xss_tags($_GET['q'], 1, 1) : '';
@@ -93,6 +94,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 					<a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=10">업종별 상품</a>
 					<ul class="ty1">
 					<?php // 업태별
+					echo '<li><a href="'.G5_SHOP_URL.'/list.php?ca_id=10">전체</a></li>';
 						$categories = show_shop_category_array(30,'4');
 						if( $categories ){
 							foreach($categories as $category){

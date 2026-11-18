@@ -168,6 +168,18 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 ?>
 	<div class="sit_ov_tbl">
 		<dl>
+			<dt>규격</dt>
+			<dd><?php echo $info_data['quantity']; ?></dd>
+		</dl>
+		<dl>
+			<dt>무게</dt>
+			<dd><?php echo $info_data['weight']; ?></dd>
+		</dl>
+		<dl>
+			<dt>단위</dt>
+			<dd><?php echo $info_data['size']; ?></dd>
+		</dl>
+		<dl>
 			<dt>판매가능 수량</dt>
 			<dd><?php echo number_format(get_it_stock_qty($it_id)); ?></dd>
 		</dl>
@@ -175,31 +187,17 @@ add_javascript('<script src="' . G5_JS_URL . '/jquery.bxslider.js"></script>', 1
 			<dt>가공형태</dt>
 			<dd><?php echo $info_data['product_composition']; ?></dd>
 		</dl>
+
 		<?/*
 		<dl>
 			<dt>과세여부</dt>
 			<dd><?php echo ($it['it_notax']==1)?"비과세":"과세"; ?></dd>
 		</dl>
-		*/?>
-		<dl>
-			<dt>규격</dt>
-			<dd><?php echo $info_data['quantity']; ?></dd>
-		</dl>
-		<?/*
 		<dl>
 			<dt>배송료</dt>
 			<dd><?php echo $sc_method?></dd>
 		</dl>
 		*/?>
-		<dl>
-			<dt>무게</dt>
-			<dd><?php echo $info_data['weight']; ?></dd>
-		</dl>
-
-		<dl>
-			<dt>단위</dt>
-			<dd><?php echo $info_data['size']; ?></dd>
-		</dl>
 			<?php if(G5_MARKET_YN=='N') { /* <!-- ?>
 				 <?php if ($it['it_maker']) { ?>
 					<dl>

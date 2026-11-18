@@ -469,6 +469,13 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <?php } ?>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row" class="sodr_sppay"><label for="od_receipt_price">신용카드 승인번호</label></th>
+                    <td>
+                    <?php echo $od['od_app_no']; ?>
+                    </td>
+                </tr>
+
                 <?php } ?>
 
                 <?php if ($od['od_settle_case'] == 'KAKAOPAY') { ?>

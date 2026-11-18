@@ -1,3 +1,6 @@
+<?php
+exit;
+?>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" id="meta_viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
@@ -5,7 +8,7 @@
 <meta name="format-detection" content="telephone=no">
 <title>마켓채널</title>
 <link rel="stylesheet" href="http://market-channel.com/theme/basic/css/mobile_shop.css?ver=2303229">
-<link rel="stylesheet" href="http://market-channel.com/css/common.css?ver=2303229">
+<link rel="stylesheet" href="http://market-channel.com/css/common.css?ver=260526">
 
 </head>
 <script>

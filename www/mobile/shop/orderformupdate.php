@@ -9,6 +9,7 @@ $post_tran_cd = isset($_POST['tran_cd']) ? $_POST['tran_cd'] : '';
 $post_lgd_paykey = isset($_POST['LGD_PAYKEY']) ? $_POST['LGD_PAYKEY'] : '';
 
 //삼성페이 또는 lpay 또는 이니시스 카카오페이 요청으로 왔다면 현재 삼성페이 또는 lpay 또는 이니시스 카카오페이는 이니시스 밖에 없으므로 $default['de_pg_service'] 값을 이니시스로 변경한다.
+$od_settle_case = isset($od_settle_case) ? (string)$od_settle_case : '';
 if( is_inicis_order_pay($od_settle_case) && !empty($_POST['P_HASH']) ){
     $default['de_pg_service'] = 'inicis';
 }
@@ -282,7 +283,7 @@ if ((int)($send_cost - $tot_sc_cp_price) !== (int)($i_send_cost - $i_send_coupon
 }
 
 // 추가배송비가 상이함
-$od_b_zip   = preg_replace('/[^0-9]/', '', $od_b_zip);
+$od_b_zip   = preg_replace('/[^0-9]/', '', isset($od_b_zip) ? (string)$od_b_zip : '');
 $od_b_zip1  = substr($od_b_zip, 0, 3);
 $od_b_zip2  = substr($od_b_zip, 3);
 $zipcode = $od_b_zip1 . $od_b_zip2;
@@ -372,7 +373,7 @@ else if ($od_settle_case == "계좌이체")
     $od_tno             = $tno;
     $od_receipt_price   = $amount;
     $od_receipt_point   = $i_temp_point;
-    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", isset($app_time) ? (string)$app_time : '');
     $od_deposit_name    = $od_name;
     $od_bank_account    = $bank_name;
     $pg_price           = $amount;
@@ -429,7 +430,7 @@ else if ($od_settle_case == "휴대폰")
     $od_tno             = $tno;
     $od_receipt_price   = $amount;
     $od_receipt_point   = $i_temp_point;
-    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", isset($app_time) ? (string)$app_time : '');
     $od_bank_account    = $commid.' '.$mobile_no;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
@@ -458,7 +459,7 @@ else if ($od_settle_case == "신용카드")
     $od_app_no          = $app_no;
     $od_receipt_price   = $amount;
     $od_receipt_point   = $i_temp_point;
-    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", isset($app_time) ? (string)$app_time : '');
     $od_bank_account    = $card_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
@@ -487,7 +488,7 @@ else if ($od_settle_case == "간편결제")
     $od_app_no          = $app_no;
     $od_receipt_price   = $amount;
     $od_receipt_point   = $i_temp_point;
-    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", isset($app_time) ? (string)$app_time : '');
     $od_bank_account    = $card_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
@@ -503,7 +504,7 @@ else if ( is_inicis_order_pay($od_settle_case) )    //이니시스의 삼성페�
     $od_app_no          = $app_no;
     $od_receipt_price   = $amount;
     $od_receipt_point   = $i_temp_point;
-    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", isset($app_time) ? (string)$app_time : '');
     $od_bank_account    = $card_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
@@ -518,7 +519,7 @@ else if ($od_settle_case == "KAKAOPAY")
     $od_app_no          = $app_no;
     $od_receipt_price   = $amount;
     $od_receipt_point   = $i_temp_point;
-    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", isset($app_time) ? (string)$app_time : '');
     $od_bank_account    = $card_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
@@ -595,26 +596,28 @@ if($default['de_tax_flag_use']) {
     $od_free_mny = isset($_POST['comm_free_mny']) ? (int) $_POST['comm_free_mny'] : 0;
 }
 
-$od_email         = get_email_address($od_email);
-$od_name          = clean_xss_tags($od_name);
-$od_tel           = clean_xss_tags($od_tel);
-$od_hp            = clean_xss_tags($od_hp);
-$od_zip           = preg_replace('/[^0-9]/', '', $od_zip);
+$od_email         = get_email_address(isset($od_email) ? (string)$od_email : '');
+$od_name          = clean_xss_tags(isset($od_name) ? (string)$od_name : '');
+$od_tel           = clean_xss_tags(isset($od_tel) ? (string)$od_tel : '');
+$od_hp            = clean_xss_tags(isset($od_hp) ? (string)$od_hp : '');
+$od_zip           = preg_replace('/[^0-9]/', '', isset($od_zip) ? (string)$od_zip : '');
 $od_zip1          = substr($od_zip, 0, 3);
 $od_zip2          = substr($od_zip, 3);
-$od_addr1         = clean_xss_tags($od_addr1);
-$od_addr2         = clean_xss_tags($od_addr2);
-$od_addr3         = clean_xss_tags($od_addr3);
+$od_addr1         = clean_xss_tags(isset($od_addr1) ? (string)$od_addr1 : '');
+$od_addr2         = clean_xss_tags(isset($od_addr2) ? (string)$od_addr2 : '');
+$od_addr3         = clean_xss_tags(isset($od_addr3) ? (string)$od_addr3 : '');
+$od_addr_jibeon   = isset($od_addr_jibeon) ? (string)$od_addr_jibeon : '';
 $od_addr_jibeon   = preg_match("/^(N|R)$/", $od_addr_jibeon) ? $od_addr_jibeon : '';
-$od_b_name        = clean_xss_tags($od_b_name);
-$od_b_tel         = clean_xss_tags($od_b_tel);
-$od_b_hp          = clean_xss_tags($od_b_hp);
-$od_b_addr1       = clean_xss_tags($od_b_addr1);
-$od_b_addr2       = clean_xss_tags($od_b_addr2);
-$od_b_addr3       = clean_xss_tags($od_b_addr3);
+$od_b_name        = clean_xss_tags(isset($od_b_name) ? (string)$od_b_name : '');
+$od_b_tel         = clean_xss_tags(isset($od_b_tel) ? (string)$od_b_tel : '');
+$od_b_hp          = clean_xss_tags(isset($od_b_hp) ? (string)$od_b_hp : '');
+$od_b_addr1       = clean_xss_tags(isset($od_b_addr1) ? (string)$od_b_addr1 : '');
+$od_b_addr2       = clean_xss_tags(isset($od_b_addr2) ? (string)$od_b_addr2 : '');
+$od_b_addr3       = clean_xss_tags(isset($od_b_addr3) ? (string)$od_b_addr3 : '');
+$od_b_addr_jibeon = isset($od_b_addr_jibeon) ? (string)$od_b_addr_jibeon : '';
 $od_b_addr_jibeon = preg_match("/^(N|R)$/", $od_b_addr_jibeon) ? $od_b_addr_jibeon : '';
-$od_memo          = clean_xss_tags($od_memo, 0, 1, 0, 0);
-$od_deposit_name  = clean_xss_tags($od_deposit_name);
+$od_memo          = clean_xss_tags(isset($od_memo) ? (string)$od_memo : '', 0, 1, 0, 0);
+$od_deposit_name  = clean_xss_tags(isset($od_deposit_name) ? (string)$od_deposit_name : '');
 $od_tax_flag      = $default['de_tax_flag_use'];
 
 $add_info_1 = isset($_REQUEST['add_info_1']) ? clean_xss_tags($_REQUEST['add_info_1'], 1, 1) : '';
@@ -701,7 +704,7 @@ while($val = sql_fetch_array($qry)) {
     $prodName[] = $val['it_name']." ".$val['ct_qty']." / ";
 }
 $data = [
-    '{{상호명}}' => $mb_nick,
+    '{{상호명}}' => $mb_nick['mb_nick'],
     '{{상품명}}' => implode(",",$prodName)
 ];
 notification_send($send_type ,$user_id ,$data);
@@ -817,6 +820,42 @@ if(!$result) {
     sql_query(" delete from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
 
     die('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
+}else{
+
+    if($cart_status=='취소'){
+        //notification_send // 배송완료 주문완료  입금확인
+        $send_type = '주문취소';
+        $user_id = $member['mb_id'];
+        $mb_nick = get_member($user_id, 'mb_nick');
+        $prodName = array();
+        $sql = " select it_name,ct_qty from {$g5['g5_shop_cart_table']} where od_id = '$od_id' and ct_select = '1' ";
+        $qry = sql_query($sql);
+        while($val = sql_fetch_array($qry)) {
+            $prodName[] = $val['it_name']." ".$val['ct_qty']." / ";
+        }
+        $data = [
+            '{{상호명}}' => $mb_nick['mb_nick'],
+            '{{상품명}}' => implode(",",$prodName)
+        ];
+        notification_send($send_type ,$user_id ,$data);
+    }
+    if($cart_status=='반품'){
+        //notification_send // 배송완료 주문완료  입금확인
+        $send_type = '환불';
+        $user_id = $member['mb_id'];
+        $mb_nick = get_member($user_id, 'mb_nick');
+        $prodName = array();
+        $sql = " select it_name,ct_qty from {$g5['g5_shop_cart_table']} where od_id = '$od_id' and ct_select = '1' ";
+        $qry = sql_query($sql);
+        while($val = sql_fetch_array($qry)) {
+            $prodName[] = $val['it_name']." ".$val['ct_qty']." / ";
+        }
+        $data = [
+            '{{상호명}}' => $mb_nick['mb_nick'],
+            '{{상품명}}' => implode(",",$prodName)
+        ];
+        notification_send($send_type ,$user_id ,$data);
+    }
 }
 
 // 회원이면서 포인트를 사용했다면 포인트 테이블에 사용을 추가
@@ -893,17 +932,17 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
         $sms_messages = array();
 
         for($s=0; $s<count($sms_contents); $s++) {
-            $sms_content = $sms_contents[$s];
-            $recv_number = preg_replace("/[^0-9]/", "", $recv_numbers[$s]);
-            $send_number = preg_replace("/[^0-9]/", "", $send_numbers[$s]);
+            $sms_content = isset($sms_contents[$s]) ? (string)$sms_contents[$s] : '';
+            $recv_number = preg_replace("/[^0-9]/", "", isset($recv_numbers[$s]) ? (string)$recv_numbers[$s] : '');
+            $send_number = preg_replace("/[^0-9]/", "", isset($send_numbers[$s]) ? (string)$send_numbers[$s] : '');
 
-            $sms_content = str_replace("{이름}", $od_name, $sms_content);
-            $sms_content = str_replace("{보낸분}", $od_name, $sms_content);
-            $sms_content = str_replace("{받는분}", $od_b_name, $sms_content);
-            $sms_content = str_replace("{주문번호}", $od_id, $sms_content);
-            $sms_content = str_replace("{주문금액}", number_format($tot_ct_price + $od_send_cost + (int) $od_send_cost2), $sms_content);
-            $sms_content = str_replace("{회원아이디}", $member['mb_id'], $sms_content);
-            $sms_content = str_replace("{회사명}", $default['de_admin_company_name'], $sms_content);
+            $sms_content = str_replace("{이름}", (string)$od_name, $sms_content);
+            $sms_content = str_replace("{보낸분}", (string)$od_name, $sms_content);
+            $sms_content = str_replace("{받는분}", (string)$od_b_name, $sms_content);
+            $sms_content = str_replace("{주문번호}", (string)$od_id, $sms_content);
+            $sms_content = str_replace("{주문금액}", number_format((float)$tot_ct_price + (float)$od_send_cost + (int) $od_send_cost2), $sms_content);
+            $sms_content = str_replace("{회원아이디}", isset($member['mb_id']) ? (string)$member['mb_id'] : '', $sms_content);
+            $sms_content = str_replace("{회사명}", isset($default['de_admin_company_name']) ? (string)$default['de_admin_company_name'] : '', $sms_content);
 
             $idx = 'de_sms_use'.($s + 2);
 
@@ -917,8 +956,8 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
         if($od_settle_case == '무통장' && $default['de_sms_use2'] && $od_misu > 0) {
             $sms_content = $od_name."님의 입금계좌입니다.\n금액:".number_format($od_misu)."원\n계좌:".$od_bank_account."\n".$default['de_admin_company_name'];
 
-            $recv_number = preg_replace("/[^0-9]/", "", $od_hp);
-            $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']);
+            $recv_number = preg_replace("/[^0-9]/", "", isset($od_hp) ? (string)$od_hp : '');
+            $send_number = preg_replace("/[^0-9]/", "", isset($default['de_admin_company_tel']) ? (string)$default['de_admin_company_tel'] : '');
 
             $sms_messages[] = array('recv' => $recv_number, 'send' => $send_number, 'cont' => $sms_content);
             $sms_count++;

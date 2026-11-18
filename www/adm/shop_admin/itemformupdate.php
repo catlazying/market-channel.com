@@ -18,9 +18,9 @@ check_admin_token();
 // input vars 체크
 check_input_vars();
 
-$ca_id = isset($_POST['ca_id']) ? preg_replace('/[^0-9a-z]/i', '', $_POST['ca_id']) : '';
-$ca_id2 = isset($_POST['ca_id2']) ? preg_replace('/[^0-9a-z]/i', '', $_POST['ca_id2']) : '';
-$ca_id3 = isset($_POST['ca_id3']) ? preg_replace('/[^0-9a-z]/i', '', $_POST['ca_id3']) : '';
+$ca_id = isset($_POST['ca_id']) && !is_array($_POST['ca_id']) ? preg_replace('/[^0-9a-z]/i', '', (string)$_POST['ca_id']) : '';
+$ca_id2 = isset($_POST['ca_id2']) && !is_array($_POST['ca_id2']) ? preg_replace('/[^0-9a-z]/i', '', (string)$_POST['ca_id2']) : '';
+$ca_id3 = isset($_POST['ca_id3']) && !is_array($_POST['ca_id3']) ? preg_replace('/[^0-9a-z]/i', '', (string)$_POST['ca_id3']) : '';
 
 if ($is_admin != 'super') {     // 최고관리자가 아니면 체크
     if( $w === '' ){
@@ -291,7 +291,7 @@ for($i=0; $i<$count_ii_article; $i++) {
 }
 $it_info_value = addslashes(serialize($value_array));
 
-$it_name = isset($_POST['it_name']) ? strip_tags(clean_xss_attributes(trim($_POST['it_name']))) : '';
+$it_name = isset($_POST['it_name']) && !is_array($_POST['it_name']) ? strip_tags(clean_xss_attributes(trim((string)$_POST['it_name']))) : '';
 
 // KVE-2019-0708
 $check_sanitize_keys = array(
@@ -307,6 +307,14 @@ $check_sanitize_keys = array(
 'it_sell_email',        // 판매자 e-mail
 'it_purchase_price',    // 매입가격
 'it_price',             // 판매가격
+'it_price_2',           // 레벨2 판매가격
+'it_price_3',           // 레벨3 판매가격
+'it_price_4',           // 레벨4 판매가격
+'it_price_5',           // 레벨5 판매가격
+'it_price_6',           // 레벨6 판매가격
+'it_price_7',           // 레벨7 판매가격
+'it_price_8',           // 레벨8 판매가격
+'it_price_9',           // 레벨9 판매가격
 'it_cust_price',        // 시중가격
 'it_point_type',        // 포인트 유형
 'it_point',             // 포인트
@@ -368,6 +376,14 @@ $sql_common = " ca_id               = '$ca_id',
                 it_mobile_explan    = '$it_mobile_explan',
                 it_cust_price       = '$it_cust_price',
                 it_price            = '$it_price',
+                it_price_2          = '$it_price_2',
+                it_price_3          = '$it_price_3',
+                it_price_4          = '$it_price_4',
+                it_price_5          = '$it_price_5',
+                it_price_6          = '$it_price_6',
+                it_price_7          = '$it_price_7',
+                it_price_8          = '$it_price_8',
+                it_price_9          = '$it_price_9',
                 it_purchase_price   = '$it_purchase_price',
                 it_point            = '$it_point',
                 it_point_type       = '$it_point_type',
@@ -432,7 +448,7 @@ $sql_common = " ca_id               = '$ca_id',
 
 if ($w == "")
 {
-    $it_id = isset($_POST['it_id']) ? $_POST['it_id'] : '';
+    $it_id = isset($_POST['it_id']) && !is_array($_POST['it_id']) ? (string)$_POST['it_id'] : '';
 
     if (!trim($it_id)) {
         alert('상품 코드가 없으므로 상품을 추가하실 수 없습니다.');
@@ -478,6 +494,14 @@ else if ($w == "d")
     $sql_common = "";
     $sql_common .= " , it_cust_price = '".$it_cust_price."' ";
     $sql_common .= " , it_price = '".$it_price."' ";
+    $sql_common .= " , it_price_2 = '".$it_price_2."' ";
+    $sql_common .= " , it_price_3 = '".$it_price_3."' ";
+    $sql_common .= " , it_price_4 = '".$it_price_4."' ";
+    $sql_common .= " , it_price_5 = '".$it_price_5."' ";
+    $sql_common .= " , it_price_6 = '".$it_price_6."' ";
+    $sql_common .= " , it_price_7 = '".$it_price_7."' ";
+    $sql_common .= " , it_price_8 = '".$it_price_8."' ";
+    $sql_common .= " , it_price_9 = '".$it_price_9."' ";
     $sql_common .= " , it_stock_qty = '".$it_stock_qty."' ";
     $sql_common .= " , it_ip = '".$_SERVER['REMOTE_ADDR']."' ";
     $sql_common .= " , it_purchase_price = '".$it_purchase_price."' ";
@@ -574,6 +598,14 @@ if(is_checked('chk_ca_it_nocoupon'))            $ca_fields .= " , it_nocoupon = 
 if(is_checked('chk_ca_it_soldout'))             $ca_fields .= " , it_soldout = '$it_soldout' ";
 if(is_checked('chk_ca_it_info'))                $ca_fields .= " , it_info_gubun = '$it_info_gubun', it_info_value = '$it_info_value' ";
 if(is_checked('chk_ca_it_price'))               $ca_fields .= " , it_price = '$it_price' ";
+if(is_checked('chk_ca_it_price_2'))              $ca_fields .= " , it_price_2 = '$it_price_2' ";
+if(is_checked('chk_ca_it_price_3'))              $ca_fields .= " , it_price_3 = '$it_price_3' ";
+if(is_checked('chk_ca_it_price_4'))              $ca_fields .= " , it_price_4 = '$it_price_4' ";
+if(is_checked('chk_ca_it_price_5'))              $ca_fields .= " , it_price_5 = '$it_price_5' ";
+if(is_checked('chk_ca_it_price_6'))              $ca_fields .= " , it_price_6 = '$it_price_6' ";
+if(is_checked('chk_ca_it_price_7'))              $ca_fields .= " , it_price_7 = '$it_price_7' ";
+if(is_checked('chk_ca_it_price_8'))              $ca_fields .= " , it_price_8 = '$it_price_8' ";
+if(is_checked('chk_ca_it_price_9'))              $ca_fields .= " , it_price_9 = '$it_price_9' ";
 if(is_checked('chk_ca_it_purchase_price'))      $ca_fields .= " , it_purchase_price = '$it_purchase_price' ";
 if(is_checked('chk_ca_it_cust_price'))          $ca_fields .= " , it_cust_price = '$it_cust_price' ";
 if(is_checked('chk_ca_it_point'))               $ca_fields .= " , it_point = '$it_point' ";
@@ -627,6 +659,14 @@ if(is_checked('chk_all_it_nocoupon'))            $all_fields .= " , it_nocoupon 
 if(is_checked('chk_all_it_soldout'))             $all_fields .= " , it_soldout = '$it_soldout' ";
 if(is_checked('chk_all_it_info'))                $all_fields .= " , it_info_gubun = '$it_info_gubun', it_info_value = '$it_info_value' ";
 if(is_checked('chk_all_it_price'))               $all_fields .= " , it_price = '$it_price' ";
+if(is_checked('chk_all_it_price_2'))              $all_fields .= " , it_price_2 = '$it_price_2' ";
+if(is_checked('chk_all_it_price_3'))              $all_fields .= " , it_price_3 = '$it_price_3' ";
+if(is_checked('chk_all_it_price_4'))              $all_fields .= " , it_price_4 = '$it_price_4' ";
+if(is_checked('chk_all_it_price_5'))              $all_fields .= " , it_price_5 = '$it_price_5' ";
+if(is_checked('chk_all_it_price_6'))              $all_fields .= " , it_price_6 = '$it_price_6' ";
+if(is_checked('chk_all_it_price_7'))              $all_fields .= " , it_price_7 = '$it_price_7' ";
+if(is_checked('chk_all_it_price_8'))              $all_fields .= " , it_price_8 = '$it_price_8' ";
+if(is_checked('chk_all_it_price_9'))              $all_fields .= " , it_price_9 = '$it_price_9' ";
 if(is_checked('chk_all_it_cust_price'))          $all_fields .= " , it_cust_price = '$it_cust_price' ";
 if(is_checked('chk_all_it_point'))               $all_fields .= " , it_point = '$it_point' ";
 if(is_checked('chk_all_it_point_type'))          $all_fields .= " , it_point_type = '$it_point_type' ";

@@ -86,21 +86,6 @@ foreach((array) $list as $row){
         if ($this->href) {
             echo "    </a></div>\n";
         }
-        $it_info_array = unserialize(stripslashes($row['it_info_value']));
-        echo "    <div class=\"sum\">\n";
-        echo "        <dl>\n";
-        echo "            <dt>가공형태</dt>\n";
-        echo "            <dd>".$it_info_array['product_composition']."</dd>\n";
-        echo "        </dl>\n";
-        echo "        <dl>\n";
-        echo "            <dt>규격</dt>\n";
-        echo "            <dd>".$it_info_array['quantity']." / ".$it_info_array['weight']."</dd>\n";
-        echo "        </dl>\n";
-        echo "        <dl>\n";
-        echo "            <dt>단위</dt>\n";
-        echo "            <dd>".$it_info_array['size']."</dd>\n";
-        echo "        </dl>\n";
-        echo "    </div>\n";
         if ($this->view_it_price) {
             echo "    <div class=\"price\">\n";
             echo "      <strong>";
@@ -108,12 +93,29 @@ foreach((array) $list as $row){
             echo "      </strong><em>원</em>\n";
             echo "    </div>\n";
         }
-        echo "    <div class=\"sum\">\n";
-        echo "        <dl>\n";
-        echo "            <dt>조회수</dt>\n";
-        echo "            <dd>".number_format($row['it_hit'])."</dd>\n";
-        echo "        </dl>\n";
-        echo "    </div>\n";
+
+        $it_info_array = unserialize(stripslashes($row['it_info_value']));
+            echo "    <div class=\"sum\">\n";
+            echo "        <dl>\n";
+            echo "            <dt>가공형태</dt>\n";
+            echo "            <dd>".$it_info_array['product_composition']."</dd>\n";
+            echo "        </dl>\n";
+            echo "        <dl>\n";
+            echo "            <dt>규격</dt>\n";
+            echo "            <dd>".$it_info_array['quantity']." / ".$it_info_array['weight']."</dd>\n";
+            echo "        </dl>\n";
+            echo "        <dl>\n";
+            echo "            <dt>단위</dt>\n";
+            echo "            <dd>".$it_info_array['size']."</dd>\n";
+            echo "        </dl>\n";
+            echo "    </div>\n";
+
+        // echo "    <div class=\"sum\">\n";
+        // echo "        <dl>\n";
+        // echo "            <dt>조회수</dt>\n";
+        // echo "            <dd>".number_format($row['it_hit'])."</dd>\n";
+        // echo "        </dl>\n";
+        // echo "    </div>\n";
         echo "</div>\n";
 
 

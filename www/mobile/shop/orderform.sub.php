@@ -17,6 +17,14 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
 // 개인결제번호제거
 set_session('ss_personalpay_id', '');
 set_session('ss_personalpay_hash', '');
+
+// 기본정보 가져오기
+$infoAry = array();
+$sql = "select add_info from {$g5['g5_shop_order_table']} where mb_id = '{$member['mb_id']}' order by od_time DESC ";
+$info = sql_fetch($sql);
+if($info){
+    $infoAry = json_decode($info['add_info'],true);
+}
 ?>
 
 <div id="sod_approval_frm">
@@ -456,23 +464,23 @@ if($is_kakaopay_use) {
 
                 <li>
                     <label for="">매장출입 및 적재정보</label>
-                    <input type="text" name="add_info_1" class="frm_input">
+                    <input type="text" name="add_info_1" class="frm_input" value="<?php echo $infoAry['info_1'] ?>">
                 </li>
                 <li>
                     <label for="">배송지 간판명</label>
-                    <input type="text" name="add_info_2" class="frm_input">
+                    <input type="text" name="add_info_2" class="frm_input" value="<?php echo $infoAry['info_2'] ?>">
                 </li>
                 <li>
                     <label for="">비밀번호</label>
-                    <input type="text" name="add_info_3" class="frm_input">
+                    <input type="text" name="add_info_3" class="frm_input" value="<?php echo $infoAry['info_3'] ?>">
                 </li>
                 <li>
                     <label for="">잠금장치위치</label>
-                    <input type="text" name="add_info_4" class="frm_input">
+                    <input type="text" name="add_info_4" class="frm_input" value="<?php echo $infoAry['info_4'] ?>">
                 </li>
                 <li>
                     <label for="">적재위치</label>
-                    <input type="text" name="add_info_5" class="frm_input">
+                    <input type="text" name="add_info_5" class="frm_input" value="<?php echo $infoAry['info_5'] ?>">
 										<div class="_redInfo">
 											* 위 정보가 없을 경우 문앞 상온 적재될 수 있습니다.<br>
 											(아이스박스 포장 없음)

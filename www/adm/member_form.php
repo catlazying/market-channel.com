@@ -603,8 +603,16 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
                 run_event('admin_member_form_add', $mb, $w, 'table');
                 ?>
+                    <tr>
+                        <th scope="row"><label for="mb_7">은행명 </label></th>
+                        <td colspan="3"><input type="text" name="mb_7" value="<?php echo $mb['mb_7'] ?>" id="mb_7" class="frm_input" size="30" maxlength="255"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="mb_8">계좌번호 </label></th>
+                        <td colspan="3"><input type="text" name="mb_8" value="<?php echo $mb['mb_8'] ?>" id="mb_8" class="frm_input" size="30" maxlength="255"></td>
+                    </tr>
 
-                <?php for ($i = 7; $i <= 10; $i++) { ?>
+                <?php for ($i = 9; $i <= 10; $i++) { ?>
                     <tr>
                         <th scope="row"><label for="mb_<?php echo $i ?>">여분 필드 <?php echo $i ?></label></th>
                         <td colspan="3"><input type="text" name="mb_<?php echo $i ?>" value="<?php echo $mb['mb_' . $i] ?>" id="mb_<?php echo $i ?>" class="frm_input" size="30" maxlength="255"></td>

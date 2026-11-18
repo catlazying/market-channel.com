@@ -65,9 +65,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 		</section>
 		<section id="">
 			<h2>마케팅 활용동의 및 광고 수신동의 (선택)</h2>
-			<textarea name="textarea" readonly>내용</textarea>
-
-
+			<textarea name="textarea" readonly><?php echo get_text($config['cf_markting']) ?></textarea>
 			<div class="_priAgrInp mt10">
 				<label class="_lab"><input type="checkbox" name="agree_email" value="1"><i></i> <span>이메일 수신</span></label>
 				<label class="_lab"><input type="checkbox" name="agree_sms" value="1"><i></i> <span>SMS 수신</span></label>

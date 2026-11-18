@@ -49,6 +49,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
                     <option value="주문완료" <?php echo ($write['send_type']=='주문완료') ? 'selected' : ''; ?>>주문완료</option>
                     <option value="입금확인" <?php echo ($write['send_type']=='입금확인') ? 'selected' : ''; ?>>입금확인</option>
                     <option value="배송완료" <?php echo ($write['send_type']=='배송완료') ? 'selected' : ''; ?>>배송완료</option>
+                    <option value="주문취소" <?php echo ($write['send_type']=='주문취소') ? 'selected' : ''; ?>>주문취소</option>
+                    <option value="환불" <?php echo ($write['send_type']=='환불') ? 'selected' : ''; ?>>환불</option>
                 </select>
             </td>
         </tr>

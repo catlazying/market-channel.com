@@ -631,7 +631,7 @@ function display_price($price, $tel_inq=false)
     if ($tel_inq)
         $price = '전화문의';
     else
-        $price = number_format($price, 0).''; // '원' 제거
+        $price = number_format(isset($price) ? (float) $price : 0, 0).''; // '원' 제거
 
     return $price;
 }
@@ -642,19 +642,38 @@ function display_price($price, $tel_inq=false)
 function get_price($it)
 {
     global $member;
-
+    $price = 0;
     if ($it['it_tel_inq']) return '전화문의';
 
-    $price = $it['it_price'];
-
-    return (int)$price;
+    $member_level = $member['mb_level'];
+    if ($member_level == 2) {
+        $price = (int)$it['it_price_2'];
+    } else if ($member_level == 3) {
+        $price = (int)$it['it_price_3'];
+    } else if ($member_level == 4) {
+        $price = (int)$it['it_price_4'];
+    } else if ($member_level == 5) {
+        $price = (int)$it['it_price_5'];
+    } else if ($member_level == 6) {
+        $price = (int)$it['it_price_6'];
+    } else if ($member_level == 7) {
+        $price = (int)$it['it_price_7'];
+    } else if ($member_level == 8) {
+        $price = (int)$it['it_price_8'];
+    } else if ($member_level == 9) {
+        $price = (int)$it['it_price_9'];
+    }
+    if($price == 0) {
+        $price = (int)$it['it_price'];
+    }
+    return $price;
 }
 
 
 // 포인트 표시
 function display_point($point)
 {
-    return number_format($point, 0).'점';
+    return number_format(isset($point) ? (float) $point : 0, 0).'점';
 }
 
 
@@ -1589,7 +1608,7 @@ function get_coupon_id()
     $len = 16;
     $chars = "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
 
-    srand((double)microtime()*1000000);
+    srand((float)microtime()*1000000);
 
     $i = 0;
     $str = '';
@@ -1967,7 +1986,7 @@ function is_soldout($it_id, $is_cache=false)
 
     static $cache = array();
 
-    $it_id = preg_replace('/[^a-z0-9_\-]/i', '', $it_id);
+    $it_id = preg_replace('/[^a-z0-9_\-]/i', '', isset($it_id) ? (string) $it_id : '');
     $key = md5($it_id);
 
     if( $is_cache && isset($cache[$key]) ){
@@ -2560,7 +2579,7 @@ function before_check_cart_price($s_cart_id, $is_ct_select_condition=false, $is_
         if(!$it['it_id'])
             continue;
 
-        if( $it['it_price'] !== $row['ct_price'] ){
+        if( (int)$it['it_price'] !== (int)$row['ct_price'] ){
             // 장바구니 테이블 상품 가격과 상품 테이블의 상품 가격이 다를경우
             $update_querys['ct_price'] = $it['it_price'];
         }

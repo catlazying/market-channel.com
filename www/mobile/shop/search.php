@@ -88,8 +88,15 @@ if ($q) {
     $where[] = "(".implode(" and ", $detail_where).")";
 }
 
-if ($qcaid)
-    $where[] = " a.ca_id like '$qcaid%' ";
+if ($qcaid){
+
+    # $qcaid 가 30, 40으로 시작하는 경우 전체 카테고리를 검색
+    if(substr($qcaid, 0, 2) == '30' || substr($qcaid, 0, 2) == '40'){
+    }else{
+        $where[] = " a.ca_id like '$qcaid%' ";
+    }
+}
+
 
 if ($qfrom && $qto)
     $where[] = " a.it_price between '$qfrom' and '$qto' ";

@@ -768,6 +768,26 @@ if(!$default['de_kakaopay_cancelpwd']){
                 주문 완료 <input type="text" name="de_point_days" value="<?php echo get_sanitize_input($default['de_point_days']); ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 지급
             </td>
         </tr>
+        <?php if($default['de_pg_service'] == 'lg'){ ?>
+            <tr class="pg_info_fld lg_info_fld" id="lg_info_anchor">
+                <th scope="row">
+                    <label for="cf_lg_mid">토스페이먼츠 상점아이디</label><br>
+                    <a href="http://sir.kr/main/service/lg_pg.php" target="_blank" id="scf_lgreg" class="lg_btn">토스페이먼츠 신청하기</a>
+                </th>
+                <td>
+                    <?php echo help("토스페이먼츠에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 토스페이먼츠에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 토스페이먼츠 상점아이디와 동일합니다."); ?>
+                    <span class="sitecode">si_</span> <input type="text" name="cf_lg_mid" value="<?php echo get_sanitize_input($config['cf_lg_mid']); ?>" id="cf_lg_mid" class="frm_input code_input" size="10" maxlength="20"> 영문자, 숫자 혼용
+                </td>
+            </tr>
+            <tr class="pg_info_fld lg_info_fld">
+                <th scope="row"><label for="cf_lg_mert_key">토스페이먼츠 MERT KEY</label></th>
+                <td>
+                    <?php echo help("토스페이먼츠 상점MertKey는 상점관리자 -> 개발자센터 -> API키 -> 머트 키에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3"); ?>
+                    <input type="text" name="cf_lg_mert_key" value="<?php echo get_sanitize_input($config['cf_lg_mert_key']); ?>" id="cf_lg_mert_key" class="frm_input " size="36" maxlength="50">
+                </td>
+            </tr>
+        <?php } ?>
+
         <?php if(G5_MARKET_YN=='N') { ?>
             <tr>
                 <th scope="row"><label for="de_pg_service">결제대행사</label></th>
@@ -2002,7 +2022,7 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
             $exe .= 'pp_cli_exe.exe';
         }
 
-        echo module_exec_check(G5_SHOP_PATH.$exe, 'pp_cli');
+        // echo module_exec_check(G5_SHOP_PATH.$exe, 'pp_cli');
 
         // shop/kcp/log 디렉토리 체크 후 있으면 경고
         if(is_dir(G5_SHOP_PATH.'/kcp/log') && is_writable(G5_SHOP_PATH.'/kcp/log')) {

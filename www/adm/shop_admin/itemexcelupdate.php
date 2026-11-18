@@ -49,12 +49,31 @@ if($is_upload_file) {
 
         $it_id              = (string) $rowData[0][$j++];
         $it_id              = preg_match('/[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)/', $it_id) ? addslashes(sprintf("%.0f", $it_id)) : preg_replace('/[^0-9a-z_\-]/i', '', $it_id);
-        $ca_id              = addslashes($rowData[0][$j++]);
+        $ca_id              = addslashes((string)$rowData[0][$j++]);
         $ca_id2             = addslashes((string)$rowData[0][$j++]);
         $ca_id3             = addslashes((string)$rowData[0][$j++]);
-        $it_name            = addslashes($rowData[0][$j++]);
-        $it_maker           = addslashes((string)$rowData[0][$j++]);
+        $it_name            = addslashes((string)$rowData[0][$j++]);
+        $it_cust_price      = addslashes(only_number($rowData[0][$j++]));
+        $it_price           = addslashes(only_number($rowData[0][$j++]));
+        $it_purchase_price  = addslashes(only_number($rowData[0][$j++]));
+        $it_use             = addslashes((string)$rowData[0][$j++]);
+        $it_price_2         = addslashes(only_number($rowData[0][$j++]));
+        $it_price_3         = addslashes(only_number($rowData[0][$j++]));
+        $it_price_4         = addslashes(only_number($rowData[0][$j++]));
+        $it_price_5         = addslashes(only_number($rowData[0][$j++]));
+        $it_price_6         = addslashes(only_number($rowData[0][$j++]));
+        $it_price_7         = addslashes(only_number($rowData[0][$j++]));
+        $it_price_8         = addslashes(only_number($rowData[0][$j++]));
+        $it_price_9         = addslashes(only_number($rowData[0][$j++]));
         $it_origin          = addslashes((string)$rowData[0][$j++]);
+        $it_basic           = addslashes((string)$rowData[0][$j++]);
+        $it_stock_qty       = addslashes(only_number($rowData[0][$j++]));
+        $it_noti_qty        = addslashes(only_number($rowData[0][$j++]));
+        $it_buy_min_qty     = addslashes(only_number($rowData[0][$j++]));
+        $it_buy_max_qty     = addslashes(only_number($rowData[0][$j++]));
+        $it_notax           = addslashes(only_number($rowData[0][$j++]));
+        $it_order           = addslashes(only_number($rowData[0][$j++]));
+        $it_maker           = addslashes((string)$rowData[0][$j++]);
         $it_brand           = addslashes((string)$rowData[0][$j++]);
         $it_model           = addslashes((string)$rowData[0][$j++]);
         $it_type1           = addslashes((string)$rowData[0][$j++]);
@@ -65,24 +84,12 @@ if($is_upload_file) {
         $it_type6           = addslashes((string)$rowData[0][$j++]);
         $it_type7           = addslashes((string)$rowData[0][$j++]);
         $it_type8           = addslashes((string)$rowData[0][$j++]);
-
-        $it_basic           = addslashes((string)$rowData[0][$j++]);
         $it_explan          = addslashes((string)$rowData[0][$j++]);
         $it_mobile_explan   = addslashes((string)$rowData[0][$j++]);
-        $it_cust_price      = addslashes(only_number($rowData[0][$j++]));
-        $it_price           = addslashes(only_number($rowData[0][$j++]));
-        $it_purchase_price  = addslashes(only_number($rowData[0][$j++]));
         $it_tel_inq         = addslashes((string)$rowData[0][$j++]);
         $it_point           = addslashes(only_number($rowData[0][$j++]));
         $it_point_type      = addslashes(only_number($rowData[0][$j++]));
         $it_sell_email      = addslashes((string)$rowData[0][$j++]);
-        $it_use             = addslashes((string)$rowData[0][$j++]);
-        $it_stock_qty       = addslashes(only_number($rowData[0][$j++]));
-        $it_noti_qty        = addslashes(only_number($rowData[0][$j++]));
-        $it_buy_min_qty     = addslashes(only_number($rowData[0][$j++]));
-        $it_buy_max_qty     = addslashes(only_number($rowData[0][$j++]));
-        $it_notax           = addslashes(only_number($rowData[0][$j++]));
-        $it_order           = addslashes(only_number($rowData[0][$j++]));
         $it_img1            = addslashes((string)$rowData[0][$j++]);
         $it_img2            = addslashes((string)$rowData[0][$j++]);
         $it_img3            = addslashes((string)$rowData[0][$j++]);
@@ -93,7 +100,7 @@ if($is_upload_file) {
         $it_img8            = addslashes((string)$rowData[0][$j++]);
         $it_img9            = addslashes((string)$rowData[0][$j++]);
         $it_img10           = addslashes((string)$rowData[0][$j++]);
-        $it_explan2         = strip_tags(trim($it_explan));
+        $it_explan2         = strip_tags(trim((string)$it_explan));
 
         if(!$it_id || !$ca_id || !$it_name) {
             $fail_count++;
@@ -103,71 +110,32 @@ if($is_upload_file) {
         // it_id 중복체크
         $sql2 = " select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
         $row2 = sql_fetch($sql2);
-        if(isset($row2['cnt']) && $row2['cnt']) {
-            $fail_it_id[] = $it_id;
-            $dup_it_id[] = $it_id;
-            $dup_count++;
-            $fail_count++;
-            continue;
+        if(empty($row2['cnt'])) {
+            if(isset($row2['cnt']) && $row2['cnt']) {
+                $fail_it_id[] = $it_id;
+                $dup_it_id[] = $it_id;
+                $dup_count++;
+                $fail_count++;
+                continue;
+            }
+
+            // 기본분류체크
+            $sql2 = " select count(*) as cnt from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
+            $row2 = sql_fetch($sql2);
+            if(! (isset($row2['cnt']) && $row2['cnt'])) {
+                $fail_it_id[] = $it_id;
+                $fail_count++;
+                continue;
+            }
+
+            $sql = " INSERT INTO {$g5['g5_shop_item_table']}
+                        SET it_id = '$it_id', ca_id = '$ca_id', ca_id2 = '$ca_id2', ca_id3 = '$ca_id3', it_name = '$it_name', it_maker = '$it_maker', it_origin = '$it_origin', it_brand = '$it_brand', it_model = '$it_model', it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5', it_type6 = '$it_type6', it_type7 = '$it_type7', it_type8 = '$it_type8', it_basic = '$it_basic', it_explan = '$it_explan', it_explan2 = '$it_explan2', it_mobile_explan = '$it_mobile_explan', it_cust_price = '$it_cust_price', it_price = '$it_price', it_purchase_price = '$it_purchase_price', it_point = '$it_point', it_point_type = '$it_point_type', it_stock_qty = '$it_stock_qty', it_noti_qty = '$it_noti_qty', it_buy_min_qty = '$it_buy_min_qty', it_buy_max_qty = '$it_buy_max_qty', it_notax = '$it_notax', it_use = '$it_use', it_time = '".G5_TIME_YMDHIS."', it_ip = '{$_SERVER['REMOTE_ADDR']}', it_order = '$it_order', it_tel_inq = '$it_tel_inq', it_img1 = '$it_img1', it_img2 = '$it_img2', it_img3 = '$it_img3', it_img4 = '$it_img4', it_img5 = '$it_img5', it_img6 = '$it_img6', it_img7 = '$it_img7', it_img8 = '$it_img8', it_img9 = '$it_img9', it_img10 = '$it_img10', it_price_2 = '$it_price_2', it_price_3 = '$it_price_3', it_price_4 = '$it_price_4', it_price_5 = '$it_price_5', it_price_6 = '$it_price_6', it_price_7 = '$it_price_7', it_price_8 = '$it_price_8', it_price_9 = '$it_price_9' ";
+        }else{
+            $sql = " UPDATE {$g5['g5_shop_item_table']}
+                        SET it_id = '$it_id', ca_id = '$ca_id', ca_id2 = '$ca_id2', ca_id3 = '$ca_id3', it_name = '$it_name', it_maker = '$it_maker', it_origin = '$it_origin', it_brand = '$it_brand', it_model = '$it_model', it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5', it_type6 = '$it_type6', it_type7 = '$it_type7', it_type8 = '$it_type8', it_basic = '$it_basic', it_explan = '$it_explan', it_explan2 = '$it_explan2', it_mobile_explan = '$it_mobile_explan', it_cust_price = '$it_cust_price', it_price = '$it_price', it_purchase_price = '$it_purchase_price', it_point = '$it_point', it_point_type = '$it_point_type', it_stock_qty = '$it_stock_qty', it_noti_qty = '$it_noti_qty', it_buy_min_qty = '$it_buy_min_qty', it_buy_max_qty = '$it_buy_max_qty', it_notax = '$it_notax', it_use = '$it_use', it_update_time = '".G5_TIME_YMDHIS."', it_ip = '{$_SERVER['REMOTE_ADDR']}', it_order = '$it_order', it_tel_inq = '$it_tel_inq', it_img1 = '$it_img1', it_img2 = '$it_img2', it_img3 = '$it_img3', it_img4 = '$it_img4', it_img5 = '$it_img5', it_img6 = '$it_img6', it_img7 = '$it_img7', it_img8 = '$it_img8', it_img9 = '$it_img9', it_img10 = '$it_img10', it_price_2 = '$it_price_2', it_price_3 = '$it_price_3', it_price_4 = '$it_price_4', it_price_5 = '$it_price_5', it_price_6 = '$it_price_6', it_price_7 = '$it_price_7', it_price_8 = '$it_price_8', it_price_9 = '$it_price_9' ";
+            $sql .= " WHERE it_id = '$it_id' ";
+
         }
-
-        // 기본분류체크
-        $sql2 = " select count(*) as cnt from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
-        $row2 = sql_fetch($sql2);
-        if(! (isset($row2['cnt']) && $row2['cnt'])) {
-            $fail_it_id[] = $it_id;
-            $fail_count++;
-            continue;
-        }
-
-        $sql = " INSERT INTO {$g5['g5_shop_item_table']}
-                     SET it_id = '$it_id',
-                         ca_id = '$ca_id',
-                         ca_id2 = '$ca_id2',
-                         ca_id3 = '$ca_id3',
-                         it_name = '$it_name',
-                         it_maker = '$it_maker',
-                         it_origin = '$it_origin',
-                         it_brand = '$it_brand',
-                         it_model = '$it_model',
-                         it_type1 = '$it_type1',
-                         it_type2 = '$it_type2',
-                         it_type3 = '$it_type3',
-                         it_type4 = '$it_type4',
-                         it_type5 = '$it_type5',
-                         it_type6 = '$it_type6',
-                         it_type7 = '$it_type7',
-                         it_type8 = '$it_type8',
-                         it_basic = '$it_basic',
-                         it_explan = '$it_explan',
-                         it_explan2 = '$it_explan2',
-                         it_mobile_explan = '$it_mobile_explan',
-                         it_cust_price = '$it_cust_price',
-                         it_price = '$it_price',
-                         it_purchase_price = '$it_purchase_price',
-                         it_point = '$it_point',
-                         it_point_type = '$it_point_type',
-                         it_stock_qty = '$it_stock_qty',
-                         it_noti_qty = '$it_noti_qty',
-                         it_buy_min_qty = '$it_buy_min_qty',
-                         it_buy_max_qty = '$it_buy_max_qty',
-                         it_notax = '$it_notax',
-                         it_use = '$it_use',
-                         it_time = '".G5_TIME_YMDHIS."',
-                         it_ip = '{$_SERVER['REMOTE_ADDR']}',
-                         it_order = '$it_order',
-                         it_tel_inq = '$it_tel_inq',
-                         it_img1 = '$it_img1',
-                         it_img2 = '$it_img2',
-                         it_img3 = '$it_img3',
-                         it_img4 = '$it_img4',
-                         it_img5 = '$it_img5',
-                         it_img6 = '$it_img6',
-                         it_img7 = '$it_img7',
-                         it_img8 = '$it_img8',
-                         it_img9 = '$it_img9',
-                         it_img10 = '$it_img10' ";
-
         sql_query($sql);
 
         $succ_count++;

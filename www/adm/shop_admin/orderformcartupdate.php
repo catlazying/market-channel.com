@@ -127,7 +127,7 @@ for ($i=0; $i<$cnt; $i++)
             $prodName = $ct['it_name']." ".$ct['ct_qty']." / ";
 
             $data = [
-                '{{상호명}}' => $mb_nick,
+                '{{상호명}}' => $mb_nick['mb_nick'],
                 '{{상품명}}' => $prodName
             ];
             notification_send($send_type ,$user_id ,$data);

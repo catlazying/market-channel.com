@@ -999,6 +999,10 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                         <th scope="row"><label for="cf_privacy">개인정보처리방침</label></th>
                         <td colspan="3"><textarea id="cf_privacy" name="cf_privacy" rows="10"><?php echo html_purifier($config['cf_privacy']); ?></textarea></td>
                     </tr>
+                    <tr>
+                        <th scope="row"><label for="cf_markting">마케팅 활용 동의</label></th>
+                        <td colspan="3"><textarea id="cf_markting" name="cf_markting" rows="10"><?php echo html_purifier($config['cf_markting']); ?></textarea></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

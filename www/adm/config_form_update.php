@@ -141,6 +141,7 @@ $check_keys = array(
     'cf_visit' => 'char',
     'cf_stipulation' => 'text',
     'cf_privacy' => 'text',
+    'cf_markting' => 'text',
     'cf_open_modify' => 'int',
     'cf_memo_send_point' => 'int',
     'cf_mobile_new_skin' => 'char',
@@ -169,7 +170,7 @@ foreach ($check_keys as $k => $v) {
     if ($v === 'int') {
         $_POST[$k] = isset($_POST[$k]) ? (int) $_POST[$k] : 0;
     } else {
-        if (in_array($k, array('cf_analytics', 'cf_add_meta', 'cf_add_script', 'cf_stipulation', 'cf_privacy'))) {
+        if (in_array($k, array('cf_analytics', 'cf_add_meta', 'cf_add_script', 'cf_stipulation', 'cf_privacy','cf_markting'))) {
             $_POST[$k] = isset($_POST[$k]) ? $_POST[$k] : '';
         } else {
             $_POST[$k] = isset($_POST[$k]) ? strip_tags(clean_xss_attributes($_POST[$k])) : '';
@@ -300,6 +301,7 @@ $sql = " update {$g5['config_table']}
                 cf_mobile_page_rows = '{$_POST['cf_mobile_page_rows']}',
                 cf_stipulation = '{$_POST['cf_stipulation']}',
                 cf_privacy = '{$_POST['cf_privacy']}',
+                cf_markting = '{$_POST['cf_markting']}',
                 cf_open_modify = '{$_POST['cf_open_modify']}',
                 cf_memo_send_point = '{$_POST['cf_memo_send_point']}',
                 cf_mobile_new_skin = '{$_POST['cf_mobile_new_skin']}',

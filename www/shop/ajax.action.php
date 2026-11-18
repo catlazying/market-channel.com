@@ -21,7 +21,7 @@ switch ($action) {
         break;
 
     case 'refresh_wish' :
-        
+
         if( !$is_member ){
             die('');
         }
@@ -30,7 +30,7 @@ switch ($action) {
         break;
 
     case 'cart_delete' :
-        
+
         // 보관기간이 지난 상품 삭제
         cart_item_clean();
 
@@ -46,7 +46,7 @@ switch ($action) {
         die(json_encode(array('error' => '')));
 
         break;
-    case 'cart_update' : 
+    case 'cart_update' :
 
         // 보관기간이 지난 상품 삭제
         cart_item_clean();
@@ -64,7 +64,7 @@ switch ($action) {
         {
             die(json_encode(array('error' => '더 이상 작업을 진행할 수 없습니다.\n\n브라우저의 쿠키 허용을 사용하지 않음으로 설정한것 같습니다.\n\n브라우저의 인터넷 옵션에서 쿠키 허용을 사용으로 설정해 주십시오.\n\n그래도 진행이 되지 않는다면 쇼핑몰 운영자에게 문의 바랍니다.')));
         }
-        
+
         $tmp_cart_id = preg_replace('/[^a-z0-9_\-]/i', '', $tmp_cart_id);
 
         // 레벨(권한)이 상품구입 권한보다 작다면 상품을 구입할 수 없음.
@@ -167,7 +167,7 @@ switch ($action) {
                 // 선택옵션정보가 존재하는데 선택된 옵션이 없으면 건너뜀
                 if($lst_count && $io_id == '')
                     continue;
-                
+
                 $opt_list_type_id_use = isset($opt_list[$io_type][$io_id]['use']) ? $opt_list[$io_type][$io_id]['use'] : '';
                 // 구매할 수 없는 옵션은 건너뜀
                 if($io_id && ! $opt_list_type_id_use)
@@ -225,7 +225,7 @@ switch ($action) {
                     if($point < 0)
                         $point = 0;
                 }
-                
+
                 $ct_send_cost = 0;
 
                 // 배송비결제
@@ -249,7 +249,7 @@ switch ($action) {
         break;
 
     case 'get_item_option' :
-        
+
         $it = get_shop_item($it_id, true);
 
         if(!$it['it_id'])
@@ -316,7 +316,7 @@ switch ($action) {
 
         break;
     case 'wish_update' :
-        
+
         $it_id = isset($_POST['it_id']) ? safe_replace_regex($_POST['it_id'], 'it_id') : '';
 
         if (!$is_member)

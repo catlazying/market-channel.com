@@ -5,12 +5,12 @@ include_once( $_SERVER['DOCUMENT_ROOT'].'/common.php');
 	error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
 // https://market-channel.com/plugin/apple/appleProc.php
-function logSave($saveTxt){
-    $openFile = $_SERVER['DOCUMENT_ROOT']."/data/tmp/".date("Ymd").".log";
-    $fp = fopen($openFile, "a+");
-    fwrite($fp, $saveTxt."\n");
-    fclose($fp);
-}
+// function logSave($saveTxt){
+//     $openFile = $_SERVER['DOCUMENT_ROOT']."/data/tmp/".date("Ymd").".log";
+//     $fp = fopen($openFile, "a+");
+//     fwrite($fp, $saveTxt."\n");
+//     fclose($fp);
+// }
 /// 로그저장
 logSave('\nstart\n');
 logSave(json_encode($_REQUEST));

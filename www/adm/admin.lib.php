@@ -270,6 +270,8 @@ function auth_check($auth, $attr, $return = false)
         return;
     }
 
+    $auth = isset($auth) ? (string) $auth : '';
+
     if (!trim($auth)) {
         $msg = '이 메뉴에는 접근 권한이 없습니다.\\n\\n접근 권한은 최고관리자만 부여할 수 있습니다.';
         if ($return) {
@@ -279,7 +281,7 @@ function auth_check($auth, $attr, $return = false)
         }
     }
 
-    $attr = strtolower($attr);
+    $attr = strtolower(isset($attr) ? (string) $attr : '');
 
     if (!strstr($auth, $attr)) {
         if ($attr == 'r') {

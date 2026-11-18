@@ -829,7 +829,15 @@ $(function(){
         <tr>
             <th scope="row"><label for="it_price">판매가격</label></th>
             <td>
-                <input type="text" name="it_price" value="<?php echo $it['it_price']; ?>" id="it_price" class="frm_input" size="8"> 원
+                기본가:<input type="text" name="it_price" value="<?php echo $it['it_price']; ?>" id="it_price" class="frm_input" size="8"> 원
+
+                <?php for($lvl=2;$lvl<=9;$lvl++) { ?>
+                / 레벨<?php echo $lvl; ?>: <input type="text" name="it_price_<?php echo $lvl; ?>" value="<?php echo $it['it_price_'.$lvl]; ?>" id="it_price_<?php echo $lvl; ?>" class="frm_input" size="8"> 원
+                <?php } ?>
+                <?php echo help("0일 경우 기본가를 적용합니다."); ?>
+
+
+
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_price" value="1" id="chk_ca_it_price">

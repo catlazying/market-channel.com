@@ -55,6 +55,9 @@ $list = new item_list($skin_file, $ca['ca_mobile_list_mod'], $ca['ca_mobile_list
 $list->set_category($ca['ca_id'], 1);
 $list->set_category($ca['ca_id'], 2);
 $list->set_category($ca['ca_id'], 3);
+$list->exp_category($ca['ca_id'], 1);
+$list->exp_category($ca['ca_id'], 2);
+$list->exp_category($ca['ca_id'], 3);
 $list->set_is_page(true);
 $list->set_mobile(true);
 $list->set_order_by($order_by);

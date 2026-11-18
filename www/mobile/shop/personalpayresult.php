@@ -125,7 +125,39 @@ if($pp['pp_pg'] == 'lg') {
                 </tr>
                 <tr>
                     <th scope="row">입금계좌</th>
-                    <td><?php echo get_text($pp['pp_bank_account']); ?></td>
+                    <td><?php echo get_text($pp['pp_bank_account']); ?>
+                        <button type="button" id="copy_bank_account_btn" style="border: 1px solid #9c9c9c;background: #c7c7c7;padding: 2px 13px;">계좌번호복사</button>
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var copyBtn = document.getElementById('copy_bank_account_btn');
+                            var accountText = document.getElementById('bank_account_text');
+                            if(copyBtn && accountText) {
+                                copyBtn.addEventListener('click', function() {
+                                    var text = accountText.textContent || accountText.innerText;
+                                    if(navigator.clipboard) {
+                                        navigator.clipboard.writeText(text).then(function() {
+                                            alert('계좌번호가 복사되었습니다.');
+                                        }, function() {
+                                            alert('복사에 실패했습니다.');
+                                        });
+                                    } else { // fallback
+                                        var tempElem = document.createElement('textarea');
+                                        tempElem.value = text;
+                                        document.body.appendChild(tempElem);
+                                        tempElem.select();
+                                        try {
+                                            document.execCommand('copy');
+                                            alert('계좌번호가 복사되었습니다.');
+                                        } catch (err) {
+                                            alert('복사에 실패했습니다.');
+                                        }
+                                        document.body.removeChild(tempElem);
+                                    }
+                                });
+                            }
+                        });
+                        </script>
+                    </td>
                 </tr>
                 <?php
                 }

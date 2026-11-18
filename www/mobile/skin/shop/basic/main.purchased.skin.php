@@ -24,24 +24,26 @@ if(is_array($showItemAry) && count($showItemAry) > 0 ) {
 
         $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' limit 1 ";
         $row = sql_fetch($sql);
-        echo "<div class=\"_item\">";
-            echo "<div class=\"img\">";
-                echo "<a href=\"".shop_item_url($row['it_id']) ."\">";
-                    echo get_it_image($row['it_id'], 340, 340, '', '', stripslashes($row['it_name']))."\n";
-                echo "</a>";
-            echo "</div>";
-            echo "<div class=\"info\">";
-                echo "<div class=\"subject\">";
-                echo "<a href=\"".shop_item_url($row['it_id']) ."\" class=\"sct_txt\">\n";
-                echo stripslashes($row['it_name'])."\n";
-                echo "</a>\n";
-                echo"</div>";
-                echo "<div class=\"price\">";
-                    echo "<strong>".display_price(get_price($row), $row['it_tel_inq'])."</strong>";
-                    echo "<em>원</em>";
+        if(!empty($row['it_id'])){
+            echo "<div class=\"_item\">";
+                echo "<div class=\"img\">";
+                    echo "<a href=\"".shop_item_url($row['it_id']) ."\">";
+                        echo get_it_image($row['it_id'], 340, 340, '', '', stripslashes($row['it_name']))."\n";
+                    echo "</a>";
+                echo "</div>";
+                echo "<div class=\"info\">";
+                    echo "<div class=\"subject\">";
+                    echo "<a href=\"".shop_item_url($row['it_id']) ."\" class=\"sct_txt\">\n";
+                    echo stripslashes($row['it_name'])."\n";
+                    echo "</a>\n";
+                    echo"</div>";
+                    echo "<div class=\"price\">";
+                        echo "<strong>".display_price(get_price($row), $row['it_tel_inq'])."</strong>";
+                        echo "<em>원</em>";
+                    echo "</div>";
                 echo "</div>";
             echo "</div>";
-        echo "</div>";
+        }
 
     }
 }else{

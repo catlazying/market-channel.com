@@ -75,8 +75,9 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 				</li>
 				<li>
 					<a href="#">상품 카테고리</a>
-					<ul class="ty1">
+					<ul class="ty3">
 					<?php // 상품별
+						echo '<li><a href="'.G5_SHOP_URL.'/list.php?ca_id=10">전체</a></li>';
 						$categories = show_shop_category_array(10,'4');
 						if( $categories ){
 							foreach($categories as $category){
@@ -93,6 +94,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 					<a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=30">업종별 상품</a>
 					<ul class="ty1">
 					<?php // 업태별
+						echo '<li><a href="'.G5_SHOP_URL.'/list.php?ca_id=30">전체</a></li>';
 						$categories = show_shop_category_array(30,'4');
 						if( $categories ){
 							foreach($categories as $category){
@@ -106,6 +108,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 					<a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=40">요리별 상품</a>
 					<ul class="ty3">
 					<?php // 조리방식별
+						echo '<li><a href="'.G5_SHOP_URL.'/list.php?ca_id=40">전체</a></li>';
 						$categories = show_shop_category_array(40,'4');
 						if( $categories ){
 							foreach($categories as $category){
@@ -135,7 +138,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 				<li>
 					<a href="/bbs/write.php?bo_table=qa">문의하기</a>
 				</li>
-				<?php if(substr($_SERVER['REMOTE_ADDR'],0,12)=='203.249.190.'){ ?>
+				<?php if(substr($_SERVER['REMOTE_ADDR'],0,12)=='203.249.190.' && true==false){ ?>
 				<li>
 					<a href="/_test.php">_TEST[<?= $_SERVER['REMOTE_ADDR'] ?>]_</a>
 				</li>

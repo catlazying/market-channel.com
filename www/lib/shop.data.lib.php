@@ -3,7 +3,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 function get_shop_item($it_id, $is_cache=false, $add_query=''){
 
-    global $g5, $g5_object;
+    global $g5, $g5_object, $member;
 
     $add_query_key = $add_query ? 'shop_'.md5($add_query) : '';
 
@@ -22,6 +22,13 @@ function get_shop_item($it_id, $is_cache=false, $add_query=''){
 
     if( ! isset($item['it_id']) ){
         $item['it_id'] = '';
+    }
+
+    $it_price = (int)$item['it_price_'.$member['mb_level']];
+    if($it_price == 0) {
+        $item['it_price'] = (int)$item['it_price'];
+    }else{
+        $item['it_price'] = $it_price;
     }
 
     return $item;
@@ -90,7 +97,7 @@ function get_shop_category_by($is_cache, $case, $value){
     if( $case === 'ca_id' ){
         $categories = get_shop_category_array($is_cache);
 
-        $key = substr(preg_replace('/[^0-9a-z]/i', '', $value), 0, 2);
+        $key = substr(preg_replace('/[^0-9a-z]/i', '', isset($value) ? (string) $value : ''), 0, 2);
 
         if( isset($categories[$key]) ){
             return $categories[$key];

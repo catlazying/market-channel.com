@@ -83,7 +83,11 @@ if(defined('G5_THEME_MSHOP_PATH')) {
             </div>
             <div class="inq_wr">
                 <div class="inquiry_price">
-                    <?php echo display_price($row['od_receipt_price']); ?>
+                    <?php
+                    //print_r($row);
+                    ?>
+                    상품가격:<?php echo display_price($row['od_cart_price']); ?> /
+                    결제금액:<?php echo display_price($row['od_receipt_price']); ?>
                 </div>
                 <div class="inv_status"><?php echo $od_status; ?></div>
             </div>

@@ -45,7 +45,7 @@ class XPayClient
 				{
 					$json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
 				}
-				else 
+				else
 				{
 					$json = new Services_JSON;
 				}
@@ -81,23 +81,23 @@ class XPayClient
 			session_start();
 		}
 		$this->home_dir = $home_dir;
-		if (!file_exists($home_dir)) 
+		if (!file_exists($home_dir))
 		{
 			$this->response_code = LGD_ERR_NO_HOME_DIR;
 			$this->response_msg = "home_dir [".$home_dir."] does not exist";
-			trigger_error($this->response_msg, E_USER_ERROR);	
+			trigger_error($this->response_msg, E_USER_ERROR);
 		}
-		else if (!file_exists($home_dir."/conf/mall.conf")) 
+		else if (!file_exists($home_dir."/conf/mall.conf"))
 		{
 			$this->response_code = LGD_ERR_NO_MALL_CONFIG;
 			$this->response_msg = "config file [".$home_dir."/conf/mall.conf] does not exist";
-			trigger_error($this->response_msg, E_USER_ERROR);	
+			trigger_error($this->response_msg, E_USER_ERROR);
 		}
-		else if (!file_exists($home_dir."/conf/lgdacom.conf")) 
+		else if (!file_exists($home_dir."/conf/lgdacom.conf"))
 		{
 			$this->response_code = LGD_ERR_NO_LGDACOM_CONFIG;
 			$this->response_msg = "config file [".$home_dir."/conf/lgdacom.conf] does not exist";
-			trigger_error($this->response_msg, E_USER_ERROR);	
+			trigger_error($this->response_msg, E_USER_ERROR);
 		}
 		$array1 = parse_ini_file($home_dir . "/conf/mall.conf");
 		foreach($array1 as $name => $value)
@@ -120,26 +120,26 @@ class XPayClient
         $random_str = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'].$_SERVER['DOCUMENT_ROOT'].date("Ymd") : $_SERVER['DOCUMENT_ROOT'].date("Ymd");
 
 		$this->log_file = $this->config["log_dir"] . "/log_" . date("Ymd") . '_' . substr(md5($random_str), 0, 12) . ".log";
-		if (!file_exists($this->config["log_dir"])) 
+		if (!file_exists($this->config["log_dir"]))
 		{
 			mkdir($this->config["log_dir"], "0777", true);
 		}
 		$this->log("XPayClient initialize [".$home_dir."] [".$mode."]", LGD_LOG_INFO);
-		if (strtolower($mode) == "test") 
+		if (strtolower($mode) == "test")
 		{
 			$this->bTest = true;
 			$this->debug = false;
 		}
 		$this->init();
 	}
-	function array_push_associative(&$arr) 
+	function array_push_associative(&$arr)
 	{
 		$args = func_get_args();
-		foreach ($args as $arg) 
+		foreach ($args as $arg)
 		{
-			if (is_array($arg)) 
+			if (is_array($arg))
 			{
-				foreach ($arg as $key => $value) 
+				foreach ($arg as $key => $value)
 				{
 					$arr[$key] = $value;
 					$ret++;
@@ -158,36 +158,36 @@ class XPayClient
 		curl_setopt($this->ch, CURLOPT_USERAGENT, LGD_USER_AGENT);
 		curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($this->ch, CURLOPT_ENCODING , 'gzip, deflate');
-		if ($this->config["verify_cert"] == 0) 
+		if ($this->config["verify_cert"] == 0)
 		{
 			curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, 0);
 			$this->log("Do not verify server Certificate", LGD_LOG_WARN);
 		}
-		if ($this->config["verify_host"] == 0) 
+		if ($this->config["verify_host"] == 0)
 		{
 			curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 0);
 			$this->log("Do not verify host Domain", LGD_LOG_WARN);
 		}
 		// TLS 설정
 		//; 512 (TLS1.1) , 2048 (TLS1.2) , 2560 (TLS1.0)
-		//CURL_SSLVERSION_DEFAULT (0), CURL_SSLVERSION_TLSv1 (1), CURL_SSLVERSION_SSLv2 (2), 
-		//CURL_SSLVERSION_SSLv3 (3), CURL_SSLVERSION_TLSv1_0 (4), CURL_SSLVERSION_TLSv1_1 (5) or CURL_SSLVERSION_TLSv1_2 (6). 
-		if( $this->config['default_secure_protocols'] == "512" ) 
+		//CURL_SSLVERSION_DEFAULT (0), CURL_SSLVERSION_TLSv1 (1), CURL_SSLVERSION_SSLv2 (2),
+		//CURL_SSLVERSION_SSLv3 (3), CURL_SSLVERSION_TLSv1_0 (4), CURL_SSLVERSION_TLSv1_1 (5) or CURL_SSLVERSION_TLSv1_2 (6).
+		if( $this->config['default_secure_protocols'] == "512" )
 		{
 			curl_setopt($this->ch, CURLOPT_SSLVERSION , 5 );
 			//echo "default_secure_protocols = " . $this->config['default_secure_protocols'] . "<br>";
 		}
-		else if ( $this->config['default_secure_protocols'] == "2048" ) 
+		else if ( $this->config['default_secure_protocols'] == "2048" )
 		{
 			curl_setopt($this->ch, CURLOPT_SSLVERSION , 6 );
 			//echo "default_secure_protocols = " . $this->config['default_secure_protocols'] . "<br>";
 		}
-		else if ( $this->config['default_secure_protocols'] == "2560" ) 
+		else if ( $this->config['default_secure_protocols'] == "2560" )
 		{
 			curl_setopt($this->ch, CURLOPT_SSLVERSION , 4 );
 			//echo "default_secure_protocols = " . $this->config['default_secure_protocols'] . "<br>";
 		}
-		else 
+		else
 		{
 			curl_setopt($this->ch, CURLOPT_SSLVERSION , 0);
 			//echo "default_secure_protocols = " . $this->config['default_secure_protocols'] . "<br>";
@@ -196,7 +196,7 @@ class XPayClient
 	}
 	function Init_TX($MID)
 	{
-		if ($this->config[$MID] == null) 
+		if ($this->config[$MID] == null)
 		{
 			$this->response_code = LGD_ERR_NO_MID;
 			$this->response_msg = "Key for MID [".$MID."] does not exist in mall.conf";
@@ -250,13 +250,13 @@ class XPayClient
 	}
 	function Check_Auto_Rollback($errno)
 	{
-		//CURLE_OPERATION_TIMEDOUT 
+		//CURLE_OPERATION_TIMEDOUT
 		if ($errno == 28) return true;
 		else return false;
 	}
 	function set_curl_error()
 	{
-		switch (curl_errno($this->ch)) 
+		switch (curl_errno($this->ch))
 		{
 		case 1: // CURLE_UNSUPPORTED_PROTOCOL:
 		case 3: // CURLE_URL_MALFORMAT:
@@ -331,21 +331,21 @@ class XPayClient
 		$bCheckURL = false;
 		$strReportStatus = "";
 		$strReportMsg = "";
-		if ($bRollbackOnError) 
+		if ($bRollbackOnError)
 		{
 			if (isset($this->config['auto_rollback']) && $this->config['auto_rollback'] == 0) $bRollbackOnError = false;
 		}
-		
+
 		if ($this->bTest) $url = isset($this->config['test_url']) ? $this->config['test_url'] : '';
 		else $url = isset($this->config['url']) ? $this->config['url'] : '';
-		
+
 		$Protocol = parse_url($url, PHP_URL_SCHEME);
-		if($Protocol == "") 
+		if($Protocol == "")
 		{
 		    $url = "https://" . $url;
 		    $bCheckURL = true;
 		}
-		else if($Protocol == "http") 
+		else if($Protocol == "http")
 		{
 		    $bCheckURL = false;
 		}
@@ -367,14 +367,14 @@ class XPayClient
 		    $this->response_msg = "http protocol not supported.";
 		    $this->log("TX failed: res code = ".$this->response_code."; msg = ". $this->response_msg, LGD_LOG_FATAL);
 		}
-		if ($result == false) 
+		if ($result == false)
 		{
 		    if($bCheckURL == true)
 		    {
     			$bTX = false;
     			$this->set_curl_error();
     			$this->log("TX failed: res code = ".$this->response_code."; msg = ". $this->response_msg, LGD_LOG_FATAL);
-    			if ($bRollbackOnError && $this->Check_Auto_Rollback(curl_errno($this->ch))) 
+    			if ($bRollbackOnError && $this->Check_Auto_Rollback(curl_errno($this->ch)))
     			{
     				$bRollback = true;
     				$strRollbackReason = "Timeout";
@@ -385,10 +385,10 @@ class XPayClient
 		        $bTX = false;
 		    }
 		}
-		else 
+		else
 		{
 			$http_res_code = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
-			if ($http_res_code < 200 || $http_res_code >= 300) 
+			if ($http_res_code < 200 || $http_res_code >= 300)
 			{
 				// http response error
 				$bTX = false;
@@ -399,25 +399,25 @@ class XPayClient
 				$bReporting = true;
 				$strReportStatus = "HTTP response ".$http_res_code;
 				$strReportMsg = $result;
-				if ($bRollbackOnError && $http_res_code >= 500) 
+				if ($bRollbackOnError && $http_res_code >= 500)
 				{
 					// rollback
 					$bRollback = true;
 					$strRollbackReason = "HTTP ".$http_res_code;
 				}
 			}
-			else 
+			else
 			{
 				$this->response_json = $result;
 				$this->response_array = json_decode($this->response_json, true);
-				if (($this->response_array == false) || (strlen($this->response_array["LGD_RESPCODE"]) == 0)) 
+				if (($this->response_array == false) || (strlen($this->response_array["LGD_RESPCODE"]) == 0))
 				{
 					// JSON decode failed
 					$bTX = false;
 					$bReporting = true;
 					$strReportStatus = "JSON decode fail";
 					$strReportMsg = $result;
-					if ($bRollbackOnError) 
+					if ($bRollbackOnError)
 					{
 						$bRollback = true;
 						$strRollbackReason = "JSON decode fail";
@@ -427,16 +427,16 @@ class XPayClient
 					$this->response_code = LGD_ERR_JSON_DECODE;
 					$this->response_msg = "JSON Decode Failed";
 				}
-				else 
+				else
 				{
 					$this->response_code = $this->response_array["LGD_RESPCODE"];
 					if ($this->config['output_UTF8'] == 1) $this->response_msg = $this->response_array["LGD_RESPMSG"];
 					else $this->response_msg = iconv("utf-8", "euc-kr", $this->response_array["LGD_RESPMSG"]);
 					$this->log("Response Code=[".$this->response_code."], Msg=[".iconv("utf-8", "euc-kr", $this->response_array["LGD_RESPMSG"])."], Count=".$this->Response_Count(), LGD_LOG_INFO);
 					$keys = $this->Response_Names();
-					for ($i = 0; $i < $this->Response_Count(); $i++) 
+					for ($i = 0; $i < $this->Response_Count(); $i++)
 					{
-						foreach($keys as $name) 
+						foreach($keys as $name)
 						{
 						    if($this->IsAcceptLog($name,LGD_LOG_DEBUG))
 						    {
@@ -447,7 +447,7 @@ class XPayClient
 				}
 			}
 		}
-		if ($bRollback) 
+		if ($bRollback)
 		{
 			// try auto-rollback
 			$tx_id = $this->TX_ID;
@@ -460,7 +460,7 @@ class XPayClient
 			$this->response_code = $code;
 			$this->response_msg = $msg;
 		}
-		if ($bReporting) 
+		if ($bReporting)
 		{
 			$this->Report($strReportStatus, $strReportMsg);
 		}
@@ -470,21 +470,21 @@ class XPayClient
 	{
 		$url = $this->config['aux_url'];
 		$result = $this->send_post_data($url, $this->Post, null, $this->config['timeout']);
-		if ($result == false) 
+		if ($result == false)
 		{
 			set_curl_error();
 			$this->log("Reporting failed: res code = ".$this->response_code."; msg = ". $this->response_msg, LGD_LOG_ERROR);
 			return false;
 		}
 		$http_res_code = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
-		if ($http_res_code < 200 || $http_res_code >= 300) 
+		if ($http_res_code < 200 || $http_res_code >= 300)
 		{
 			// http response error
 			$this->log("Reporting failed: HTTP response code = ".$http_res_code, LGD_LOG_ERROR);
 			return false;
 		}
 		$response_array = json_decode($result, true);
-		if ($response_array == false) 
+		if ($response_array == false)
 		{
 			// JSON decode failed
 			$this->log("Report JSON Decode failed", LGD_LOG_ERROR);
@@ -502,31 +502,31 @@ class XPayClient
 		$fp = fopen($tmp_file, "w");
 		$result = $this->post_into_file($url, $this->Post, $fp, null, $this->config['timeout']);
 		fclose($fp);
-		if ($result == false) 
+		if ($result == false)
 		{
 			unlink($tmp_file);
 			$this->log("Patch failed: file = ".$filename, LGD_LOG_ERROR);
 			return false;
 		}
-		else 
+		else
 		{
 			$this->log("Patch success: file = ".$filename, LGD_LOG_INFO);
 			$type = curl_getinfo($this->ch, CURLINFO_CONTENT_TYPE);
-			if (strncasecmp($type, "text/plain", 10) == 0) 
+			if (strncasecmp($type, "text/plain", 10) == 0)
 			{
 				$this->log("Patch success: Content-Type = ".$type, LGD_LOG_INFO);
 				copy($tmp_file, $this->home_dir."/conf/".$filename);
 				unlink($tmp_file);
-				return true;			
+				return true;
 			}
-			else 
+			else
 			{
 				// error
 				$fp = fopen($tmp_file, "r");
 				$content = fread($fp, 512);
 				$this->Report("Patch error : ".$filename, $content);
 				fclose($fp);
-				unlink($tmp_file);				
+				unlink($tmp_file);
 			}
 			return false;
 		}
@@ -632,7 +632,7 @@ class XPayClient
 		curl_setopt($this->ch, CURLOPT_POST, true);
 		$post_array = array();
 		if(is_array($postdata))
-		{		
+		{
 			foreach($postdata as $key=>$value)
 			{
 				$post_array[] = urlencode($key) . "=" . urlencode($value);
@@ -643,7 +643,7 @@ class XPayClient
 			}
 			$post_string = implode("&",$post_array);
 		}
-		else 
+		else
 		{
 			$post_string = $postdata;
 		}
@@ -740,7 +740,7 @@ class XPayClient
 		curl_setopt($this->ch, CURLOPT_POST, true);
 		$post_array = array();
 		if(is_array($postdata))
-		{		
+		{
 			foreach($postdata as $key=>$value)
 			{
 				$post_array[] = urlencode($key) . "=" . urlencode($value);
@@ -755,7 +755,7 @@ class XPayClient
 				echo "Url: $url\nPost String: $post_string\n";
 			}
 		}
-		else 
+		else
 		{
 			$post_string = $postdata;
 		}
@@ -841,7 +841,7 @@ class XPayClient
 		curl_setopt ($this->ch, CURLOPT_COOKIEFILE, $cookie_file);
 	}
 	function set_cookie($cookie)
-	{		
+	{
 		curl_setopt ($this->ch, CURLOPT_COOKIE, $cookie);
 	}
 	function get_effective_url()
@@ -879,7 +879,7 @@ class XPayClient
 
 	function GetHashDataOpenpay($LGD_VENDERNO,$LGD_MID,$LGD_OPENPAY_MER_UID,$LGD_OPENPAY_TOKEN,$LGD_TIMESTAMP)
 	{
-		$LGD_HASHDATA = "";			
+		$LGD_HASHDATA = "";
 		$InputData = "";
 		$InputData = $LGD_MID . $LGD_VENDERNO . $LGD_OPENPAY_MER_UID;
 		if(empty($LGD_OPENPAY_TOKEN)) $InputData = $InputData . $LGD_TIMESTAMP .$this->config[$LGD_MID];
@@ -887,14 +887,14 @@ class XPayClient
 		$LGD_HASHDATA = hash('sha512',$InputData);
 		return $LGD_HASHDATA;
 	}
-	
+
 	function GetHashDataCas($LGD_MID,$LGD_OID,$LGD_AMOUNT,$LGD_RESPCODE,$LGD_TIMESTAMP)
 	{
 	    $LGD_HASHDATA = "";
 	    $LGD_HASHDATA = md5($LGD_MID.$LGD_OID.$LGD_AMOUNT.$LGD_RESPCODE.$LGD_TIMESTAMP.$this->config[$LGD_MID]);
 	    return $LGD_HASHDATA;
 	}
-		
+
 	/**
 	@brief MertKey Bytes 변환
 	@param MertKey MertKey
@@ -916,12 +916,12 @@ class XPayClient
 		//{
 		//	echo Bin2Hex($szKeyString[$i])."<BR>";
 		//}
-		
+
 		return $szKeyString;
 	}
 
 	/**
-	@brief Micro time 
+	@brief Micro time
 	@param MertKey MertKey
 	@date 2014.04.03
 	@author SangmanPark (sangman.park@gmail.com)
@@ -947,7 +947,7 @@ class XPayClient
 	*/
 	function EncryptAndEncode($MertKey,$PlainBuffer)
     {
-		echo "EncryptAndEncode Start<BR>";	
+		echo "EncryptAndEncode Start<BR>";
 		$microsecond = $this->getMicrotime();
 		$PlainBufferTemp = sprintf("%lf", $microsecond);
 		$PlainBufferTemp = substr($PlainBufferTemp,-3);
@@ -955,7 +955,7 @@ class XPayClient
 		$PlainBuffer .= $LgdValue;
 		$key = $this->StringToHex($MertKey);
 		$EncrytBuffer = mcrypt_ecb(MCRYPT_RIJNDAEL_128,$key,$PlainBuffer,MCRYPT_ENCRYPT);
-		$EncryptAndEncodeBuffer = base64_encode($EncrytBuffer); 
+		$EncryptAndEncodeBuffer = base64_encode($EncrytBuffer);
 		$EncryptReturnValue = $EncryptAndEncodeBuffer;
 		echo "EncryptReturnValue = " . $EncryptReturnValue . "<BR>";
 		echo "EncryptAndEncode Complete<BR>";
@@ -974,12 +974,12 @@ class XPayClient
     {
 		echo "DecodeAndDecrypt Start<BR>";
 		$key = $this->StringToHex($MertKey);
-		$DecodeBuffer = base64_decode($EncryptAndEncodeBuffer);  
+		$DecodeBuffer = base64_decode($EncryptAndEncodeBuffer);
 		$DecryptBuffer = mcrypt_ecb(MCRYPT_RIJNDAEL_128,$key,$DecodeBuffer,MCRYPT_DECRYPT);
 		$UnPaddString = $this->pkcs5_unpad($DecryptBuffer);
 		echo "UnPaddString : ".$UnPaddString . "<BR>";
 		echo "DecodeAndDecrypt Complete<BR>";
-		$ConvertCharset = iconv("euc-kr", "utf-8", $UnPaddString);	
+		$ConvertCharset = iconv("euc-kr", "utf-8", $UnPaddString);
 		return $ConvertCharset;
 
     }
@@ -990,22 +990,22 @@ class XPayClient
 	* @param int $blocksize
 	* @return string
 	*/
-	function pkcs5_pad($text, $blocksize) 
-	{ 
-		$pad = $blocksize - (strlen($text) % $blocksize); 
-		return $text . str_repeat(chr($pad), $pad); 
-	} 
-	
+	function pkcs5_pad($text, $blocksize)
+	{
+		$pad = $blocksize - (strlen($text) % $blocksize);
+		return $text . str_repeat(chr($pad), $pad);
+	}
+
 	/**
 	* PKCS5 패딩제거
 	* @param string $text
 	* @return boolean|string
 	*/
-	function pkcs5_unpad($text) 
-	{ 
-		$pad = ord($text[strlen($text)-1]); 
-		if ($pad > strlen($text)) return false; 
-		if (strspn($text, chr($pad), strlen($text) - $pad) != $pad) return false; 
-		return substr($text, 0, -1 * $pad); 
+	function pkcs5_unpad($text)
+	{
+		$pad = ord($text[strlen($text)-1]);
+		if ($pad > strlen($text)) return false;
+		if (strspn($text, chr($pad), strlen($text) - $pad) != $pad) return false;
+		return substr($text, 0, -1 * $pad);
 	}
 }

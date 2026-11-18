@@ -259,12 +259,31 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 				<?php } ?>
 				<div class="_topArea mt20">
 				</div>
+				<div class="form_01">
+					<h2>환불정보를 입력해주세요</h2>
+					<ul>
+						<li>
+							<label for="reg_mb_7" class="sound_only">은행명</label>
+							<input type="text" name="mb_7" id="reg_mb_7" class="frm_input full_input" placeholder="은행명" value="<?php echo get_text($member['mb_7']); ?>">
+						</li>
+						<li>
+							<label for="reg_mb_8" class="sound_only">계좌번호</label>
+							<input type="text" name="mb_8" id="reg_mb_8" class="frm_input full_input" placeholder="계좌번호" value="<?php echo get_text($member['mb_8']); ?>">
+						</li>
+					</ul>
+					<span class="frm_info">
+						* 주문취소 및 환불 시 꼭 필요한 정보 입니다
+					</span>
+				</div>
+				<div class="_topArea mt20">
+				</div>
+
 				<?php if ($w == "" && $config['cf_use_recommend']) { ?>
 				<ul>
-						<li>
-							<label for="reg_mb_recommend" class="sound_only">추천인아이디</label>
-							<input type="text" name="mb_recommend" id="reg_mb_recommend" class="frm_input full_input" placeholder="추천인아이디">
-						</li>
+					<li>
+						<label for="reg_mb_recommend" class="sound_only">추천인아이디</label>
+						<input type="text" name="mb_recommend" id="reg_mb_recommend" class="frm_input full_input" placeholder="추천인아이디">
+					</li>
 				</ul>
 				<?php } ?>
 

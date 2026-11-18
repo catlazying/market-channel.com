@@ -75,57 +75,96 @@ function sendFCMMessage($accessToken, $deviceToken, $title, $body, $imageUrl, $l
     $projectId = 'market-channel-de339';  //  Firebase 프로젝트 ID
     $url = "https://fcm.googleapis.com/v1/projects/$projectId/messages:send";
 
-    if ($_fcm_device=='ios') {
-        $data = [
-            "message" => [
-                "token" => $deviceToken,
-                "data" => [
-                    "title" => $title,
-                    "body" => $body,
-                    "image" => $imageUrl,
-                    "targetUrl" => $linkUrl
+    // if ($_fcm_device=='ios') {
+    //     $data = [
+    //         "message" => [
+    //             "token" => $deviceToken,
+    //             "data" => [
+    //                 "title" => $title,
+    //                 "body" => $body,
+    //                 "image" => $imageUrl,
+    //                 "targetUrl" => $linkUrl
+    //             ],
+    //             "notification" => [
+    //                 "title" => $title,
+    //                 "body" => $body,
+    //                 "image" => $imageUrl
+    //             ],
+    //             "apns" => [
+    //                 "headers" => [
+    //                     "apns-priority" => "10", // 즉시 전송 (중요!)
+    //                     "apns-push-type" => "alert" // 알림 형태 명시
+    //                 ],
+    //                 "payload" => [
+    //                     "aps" => [
+    //                         "sound" => "default", // 푸시 올 때 소리 재생
+    //                         "badge" => 1,         // 앱 아이콘에 숫자 1 표시
+    //                         "content-available" => 1, // 백그라운드 업데이트 허용
+    //                         "mutable-content" => 1 // 이미지 Extension이 작동함
+    //                         // "category" => "NEW_MESSAGE_CATEGORY"
+    //                     ]
+    //                 ]
+    //             ]
+    //         ]
+    //     ];
+    // }else{
+    //     $data = [
+    //         "message" => [
+    //             "token" => $deviceToken,
+    //             "data" => [
+    //                 "title" => $title,
+    //                 "body" => $body,
+    //                 "image" => $imageUrl,
+    //                 "link" => $linkUrl
+    //             ],
+    //             // "notification" => [
+    //             //     "title" => $title,
+    //             //     "body" => $body,
+    //             //     "image" => $imageUrl
+    //             // ],
+    //         ]
+    //     ];
+    // }
+    $unreadCount = 1;
+    $data = [
+        "message" => [
+            "token" => $deviceToken,
+            "notification" => [
+                "title" => $title,
+                "body" => $body,
+                "image" => $imageUrl
+            ],
+            "data" => [
+                "title" => $title,     // 앱이 포그라운드일 때 처리용
+                "body" => $body,       // 앱이 포그라운드일 때 처리용
+                "targetUrl" => $linkUrl, // 앱에서 페이지 이동에 사용
+                "image" => $imageUrl
+            ],
+            "apns" => [
+                "headers" => [
+                    "apns-priority" => "10",
+                    "apns-push-type" => "alert"
                 ],
-                "notification" => [
-                    "title" => $title,
-                    "body" => $body,
-                    "image" => $imageUrl
-                ],
-                "apns" => [
-                    "headers" => [
-                        "apns-priority" => "10", // 즉시 전송 (중요!)
-                        "apns-push-type" => "alert" // 알림 형태 명시
-                    ],
-                    "payload" => [
-                        "aps" => [
-                            "sound" => "default", // 푸시 올 때 소리 재생
-                            "badge" => 1,         // 앱 아이콘에 숫자 1 표시
-                            "content-available" => 1, // 백그라운드 업데이트 허용
-                            "mutable-content" => 1 // 이미지 Extension이 작동함
-                            // "category" => "NEW_MESSAGE_CATEGORY"
-                        ]
+                "payload" => [
+                    "aps" => [
+                        "sound" => "default",
+                        "badge" => $unreadCount, // 고정값 1 대신 서버에서 계산한 개수 권장
+                        "content-available" => 1,
+                        "mutable-content" => 1
                     ]
                 ]
+            ],
+            // 안드로이드 기기도 고려한다면 추가
+            "android" => [
+                "priority" => "high",
+                "notification" => [
+                    "sound" => "default",
+                    "channel_id" => "default_channel" // 안드로이드 8.0 이상 필수
+                ]
             ]
-        ];
-    }else{
-        $data = [
-            "message" => [
-                "token" => $deviceToken,
-                "data" => [
-                    "title" => $title,
-                    "body" => $body,
-                    "image" => $imageUrl,
-                    "link" => $linkUrl
-                ],
-                // "notification" => [
-                //     "title" => $title,
-                //     "body" => $body,
-                //     "image" => $imageUrl
-                // ],
-            ]
-        ];
+        ]
+    ];
 
-    }
     $headers = [
         "Authorization: Bearer $accessToken",
         "Content-Type: application/json"
