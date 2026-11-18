@@ -6,10 +6,10 @@ error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_W
 
 
 // 특정 아이피 체크 if (substr($_SERVER['REMOTE_ADDR'], 0, 11) == "203.249.190") {}
-// if (substr($_SERVER['REMOTE_ADDR'], 0, 11) == "203.249.190") {
+if ($_SERVER['REMOTE_ADDR'] == "118.36.141.218") {
 	ini_set('display_errors', '1');
 	error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-// }
+}
 
 // 보안설정이나 프레임이 달라도 쿠키가 통하도록 설정
 header('P3P: CP="ALL CURa ADMa DEVa TAIa OUR BUS IND PHY ONL UNI PUR FIN COM NAV INT DEM CNT STA POL HEA PRE LOC OTC"');
